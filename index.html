@@ -1,21 +1,874 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Nobre Lab</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Adriel Nobre Lab - jogos, projetos e experimentos de tecnologia.">
+
+    <title>Adriel Nobre Lab</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: #f8fafc;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    #172554 0%,
+                    #0f172a 35%,
+                    #020617 75%
+                );
+
+            overflow-x: hidden;
+        }
+
+        /* -------------------------
+           BACKGROUND
+        ------------------------- */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 40px 40px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent 80%
+            );
+        }
+
+        /* -------------------------
+           HEADER
+        ------------------------- */
+
+        header {
+            width: 100%;
+            max-width: 1000px;
+
+            margin: auto;
+
+            padding: 28px 24px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 12px #22c55e;
+        }
+
+        /* -------------------------
+           HERO
+        ------------------------- */
+
+        .hero {
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            padding:
+                80px 24px
+                70px;
+
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+
+            padding: 7px 13px;
+
+            margin-bottom: 22px;
+
+            border: 1px solid rgba(96,165,250,0.25);
+
+            border-radius: 999px;
+
+            background: rgba(59,130,246,0.08);
+
+            color: #93c5fd;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 8vw, 78px);
+
+            line-height: 0.95;
+
+            letter-spacing: -4px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a78bfa,
+                    #22d3ee
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 600px;
+
+            margin: auto;
+
+            color: #94a3b8;
+
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* -------------------------
+           MAIN
+        ------------------------- */
+
+        main {
+            width: 100%;
+            max-width: 1000px;
+
+            margin: auto;
+
+            padding: 0 24px 80px;
+        }
+
+        .section {
+            margin-bottom: 70px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 22px;
+        }
+
+        .section-title p {
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        /* -------------------------
+           GAME CARD
+        ------------------------- */
+
+        .game-card {
+            position: relative;
+
+            display: grid;
+            grid-template-columns: 1fr auto;
+
+            gap: 30px;
+
+            padding: 30px;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(96,165,250,0.18);
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(30,41,59,0.9),
+                    rgba(15,23,42,0.85)
+                );
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .game-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            right: -100px;
+            top: -100px;
+
+            border-radius: 50%;
+
+            background: rgba(59,130,246,0.12);
+
+            filter: blur(40px);
+
+            pointer-events: none;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(96,165,250,0.45);
+        }
+
+        .game-icon {
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            font-size: 30px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(37,99,235,0.25);
+        }
+
+        .game-info h3 {
+            font-size: 27px;
+
+            margin-bottom: 8px;
+        }
+
+        .game-info p {
+            max-width: 560px;
+
+            color: #94a3b8;
+
+            line-height: 1.6;
+
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 6px 10px;
+
+            border-radius: 8px;
+
+            background: rgba(148,163,184,0.08);
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+        .play-button {
+            align-self: center;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 130px;
+
+            padding: 14px 22px;
+
+            border: 0;
+
+            border-radius: 12px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s,
+                background 0.2s;
+        }
+
+        .play-button:hover {
+            background: #3b82f6;
+
+            transform: scale(1.04);
+        }
+
+        /* -------------------------
+           COMING SOON
+        ------------------------- */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 16px;
+        }
+
+        .small-card {
+            padding: 24px;
+
+            border:
+                1px solid
+                rgba(148,163,184,0.12);
+
+            border-radius: 20px;
+
+            background:
+                rgba(15,23,42,0.65);
+
+            transition:
+                transform 0.2s,
+                border-color 0.2s;
+        }
+
+        .small-card:hover {
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(148,163,184,0.25);
+        }
+
+        .small-card .icon {
+            font-size: 28px;
+
+            margin-bottom: 16px;
+        }
+
+        .small-card h3 {
+            margin-bottom: 8px;
+
+            font-size: 18px;
+        }
+
+        .small-card p {
+            color: #64748b;
+
+            line-height: 1.5;
+
+            font-size: 14px;
+        }
+
+        .coming {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 5px 9px;
+
+            border-radius: 6px;
+
+            background:
+                rgba(148,163,184,0.08);
+
+            color: #64748b;
+
+            font-size: 11px;
+        }
+
+        /* -------------------------
+           LINKS
+        ------------------------- */
+
+        .links {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 18px;
+
+            border:
+                1px solid
+                rgba(148,163,184,0.12);
+
+            border-radius: 15px;
+
+            color: #e2e8f0;
+
+            text-decoration: none;
+
+            background:
+                rgba(15,23,42,0.5);
+
+            transition:
+                background 0.2s,
+                transform 0.2s;
+        }
+
+        .link-card:hover {
+            background:
+                rgba(30,41,59,0.8);
+
+            transform: translateY(-2px);
+        }
+
+        .link-icon {
+            font-size: 22px;
+        }
+
+        .link-card span:last-child {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* -------------------------
+           FOOTER
+        ------------------------- */
+
+        footer {
+            padding: 30px 24px 45px;
+
+            text-align: center;
+
+            color: #475569;
+
+            font-size: 13px;
+        }
+
+        footer strong {
+            color: #64748b;
+        }
+
+        /* -------------------------
+           MOBILE
+        ------------------------- */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 22px 18px;
+            }
+
+            .hero {
+                padding:
+                    60px 20px
+                    50px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            main {
+                padding:
+                    0 18px
+                    60px;
+            }
+
+            .game-card {
+                grid-template-columns: 1fr;
+
+                padding: 23px;
+            }
+
+            .play-button {
+                width: 100%;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .links {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <h1>🚀 Nobre Lab</h1>
+<header>
 
-    <p>Meu primeiro site com GitHub Pages!</p>
+    <div class="logo">
+        ADRIEL<span>NOBRE</span>
+    </div>
 
-    <button onclick="alert('Funcionou! 🎉')">
-        Clique aqui
-    </button>
+    <div class="status">
+        <span class="status-dot"></span>
+        Online
+    </div>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="hero-badge">
+        🧪 PERSONAL LAB
+    </div>
+
+    <h1>
+        Adriel Nobre<br>
+        <span>Lab.</span>
+    </h1>
+
+    <p>
+        Um espaço para meus jogos, projetos,
+        experimentos e pequenas ideias
+        de tecnologia.
+    </p>
+
+</section>
+
+
+<main>
+
+    <!-- JOGOS -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h2>🎮 Jogos</h2>
+
+            <p>
+                Pequenas experiências para jogar no navegador.
+            </p>
+
+        </div>
+
+
+        <div class="game-card">
+
+            <div class="game-info">
+
+                <div class="game-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Nobre Reflex
+                </h3>
+
+                <p>
+                    Teste sua velocidade de reação.
+                    Espere o momento certo e clique
+                    o mais rápido que conseguir.
+                </p>
+
+                <div class="tags">
+
+                    <span class="tag">
+                        ⚡ Reflexo
+                    </span>
+
+                    <span class="tag">
+                        📱 Mobile
+                    </span>
+
+                    <span class="tag">
+                        🖱️ PC
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a
+                class="play-button"
+                href="/reflex/"
+            >
+                Jogar →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- EM BREVE -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h2>🧪 Próximos experimentos</h2>
+
+            <p>
+                Coisas que ainda estão sendo construídas.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+
+            <div class="small-card">
+
+                <div class="icon">
+                    🧠
+                </div>
+
+                <h3>
+                    Nobre Memory
+                </h3>
+
+                <p>
+                    Um pequeno desafio de memória
+                    e concentração.
+                </p>
+
+                <span class="coming">
+                    EM BREVE
+                </span>
+
+            </div>
+
+
+            <div class="small-card">
+
+                <div class="icon">
+                    💻
+                </div>
+
+                <h3>
+                    Hack the Code
+                </h3>
+
+                <p>
+                    Resolva enigmas e descubra
+                    o código escondido.
+                </p>
+
+                <span class="coming">
+                    EM BREVE
+                </span>
+
+            </div>
+
+
+            <div class="small-card">
+
+                <div class="icon">
+                    👾
+                </div>
+
+                <h3>
+                    Bug Escape
+                </h3>
+
+                <p>
+                    Sobreviva aos bugs pelo
+                    maior tempo possível.
+                </p>
+
+                <span class="coming">
+                    EM BREVE
+                </span>
+
+            </div>
+
+
+            <div class="small-card">
+
+                <div class="icon">
+                    🔬
+                </div>
+
+                <h3>
+                    Experimentos
+                </h3>
+
+                <p>
+                    Ideias estranhas, testes,
+                    animações e outras coisas.
+                </p>
+
+                <span class="coming">
+                    EM BREVE
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LINKS -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h2>🔗 Encontrar-me</h2>
+
+        </div>
+
+
+        <div class="links">
+
+            <a
+                class="link-card"
+                href="https://github.com/adriel-nobre"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span class="link-icon">
+                    💻
+                </span>
+
+                <span>
+                    GitHub
+                </span>
+            </a>
+
+
+            <a
+                class="link-card"
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span class="link-icon">
+                    📸
+                </span>
+
+                <span>
+                    Instagram
+                </span>
+            </a>
+
+
+            <a
+                class="link-card"
+                href="mailto:"
+            >
+                <span class="link-icon">
+                    ✉️
+                </span>
+
+                <span>
+                    Contato
+                </span>
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    Feito por <strong>Adriel Nobre</strong> ·
+    Nobre Lab
+
+</footer>
 
 </body>
+
 </html>
