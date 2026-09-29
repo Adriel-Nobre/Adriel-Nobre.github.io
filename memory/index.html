@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nobre Memory</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top, #172554, #0f172a 45%, #020617);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            color: #cbd5e1;
+        }
+
+        .stats strong {
+            color: white;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .card {
+            aspect-ratio: 1;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            font-size: 32px;
+            perspective: 600px;
+            transition: transform 0.15s;
+        }
+
+        .card:hover {
+            transform: scale(1.04);
+        }
+
+        .card.flipped,
+        .card.matched {
+            background: #1e293b;
+            cursor: default;
+        }
+
+        .card.matched {
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.35);
+        }
+
+        .card span {
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .card.flipped span,
+        .card.matched span {
+            opacity: 1;
+        }
+
+        .message {
+            min-height: 28px;
+            margin: 20px 0 10px;
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button.action {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 20px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button.action:hover {
+            background: #3b82f6;
+        }
+
+        .back {
+            background: #334155 !important;
+        }
+
+        .back:hover {
+            background: #475569 !important;
+        }
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 18px;
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .result h2 {
+            margin-bottom: 15px;
+        }
+
+        .result p {
+            color: #cbd5e1;
+            margin: 7px 0;
+        }
+
+        .record {
+            color: #facc15 !important;
+            font-weight: bold;
+            margin-top: 12px !important;
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 34px;
+            }
+
+            .board {
+                gap: 8px;
+            }
+
+            .card {
+                border-radius: 12px;
+                font-size: 25px;
+            }
+
+            .stats {
+                gap: 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="game">
+
+    <h1>🧠 Nobre Memory</h1>
+
+    <p class="subtitle">
+        Encontre todos os pares!
+    </p>
+
+    <div class="stats">
+        <div>⏱️ <strong id="time">0s</strong></div>
+        <div>🎯 <strong id="moves">0</strong> movimentos</div>
+        <div>✅ <strong id="pairs">0/8</strong></div>
+    </div>
+
+    <div id="board" class="board"></div>
+
+    <div id="message" class="message">
+        Encontre os pares iguais.
+    </div>
+
+    <div class="buttons">
+        <button class="action" onclick="startGame()">
+            🔄 Reiniciar
+        </button>
+
+        <button class="action back" onclick="goBack()">
+            ← Voltar
+        </button>
+    </div>
+
+    <div id="result" class="result">
+
+        <h2>🎉 Você conseguiu!</h2>
+
+        <p>
+            ⏱️ Tempo:
+            <strong id="finalTime"></strong>
+        </p>
+
+        <p>
+            🎯 Movimentos:
+            <strong id="finalMoves"></strong>
+        </p>
+
+        <p id="recordText" class="record"></p>
+
+        <button class="action" onclick="startGame()">
+            🧠 Jogar novamente
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+    const symbols = [
+        "⚡",
+        "🎮",
+        "👾",
+        "💻",
+        "🧠",
+        "🔥",
+        "🚀",
+        "🎯"
+    ];
+
+    let cards = [];
+    let firstCard = null;
+    let secondCard = null;
+
+    let lockBoard = false;
+    let moves = 0;
+    let matchedPairs = 0;
+
+    let startTime = null;
+    let timer = null;
+
+    const board = document.getElementById("board");
+    const timeElement = document.getElementById("time");
+    const movesElement = document.getElementById("moves");
+    const pairsElement = document.getElementById("pairs");
+    const messageElement = document.getElementById("message");
+
+    const resultElement = document.getElementById("result");
+    const finalTimeElement = document.getElementById("finalTime");
+    const finalMovesElement = document.getElementById("finalMoves");
+    const recordTextElement = document.getElementById("recordText");
+
+
+    function startGame() {
+
+        clearInterval(timer);
+
+        cards = [];
+        firstCard = null;
+        secondCard = null;
+
+        lockBoard = false;
+        moves = 0;
+        matchedPairs = 0;
+
+        movesElement.textContent = "0";
+        pairsElement.textContent = "0/8";
+        timeElement.textContent = "0s";
+
+        messageElement.textContent = "Encontre os pares iguais.";
+
+        resultElement.style.display = "none";
+
+        const deck = [...symbols, ...symbols];
+
+        deck.sort(() => Math.random() - 0.5);
+
+        board.innerHTML = "";
+
+        deck.forEach((symbol, index) => {
+
+            const card = document.createElement("button");
+
+            card.className = "card";
+
+            card.dataset.symbol = symbol;
+
+            card.innerHTML = `<span>${symbol}</span>`;
+
+            card.addEventListener("click", () => flipCard(card));
+
+            board.appendChild(card);
+
+        });
+
+        startTime = Date.now();
+
+        timer = setInterval(updateTimer, 1000);
+    }
+
+
+    function flipCard(card) {
+
+        if (lockBoard) return;
+
+        if (card === firstCard) return;
+
+        if (card.classList.contains("matched")) return;
+
+        card.classList.add("flipped");
+
+        if (!firstCard) {
+
+            firstCard = card;
+
+            return;
+        }
+
+        secondCard = card;
+
+        moves++;
+
+        movesElement.textContent = moves;
+
+        checkMatch();
+    }
+
+
+    function checkMatch() {
+
+        const isMatch =
+            firstCard.dataset.symbol ===
+            secondCard.dataset.symbol;
+
+        if (isMatch) {
+
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+
+            matchedPairs++;
+
+            pairsElement.textContent =
+                matchedPairs + "/8";
+
+            messageElement.textContent =
+                "✅ Par encontrado!";
+
+            resetTurn();
+
+            if (matchedPairs === 8) {
+                finishGame();
+            }
+
+        } else {
+
+            lockBoard = true;
+
+            messageElement.textContent =
+                "❌ Não são iguais...";
+
+            setTimeout(() => {
+
+                firstCard.classList.remove("flipped");
+                secondCard.classList.remove("flipped");
+
+                resetTurn();
+
+            }, 800);
+        }
+    }
+
+
+    function resetTurn() {
+
+        firstCard = null;
+        secondCard = null;
+
+        if (!lockBoard) {
+            return;
+        }
+
+        lockBoard = false;
+    }
+
+
+    function updateTimer() {
+
+        if (!startTime) return;
+
+        const elapsed =
+            Math.floor((Date.now() - startTime) / 1000);
+
+        timeElement.textContent =
+            elapsed + "s";
+    }
+
+
+    function finishGame() {
+
+        clearInterval(timer);
+
+        const finalTime =
+            Math.floor((Date.now() - startTime) / 1000);
+
+        finalTimeElement.textContent =
+            finalTime + " segundos";
+
+        finalMovesElement.textContent =
+            moves;
+
+        const oldRecord =
+            localStorage.getItem("nobreMemoryRecord");
+
+        if (
+            oldRecord === null ||
+            finalTime < Number(oldRecord)
+        ) {
+
+            localStorage.setItem(
+                "nobreMemoryRecord",
+                finalTime
+            );
+
+            recordTextElement.textContent =
+                "🏆 NOVO RECORDE!";
+
+        } else {
+
+            recordTextElement.textContent =
+                "🏆 Recorde: " +
+                oldRecord +
+                " segundos";
+        }
+
+        resultElement.style.display = "block";
+
+        messageElement.textContent =
+            "Todos os pares foram encontrados! 🎉";
+    }
+
+
+    function goBack() {
+
+        window.location.href = "../";
+    }
+
+
+    startGame();
+
+</script>
+
+</body>
+</html>
