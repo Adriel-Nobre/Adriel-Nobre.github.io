@@ -20,31 +20,32 @@
             padding: 0;
         }
 
-        body {
+body {
+    min-height: 100vh;
 
-            min-height: 100vh;
+    font-family:
+        "Courier New",
+        monospace;
 
-            font-family:
-                "Courier New",
-                monospace;
+    background:
+        radial-gradient(
+            circle at top,
+            #052e16,
+            #020617 55%
+        );
 
-            background:
-                radial-gradient(
-                    circle at top,
-                    #052e16,
-                    #020617 55%
-                );
+    color: #22c55e;
 
-            color: #22c55e;
+    display: flex;
 
-            display: flex;
+    justify-content: center;
 
-            justify-content: center;
+    align-items: flex-start;
 
-            align-items: center;
+    padding: 20px;
 
-            padding: 20px;
-        }
+    overflow-y: auto;
+}
 
         .game {
 
@@ -410,37 +411,98 @@
             font-weight: bold;
         }
 
-        @media (max-width: 500px) {
+@media (max-width: 500px) {
 
-            .terminal {
+    body {
+        display: block;
+        padding: 12px;
+    }
 
-                padding: 20px;
-            }
+    .game {
+        max-width: 100%;
+        padding-bottom: 30px;
+    }
 
-            h1 {
+    .terminal {
+        padding: 18px 14px;
+        border-radius: 16px;
+    }
 
-                font-size: 30px;
-            }
+    h1 {
+        font-size: 27px;
+        margin-bottom: 6px;
+    }
 
-            .digit {
+    .subtitle {
+        font-size: 12px;
+        margin-bottom: 18px;
+    }
 
-                width: 55px;
+    .difficulty {
+        gap: 6px;
+    }
 
-                height: 55px;
-            }
+    .time-button {
+        padding: 9px 10px;
+        font-size: 11px;
+    }
 
-            .code {
+    .status {
+        margin-bottom: 12px;
+        font-size: 12px;
+    }
 
-                font-size: 30px;
+    .timer {
+        font-size: 26px;
+        margin-bottom: 15px;
+    }
 
-                letter-spacing: 7px;
-            }
+    .screen {
+        padding: 16px;
+        margin-bottom: 15px;
+    }
 
-            .hint {
+    .code {
+        font-size: 28px;
+        letter-spacing: 6px;
+        margin-bottom: 16px;
+    }
 
-                font-size: 13px;
-            }
-        }
+    .hint {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .input-area {
+        gap: 7px;
+        margin-bottom: 15px;
+    }
+
+    .digit {
+        width: 52px;
+        height: 52px;
+        font-size: 23px;
+    }
+
+    .buttons {
+        gap: 7px;
+    }
+
+    button.action {
+        padding: 11px 13px;
+        font-size: 12px;
+    }
+
+    .message {
+        margin-top: 14px;
+        font-size: 13px;
+    }
+
+    .result {
+        margin-top: 18px;
+        padding: 20px 15px;
+    }
+}
 
     </style>
 
