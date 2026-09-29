@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Hack the Code</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,83 +21,171 @@
         }
 
         body {
+
             min-height: 100vh;
-            font-family: "Courier New", monospace;
+
+            font-family:
+                "Courier New",
+                monospace;
+
             background:
-                radial-gradient(circle at top, #052e16, #020617 55%);
+                radial-gradient(
+                    circle at top,
+                    #052e16,
+                    #020617 55%
+                );
+
             color: #22c55e;
 
             display: flex;
+
             justify-content: center;
+
             align-items: center;
 
             padding: 20px;
         }
 
         .game {
+
             width: 100%;
-            max-width: 600px;
+
+            max-width: 650px;
+
             text-align: center;
         }
 
         .terminal {
+
             padding: 30px;
 
-            background: rgba(2, 6, 23, 0.92);
+            background:
+                rgba(2, 6, 23, 0.95);
 
-            border: 1px solid rgba(34, 197, 94, 0.35);
+            border:
+                1px solid
+                rgba(34, 197, 94, 0.35);
 
             border-radius: 20px;
 
             box-shadow:
-                0 0 40px rgba(34, 197, 94, 0.08);
+                0 0 40px
+                rgba(34, 197, 94, 0.08);
         }
 
         h1 {
+
             font-size: 38px;
+
             margin-bottom: 8px;
 
             text-shadow:
-                0 0 15px rgba(34, 197, 94, 0.6);
+                0 0 15px
+                rgba(34, 197, 94, 0.6);
         }
 
         .subtitle {
+
             color: #86efac;
+
             margin-bottom: 25px;
         }
 
-        .status {
+        .difficulty {
+
             display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .time-button {
+
+            border: 1px solid #166534;
+
+            border-radius: 10px;
+
+            padding: 10px 20px;
+
+            background: #020617;
+
+            color: #86efac;
+
+            font-family:
+                "Courier New",
+                monospace;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .time-button:hover {
+
+            border-color: #22c55e;
+        }
+
+        .time-button.active {
+
+            background: #166534;
+
+            color: white;
+
+            border-color: #22c55e;
+
+            box-shadow:
+                0 0 12px
+                rgba(34, 197, 94, 0.25);
+        }
+
+        .status {
+
+            display: flex;
+
             justify-content: space-between;
 
             margin-bottom: 20px;
 
             color: #94a3b8;
+
             font-size: 14px;
         }
 
         .status strong {
+
             color: #22c55e;
         }
 
         .timer {
-            font-size: 26px;
+
+            font-size: 30px;
+
             font-weight: bold;
 
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .timer.warning {
+
             color: #facc15;
         }
 
         .timer.danger {
+
             color: #ef4444;
 
-            animation: blink 0.5s infinite alternate;
+            animation:
+                blink
+                0.5s
+                infinite
+                alternate;
         }
 
         @keyframes blink {
+
             from {
                 opacity: 1;
             }
@@ -101,7 +196,8 @@
         }
 
         .screen {
-            padding: 20px;
+
+            padding: 22px;
 
             margin-bottom: 20px;
 
@@ -109,36 +205,61 @@
 
             background: #020617;
 
-            border: 1px solid rgba(34, 197, 94, 0.2);
+            border:
+                1px solid
+                rgba(34, 197, 94, 0.2);
+
+            text-align: left;
         }
 
         .screen-title {
+
             color: #64748b;
+
             font-size: 12px;
-            margin-bottom: 12px;
+
+            margin-bottom: 15px;
+
+            text-align: center;
         }
 
         .code {
+
+            text-align: center;
+
             font-size: 38px;
+
             letter-spacing: 12px;
 
             color: #f8fafc;
 
-            min-height: 45px;
+            margin-bottom: 22px;
+        }
+
+        .hints-title {
+
+            color: #22c55e;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
         }
 
         .hint {
-            margin-top: 15px;
 
-            color: #94a3b8;
+            color: #cbd5e1;
 
             font-size: 14px;
 
-            line-height: 1.5;
+            line-height: 1.6;
+
+            margin: 5px 0;
         }
 
         .input-area {
+
             display: flex;
+
             justify-content: center;
 
             gap: 10px;
@@ -147,18 +268,24 @@
         }
 
         .digit {
+
             width: 60px;
+
             height: 60px;
 
             border-radius: 10px;
 
-            border: 1px solid #166534;
+            border:
+                1px solid
+                #166534;
 
             background: #020617;
 
             color: #22c55e;
 
-            font-family: "Courier New", monospace;
+            font-family:
+                "Courier New",
+                monospace;
 
             font-size: 26px;
 
@@ -168,13 +295,16 @@
         }
 
         .digit:focus {
+
             border-color: #22c55e;
 
             box-shadow:
-                0 0 12px rgba(34, 197, 94, 0.3);
+                0 0 12px
+                rgba(34, 197, 94, 0.3);
         }
 
         .buttons {
+
             display: flex;
 
             justify-content: center;
@@ -184,14 +314,17 @@
             flex-wrap: wrap;
         }
 
-        button {
+        button.action {
+
             border: none;
 
             border-radius: 10px;
 
             padding: 13px 20px;
 
-            font-family: "Courier New", monospace;
+            font-family:
+                "Courier New",
+                monospace;
 
             font-weight: bold;
 
@@ -199,26 +332,31 @@
         }
 
         .hack-button {
+
             background: #16a34a;
 
             color: white;
         }
 
         .hack-button:hover {
+
             background: #22c55e;
         }
 
         .restart-button {
+
             background: #334155;
 
             color: white;
         }
 
         .restart-button:hover {
+
             background: #475569;
         }
 
         .message {
+
             min-height: 25px;
 
             margin-top: 20px;
@@ -227,6 +365,7 @@
         }
 
         .result {
+
             display: none;
 
             margin-top: 25px;
@@ -237,28 +376,35 @@
 
             background: #020617;
 
-            border: 1px solid rgba(34, 197, 94, 0.25);
+            border:
+                1px solid
+                rgba(34, 197, 94, 0.25);
         }
 
         .result h2 {
+
             margin-bottom: 15px;
         }
 
         .result p {
+
             color: #cbd5e1;
 
             margin: 7px;
         }
 
         .success {
+
             color: #22c55e;
         }
 
         .failure {
+
             color: #ef4444;
         }
 
         .record {
+
             color: #facc15 !important;
 
             font-weight: bold;
@@ -267,31 +413,47 @@
         @media (max-width: 500px) {
 
             .terminal {
+
                 padding: 20px;
             }
 
             h1 {
+
                 font-size: 30px;
             }
 
             .digit {
+
                 width: 55px;
+
                 height: 55px;
             }
 
             .code {
+
                 font-size: 30px;
+
                 letter-spacing: 7px;
             }
+
+            .hint {
+
+                font-size: 13px;
+            }
         }
+
     </style>
+
 </head>
 
+
 <body>
+
 
 <div class="game">
 
     <div class="terminal">
+
 
         <h1>💻 HACK THE CODE</h1>
 
@@ -299,11 +461,35 @@
             SYSTEM SECURITY TERMINAL
         </p>
 
+
+        <!-- ESCOLHA DE TEMPO -->
+
+        <div class="difficulty">
+
+            <button
+                id="time30"
+                class="time-button active"
+                onclick="selectTime(30)"
+            >
+                ⏱️ 30 SEGUNDOS
+            </button>
+
+            <button
+                id="time60"
+                class="time-button"
+                onclick="selectTime(60)"
+            >
+                ⏱️ 60 SEGUNDOS
+            </button>
+
+        </div>
+
+
         <div class="status">
 
             <span>
                 NÍVEL:
-                <strong id="level">1</strong>
+                <strong>1</strong>
             </span>
 
             <span>
@@ -313,9 +499,11 @@
 
         </div>
 
+
         <div id="timer" class="timer">
             30s
         </div>
+
 
         <div class="screen">
 
@@ -323,15 +511,26 @@
                 🔐 ENCRYPTED ACCESS CODE
             </div>
 
-            <div id="codeDisplay" class="code">
+
+            <div
+                id="codeDisplay"
+                class="code"
+            >
                 _ _ _ _
             </div>
 
-            <div id="hint" class="hint">
-                Descubra o código de 4 dígitos.
+
+            <div class="hints-title">
+                💡 PISTAS
             </div>
 
+
+            <div
+                id="hints"
+            ></div>
+
         </div>
+
 
         <div class="input-area">
 
@@ -365,24 +564,27 @@
 
         </div>
 
+
         <div class="buttons">
 
             <button
-                class="hack-button"
+                class="action hack-button"
                 onclick="checkCode()"
             >
                 ⚡ TENTAR INVADIR
             </button>
 
-            <button
-                class="restart-button"
-                onclick="startGame()"
-            >
-                🔄 REINICIAR
-            </button>
 
             <button
-                class="restart-button"
+                class="action restart-button"
+                onclick="startGame()"
+            >
+                🔄 NOVO CÓDIGO
+            </button>
+
+
+            <button
+                class="action restart-button"
                 onclick="goBack()"
             >
                 ← VOLTAR
@@ -390,11 +592,19 @@
 
         </div>
 
-        <div id="message" class="message">
-            Aguardando tentativa...
+
+        <div
+            id="message"
+            class="message"
+        >
+            Sistema pronto.
         </div>
 
-        <div id="result" class="result">
+
+        <div
+            id="result"
+            class="result"
+        >
 
             <h2 id="resultTitle"></h2>
 
@@ -418,13 +628,14 @@
             <br>
 
             <button
-                class="hack-button"
+                class="action hack-button"
                 onclick="startGame()"
             >
-                💻 TENTAR NOVAMENTE
+                💻 NOVO DESAFIO
             </button>
 
         </div>
+
 
     </div>
 
@@ -433,44 +644,58 @@
 
 <script>
 
+
     const inputs =
         document.querySelectorAll(".digit");
+
 
     const timerElement =
         document.getElementById("timer");
 
-    const levelElement =
-        document.getElementById("level");
 
     const attemptsElement =
         document.getElementById("attempts");
 
+
     const messageElement =
         document.getElementById("message");
+
+
+    const hintsElement =
+        document.getElementById("hints");
+
 
     const resultElement =
         document.getElementById("result");
 
+
     const resultTitle =
         document.getElementById("resultTitle");
+
 
     const resultText =
         document.getElementById("resultText");
 
+
     const finalAttempts =
         document.getElementById("finalAttempts");
+
 
     const finalTime =
         document.getElementById("finalTime");
 
+
     const recordElement =
         document.getElementById("record");
+
 
     let secretCode = "";
 
     let attempts = 0;
 
-    let timeLeft = 60;
+    let timeLimit = 30;
+
+    let timeLeft = 30;
 
     let timer = null;
 
@@ -479,11 +704,19 @@
     let startTime = null;
 
 
+    /*
+        Gera um código de 4 números.
+    */
+
     function generateCode() {
 
         let code = "";
 
-        for (let i = 0; i < 4; i++) {
+        for (
+            let i = 0;
+            i < 4;
+            i++
+        ) {
 
             code += Math.floor(
                 Math.random() * 10
@@ -495,64 +728,272 @@
     }
 
 
+    /*
+        Escolhe 30 ou 60 segundos.
+    */
+
+    function selectTime(seconds) {
+
+        timeLimit = seconds;
+
+        document
+            .getElementById("time30")
+            .classList
+            .remove("active");
+
+        document
+            .getElementById("time60")
+            .classList
+            .remove("active");
+
+
+        document
+            .getElementById(
+                seconds === 30
+                    ? "time30"
+                    : "time60"
+            )
+            .classList
+            .add("active");
+
+
+        startGame();
+    }
+
+
+    /*
+        Cria as pistas com base
+        no código atual.
+    */
+
+    function generateHints(code) {
+
+        const hints = [];
+
+
+        /*
+            Pista 1:
+            revela uma posição.
+        */
+
+        const position =
+            Math.floor(
+                Math.random() * 4
+            );
+
+        const positionNames = [
+            "primeiro",
+            "segundo",
+            "terceiro",
+            "quarto"
+        ];
+
+        hints.push(
+            `• O ${positionNames[position]} número é ${code[position]}.`
+        );
+
+
+        /*
+            Pista 2:
+            informa se uma posição
+            é par ou ímpar.
+        */
+
+        let parityPosition;
+
+        do {
+
+            parityPosition =
+                Math.floor(
+                    Math.random() * 4
+                );
+
+        } while (
+            parityPosition === position
+        );
+
+
+        const parity =
+            Number(
+                code[parityPosition]
+            ) % 2 === 0
+                ? "par"
+                : "ímpar";
+
+
+        hints.push(
+            `• O ${
+                positionNames[parityPosition]
+            } número é ${parity}.`
+        );
+
+
+        /*
+            Pista 3:
+            soma de duas posições.
+        */
+
+        let first =
+            Math.floor(
+                Math.random() * 4
+            );
+
+        let second =
+            Math.floor(
+                Math.random() * 4
+            );
+
+
+        while (
+            second === first
+        ) {
+
+            second =
+                Math.floor(
+                    Math.random() * 4
+                );
+        }
+
+
+        const sum =
+            Number(code[first]) +
+            Number(code[second]);
+
+
+        hints.push(
+            `• A soma do ${
+                positionNames[first]
+            } e do ${
+                positionNames[second]
+            } número é ${sum}.`
+        );
+
+
+        return hints;
+    }
+
+
+    /*
+        Inicia uma nova partida.
+    */
+
     function startGame() {
 
         clearInterval(timer);
 
-        secretCode = generateCode();
+
+        secretCode =
+            generateCode();
+
 
         attempts = 0;
 
-        timeLeft = 60;
+        timeLeft =
+            timeLimit;
 
         gameActive = true;
 
-        startTime = Date.now();
+        startTime =
+            Date.now();
 
-        attemptsElement.textContent = "0";
 
-        levelElement.textContent = "1";
+        attemptsElement.textContent =
+            "0";
 
-        timerElement.textContent = "60s";
 
-        timerElement.className = "timer";
+        timerElement.textContent =
+            timeLimit + "s";
+
+
+        timerElement.className =
+            "timer";
+
 
         messageElement.textContent =
-            "Aguardando tentativa...";
+            "Descubra o código.";
+
 
         resultElement.style.display =
             "none";
 
+
+        /*
+            Gera novas pistas
+            para o novo código.
+        */
+
+        const hints =
+            generateHints(
+                secretCode
+            );
+
+
+        hintsElement.innerHTML =
+            hints
+                .map(
+                    hint =>
+                        `<div class="hint">${hint}</div>`
+                )
+                .join("");
+
+
+        /*
+            Limpa os campos.
+        */
+
         inputs.forEach(input => {
+
             input.value = "";
+
             input.disabled = false;
+
         });
+
 
         inputs[0].focus();
 
-        timer = setInterval(updateTimer, 1000);
+
+        /*
+            Começa o cronômetro.
+        */
+
+        timer =
+            setInterval(
+                updateTimer,
+                1000
+            );
     }
 
+
+    /*
+        Atualiza o tempo.
+    */
 
     function updateTimer() {
 
         if (!gameActive) return;
 
+
         timeLeft--;
+
 
         timerElement.textContent =
             timeLeft + "s";
+
 
         if (timeLeft <= 15) {
 
             timerElement.className =
                 "timer danger";
 
-        } else if (timeLeft <= 30) {
+        } else if (
+            timeLeft <= 30
+        ) {
 
             timerElement.className =
                 "timer warning";
         }
+
 
         if (timeLeft <= 0) {
 
@@ -561,17 +1002,29 @@
     }
 
 
+    /*
+        Verifica a tentativa.
+    */
+
     function checkCode() {
 
         if (!gameActive) return;
 
+
         let enteredCode = "";
 
+
         inputs.forEach(input => {
-            enteredCode += input.value;
+
+            enteredCode +=
+                input.value;
+
         });
 
-        if (enteredCode.length !== 4) {
+
+        if (
+            enteredCode.length !== 4
+        ) {
 
             messageElement.textContent =
                 "⚠️ Digite os 4 números.";
@@ -579,23 +1032,42 @@
             return;
         }
 
+
         attempts++;
+
 
         attemptsElement.textContent =
             attempts;
 
-        if (enteredCode === secretCode) {
+
+        /*
+            Vitória.
+        */
+
+        if (
+            enteredCode ===
+            secretCode
+        ) {
 
             winGame();
 
             return;
         }
 
+
+        /*
+            Conta números corretos
+            na posição correta.
+        */
+
         let correctPosition = 0;
 
-        let correctNumber = 0;
 
-        for (let i = 0; i < 4; i++) {
+        for (
+            let i = 0;
+            i < 4;
+            i++
+        ) {
 
             if (
                 enteredCode[i] ===
@@ -603,29 +1075,46 @@
             ) {
 
                 correctPosition++;
-
-            } else if (
-                secretCode.includes(
-                    enteredCode[i]
-                )
-            ) {
-
-                correctNumber++;
             }
         }
 
-        messageElement.textContent =
-            `❌ Código incorreto. ` +
-            `${correctPosition} número(s) na posição correta. ` +
-            `${correctNumber} número(s) existem no código.`;
+
+        /*
+            Mensagem de feedback.
+        */
+
+        if (
+            correctPosition === 0
+        ) {
+
+            messageElement.textContent =
+                "❌ Nenhum número está na posição correta.";
+
+        } else {
+
+            messageElement.textContent =
+                `⚡ ${correctPosition} número(s) estão na posição correta.`;
+        }
+
+
+        /*
+            Limpa tentativa.
+        */
 
         inputs.forEach(input => {
+
             input.value = "";
+
         });
+
 
         inputs[0].focus();
     }
 
+
+    /*
+        Vitória.
+    */
 
     function winGame() {
 
@@ -633,39 +1122,58 @@
 
         clearInterval(timer);
 
+
         const elapsed =
             Math.floor(
-                (Date.now() - startTime) / 1000
+                (
+                    Date.now() -
+                    startTime
+                ) / 1000
             );
 
+
         inputs.forEach(input => {
+
             input.disabled = true;
+
         });
+
 
         resultTitle.textContent =
             "🟢 ACCESS GRANTED";
 
+
         resultTitle.className =
             "success";
+
 
         resultText.textContent =
             "Você invadiu o sistema!";
 
+
         finalAttempts.textContent =
             attempts;
+
 
         finalTime.textContent =
             elapsed + " segundos";
 
+
         saveRecord(elapsed);
+
 
         resultElement.style.display =
             "block";
+
 
         messageElement.textContent =
             "🔓 SISTEMA DESBLOQUEADO";
     }
 
+
+    /*
+        Derrota.
+    */
 
     function loseGame() {
 
@@ -673,42 +1181,65 @@
 
         clearInterval(timer);
 
+
         inputs.forEach(input => {
+
             input.disabled = true;
+
         });
+
 
         resultTitle.textContent =
             "🔴 ACCESS DENIED";
 
+
         resultTitle.className =
             "failure";
+
 
         resultText.textContent =
             "O sistema bloqueou o acesso.";
 
+
         finalAttempts.textContent =
             attempts;
 
+
         finalTime.textContent =
-            "60 segundos";
+            timeLimit +
+            " segundos";
+
 
         recordElement.textContent =
-            "Código correto: " + secretCode;
+            "Código correto: " +
+            secretCode;
+
 
         resultElement.style.display =
             "block";
+
 
         messageElement.textContent =
             "🚨 SISTEMA BLOQUEADO";
     }
 
 
+    /*
+        Recorde.
+    */
+
     function saveRecord(time) {
+
+        const recordKey =
+            "hackTheCodeRecord_" +
+            timeLimit;
+
 
         const oldRecord =
             localStorage.getItem(
-                "hackTheCodeRecord"
+                recordKey
             );
+
 
         if (
             oldRecord === null ||
@@ -716,12 +1247,14 @@
         ) {
 
             localStorage.setItem(
-                "hackTheCodeRecord",
+                recordKey,
                 time
             );
 
+
             recordElement.textContent =
                 "🏆 NOVO RECORDE!";
+
         } else {
 
             recordElement.textContent =
@@ -732,59 +1265,90 @@
     }
 
 
-    inputs.forEach((input, index) => {
+    /*
+        Digitação automática.
+    */
 
-        input.addEventListener(
-            "input",
-            () => {
+    inputs.forEach(
+        (input, index) => {
 
-                input.value =
-                    input.value.replace(
-                        /[^0-9]/g,
-                        ""
-                    );
+            input.addEventListener(
+                "input",
+                () => {
 
-                if (
-                    input.value &&
-                    index < inputs.length - 1
-                ) {
+                    input.value =
+                        input.value.replace(
+                            /[^0-9]/g,
+                            ""
+                        );
 
-                    inputs[index + 1].focus();
+
+                    if (
+                        input.value &&
+                        index <
+                        inputs.length - 1
+                    ) {
+
+                        inputs[
+                            index + 1
+                        ].focus();
+                    }
+
                 }
-            }
-        );
+            );
 
-        input.addEventListener(
-            "keydown",
-            event => {
 
-                if (
-                    event.key === "Backspace" &&
-                    !input.value &&
-                    index > 0
-                ) {
+            input.addEventListener(
+                "keydown",
+                event => {
 
-                    inputs[index - 1].focus();
+                    if (
+                        event.key ===
+                        "Backspace" &&
+                        !input.value &&
+                        index > 0
+                    ) {
+
+                        inputs[
+                            index - 1
+                        ].focus();
+                    }
+
+
+                    if (
+                        event.key ===
+                        "Enter"
+                    ) {
+
+                        checkCode();
+                    }
+
                 }
+            );
 
-                if (event.key === "Enter") {
-                    checkCode();
-                }
-            }
-        );
+        }
+    );
 
-    });
 
+    /*
+        Voltar para o Lab.
+    */
 
     function goBack() {
 
-        window.location.href = "../";
+        window.location.href =
+            "../";
     }
 
+
+    /*
+        Começa a primeira partida.
+    */
 
     startGame();
 
 </script>
 
 </body>
+
 </html>
