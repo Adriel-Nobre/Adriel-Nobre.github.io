@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="Adriel Nobre Lab - jogos, projetos e experimentos de tecnologia.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Adriel Nobre Lab</title>
 
-    <style>
+    <meta
+        name="description"
+        content="Adriel Nobre Lab — games, experiments and things I like."
+    >
 
+    <style>
         * {
             box-sizing: border-box;
             margin: 0;
@@ -25,758 +23,883 @@
         }
 
         body {
-            min-height: 100vh;
-
-            font-family:
-                Inter,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-
-            color: #f8fafc;
-
+            font-family: Arial, Helvetica, sans-serif;
             background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    #172554 0%,
-                    #0f172a 35%,
-                    #020617 75%
-                );
-
+                radial-gradient(circle at 20% 10%, rgba(59, 130, 246, 0.12), transparent 30%),
+                radial-gradient(circle at 80% 30%, rgba(139, 92, 246, 0.10), transparent 30%),
+                #050816;
+            color: #f8fafc;
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* -------------------------
-           BACKGROUND
-        ------------------------- */
-
         body::before {
             content: "";
-
             position: fixed;
             inset: 0;
-
             pointer-events: none;
-
             background-image:
-                linear-gradient(
-                    rgba(255,255,255,0.025) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,0.025) 1px,
-                    transparent 1px
-                );
-
-            background-size: 40px 40px;
-
-            mask-image: linear-gradient(
-                to bottom,
-                black,
-                transparent 80%
-            );
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, black, transparent 85%);
         }
 
-        /* -------------------------
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* =========================
            HEADER
-        ------------------------- */
+        ========================= */
 
         header {
-            width: 100%;
-            max-width: 1000px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(5, 8, 22, 0.78);
+            backdrop-filter: blur(18px);
+        }
 
+        .nav {
+            width: min(1150px, calc(100% - 32px));
             margin: auto;
-
-            padding: 28px 24px;
+            min-height: 70px;
 
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
 
         .logo {
-            font-size: 18px;
-            font-weight: 800;
-
-            letter-spacing: 1px;
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 2px;
         }
 
         .logo span {
             color: #60a5fa;
         }
 
-        .status {
+        nav {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            gap: 22px;
+        }
 
+        nav a {
             color: #94a3b8;
-
             font-size: 13px;
+            transition: 0.2s;
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-
-            border-radius: 50%;
-
-            background: #22c55e;
-
-            box-shadow:
-                0 0 12px #22c55e;
+        nav a:hover {
+            color: white;
         }
 
-        /* -------------------------
+        /* =========================
            HERO
-        ------------------------- */
+        ========================= */
 
         .hero {
-            width: 100%;
-            max-width: 850px;
-
+            width: min(1150px, calc(100% - 32px));
             margin: auto;
 
-            padding:
-                80px 24px
-                70px;
+            min-height: 720px;
 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+
+            position: relative;
         }
 
         .hero-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
 
-            padding: 7px 13px;
-
-            margin-bottom: 22px;
-
-            border: 1px solid rgba(96,165,250,0.25);
-
+            padding: 8px 14px;
             border-radius: 999px;
 
-            background: rgba(59,130,246,0.08);
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.25);
 
-            color: #93c5fd;
-
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .hero h1 {
-            font-size: clamp(42px, 8vw, 78px);
-
-            line-height: 0.95;
-
-            letter-spacing: -4px;
+            color: #86efac;
+            font-size: 12px;
+            letter-spacing: 1px;
 
             margin-bottom: 25px;
         }
 
-        .hero h1 span {
-            background:
-                linear-gradient(
-                    90deg,
-                    #60a5fa,
-                    #a78bfa,
-                    #22d3ee
-                );
+        .online-dot {
+            width: 7px;
+            height: 7px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #22c55e;
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 10vw, 105px);
+            line-height: 0.9;
+            letter-spacing: -5px;
+            font-weight: 900;
+
+            background: linear-gradient(
+                120deg,
+                #ffffff,
+                #93c5fd 40%,
+                #a78bfa
+            );
 
             -webkit-background-clip: text;
             background-clip: text;
-
             color: transparent;
         }
 
-        .hero p {
-            max-width: 600px;
+        .hero h2 {
+            margin-top: 20px;
 
-            margin: auto;
+            font-size: clamp(25px, 4vw, 42px);
+            color: #64748b;
+            font-weight: 300;
+            letter-spacing: 5px;
+        }
+
+        .hero-description {
+            max-width: 650px;
+            margin-top: 28px;
 
             color: #94a3b8;
+            line-height: 1.8;
+            font-size: 16px;
+        }
 
-            font-size: 17px;
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 14px 22px;
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            border: 1px solid rgba(255,255,255,0.1);
+
+            transition: 0.25s;
+        }
+
+        .button.primary {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            box-shadow: 0 10px 35px rgba(59,130,246,0.2);
+        }
+
+        .button.secondary {
+            background: rgba(255,255,255,0.04);
+            color: #cbd5e1;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 35px;
+            color: #475569;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        /* =========================
+           GENERAL
+        ========================= */
+
+        section {
+            width: min(1150px, calc(100% - 32px));
+            margin: auto;
+            padding: 100px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 35px;
+        }
+
+        .section-label {
+            color: #60a5fa;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(30px, 5vw, 48px);
+            letter-spacing: -1px;
+        }
+
+        .section-heading p {
+            color: #64748b;
+            margin-top: 10px;
+            max-width: 600px;
             line-height: 1.7;
         }
 
-        /* -------------------------
-           MAIN
-        ------------------------- */
+        /* =========================
+           GAMES
+        ========================= */
 
-        main {
-            width: 100%;
-            max-width: 1000px;
-
-            margin: auto;
-
-            padding: 0 24px 80px;
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
         }
-
-        .section {
-            margin-bottom: 70px;
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            margin-bottom: 20px;
-        }
-
-        .section-title h2 {
-            font-size: 22px;
-        }
-
-        .section-title p {
-            color: #64748b;
-
-            font-size: 13px;
-        }
-
-        /* -------------------------
-           GAME CARD
-        ------------------------- */
 
         .game-card {
-            position: relative;
+            min-height: 360px;
+            padding: 28px;
 
-            display: grid;
-            grid-template-columns: 1fr auto;
+            display: flex;
+            flex-direction: column;
 
-            gap: 30px;
-
-            padding: 30px;
-
-            overflow: hidden;
-
-            border: 1px solid rgba(96,165,250,0.18);
-
-            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 22px;
 
             background:
                 linear-gradient(
-                    135deg,
-                    rgba(30,41,59,0.9),
-                    rgba(15,23,42,0.85)
+                    145deg,
+                    rgba(255,255,255,0.07),
+                    rgba(255,255,255,0.025)
                 );
 
-            transition:
-                transform 0.25s ease,
-                border-color 0.25s ease;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .game-card::after {
             content: "";
-
             position: absolute;
-
-            width: 250px;
-            height: 250px;
-
-            right: -100px;
-            top: -100px;
-
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
 
-            background: rgba(59,130,246,0.12);
+            background: rgba(59,130,246,0.10);
 
-            filter: blur(40px);
+            top: -80px;
+            right: -80px;
 
-            pointer-events: none;
+            filter: blur(10px);
         }
 
         .game-card:hover {
-            transform: translateY(-4px);
-
-            border-color:
-                rgba(96,165,250,0.45);
+            transform: translateY(-7px);
+            border-color: rgba(96,165,250,0.35);
         }
 
         .game-icon {
-            width: 65px;
-            height: 65px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-bottom: 18px;
-
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #2563eb,
-                    #7c3aed
-                );
-
-            font-size: 30px;
-
-            box-shadow:
-                0 10px 35px
-                rgba(37,99,235,0.25);
+            font-size: 46px;
+            margin-bottom: 30px;
         }
 
-        .game-info h3 {
-            font-size: 27px;
-
-            margin-bottom: 8px;
+        .game-card h3 {
+            font-size: 25px;
+            margin-bottom: 10px;
         }
 
-        .game-info p {
-            max-width: 560px;
-
+        .game-card p {
             color: #94a3b8;
-
-            line-height: 1.6;
-
-            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 14px;
         }
 
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tag {
-            padding: 6px 10px;
-
-            border-radius: 8px;
-
-            background: rgba(148,163,184,0.08);
-
-            color: #94a3b8;
-
-            font-size: 12px;
-        }
-
-        .play-button {
-            align-self: center;
+        .game-button {
+            margin-top: auto;
 
             display: inline-flex;
-            align-items: center;
             justify-content: center;
 
-            min-width: 130px;
-
-            padding: 14px 22px;
-
-            border: 0;
-
-            border-radius: 12px;
+            padding: 12px 16px;
 
             background: #2563eb;
+            border-radius: 10px;
 
-            color: white;
+            font-size: 13px;
+            font-weight: bold;
 
-            text-decoration: none;
-
-            font-size: 15px;
-            font-weight: 700;
-
-            transition:
-                transform 0.2s,
-                background 0.2s;
+            transition: 0.2s;
         }
 
-        .play-button:hover {
+        .game-button:hover {
             background: #3b82f6;
-
-            transform: scale(1.04);
         }
 
-        /* -------------------------
-           COMING SOON
-        ------------------------- */
+        /* =========================
+           EXPERIMENT
+        ========================= */
 
-        .cards {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 16px;
-        }
-
-        .small-card {
-            padding: 24px;
-
-            border:
-                1px solid
-                rgba(148,163,184,0.12);
-
-            border-radius: 20px;
+        .experiment {
+            border: 1px solid rgba(96,165,250,0.18);
+            border-radius: 28px;
+            overflow: hidden;
 
             background:
-                rgba(15,23,42,0.65);
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(139,92,246,0.15),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    rgba(15,23,42,0.95),
+                    rgba(10,15,30,0.95)
+                );
 
-            transition:
-                transform 0.2s,
-                border-color 0.2s;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
         }
 
-        .small-card:hover {
-            transform: translateY(-3px);
-
-            border-color:
-                rgba(148,163,184,0.25);
+        .experiment-content {
+            padding: 55px;
         }
 
-        .small-card .icon {
-            font-size: 28px;
-
-            margin-bottom: 16px;
+        .experiment-content h3 {
+            font-size: 38px;
+            margin-bottom: 15px;
         }
 
-        .small-card h3 {
-            margin-bottom: 8px;
-
-            font-size: 18px;
+        .experiment-content p {
+            color: #94a3b8;
+            line-height: 1.8;
+            max-width: 560px;
         }
 
-        .small-card p {
-            color: #64748b;
-
-            line-height: 1.5;
-
-            font-size: 14px;
-        }
-
-        .coming {
+        .experiment-button {
             display: inline-block;
+            margin-top: 25px;
 
-            margin-top: 15px;
+            padding: 13px 20px;
+            border-radius: 10px;
 
-            padding: 5px 9px;
+            border: 1px solid rgba(96,165,250,0.3);
+            background: rgba(59,130,246,0.1);
 
-            border-radius: 6px;
-
-            background:
-                rgba(148,163,184,0.08);
-
-            color: #64748b;
-
-            font-size: 11px;
-        }
-
-        /* -------------------------
-           LINKS
-        ------------------------- */
-
-        .links {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 12px;
-        }
-
-        .link-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            padding: 18px;
-
-            border:
-                1px solid
-                rgba(148,163,184,0.12);
-
-            border-radius: 15px;
-
-            color: #e2e8f0;
-
-            text-decoration: none;
-
-            background:
-                rgba(15,23,42,0.5);
-
-            transition:
-                background 0.2s,
-                transform 0.2s;
-        }
-
-        .link-card:hover {
-            background:
-                rgba(30,41,59,0.8);
-
-            transform: translateY(-2px);
-        }
-
-        .link-icon {
-            font-size: 22px;
-        }
-
-        .link-card span:last-child {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        /* -------------------------
-           FOOTER
-        ------------------------- */
-
-        footer {
-            padding: 30px 24px 45px;
-
-            text-align: center;
-
-            color: #475569;
-
+            color: #93c5fd;
+            font-weight: bold;
             font-size: 13px;
         }
 
-        footer strong {
-            color: #64748b;
+        .experiment-visual {
+            min-height: 300px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 120px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(59,130,246,0.15),
+                    transparent 60%
+                );
         }
 
-        /* -------------------------
+        /* =========================
+           FAVORITES
+        ========================= */
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .favorite-card {
+            min-height: 180px;
+
+            padding: 22px;
+
+            border-radius: 18px;
+
+            border: 1px solid rgba(255,255,255,0.07);
+
+            background: rgba(255,255,255,0.035);
+
+            transition: 0.25s;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.06);
+        }
+
+        .favorite-icon {
+            font-size: 30px;
+        }
+
+        .favorite-card h3 {
+            font-size: 18px;
+        }
+
+        .favorite-card p {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-top: 7px;
+        }
+
+        /* =========================
+           HIGHLIGHTS
+        ========================= */
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .highlight {
+            min-height: 250px;
+            padding: 28px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(30,41,59,0.7),
+                    rgba(15,23,42,0.8)
+                );
+
+            border: 1px solid rgba(255,255,255,0.07);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .highlight-icon {
+            font-size: 35px;
+        }
+
+        .highlight h3 {
+            font-size: 22px;
+            margin-top: 25px;
+        }
+
+        .highlight p {
+            color: #94a3b8;
+            line-height: 1.7;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-top: 15px;
+
+            color: #60a5fa;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* =========================
+           MUSIC
+        ========================= */
+
+        .music-player {
+            padding: 30px;
+
+            border-radius: 22px;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(59,130,246,0.08),
+                    rgba(139,92,246,0.08)
+                );
+
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .album-placeholder {
+            width: 90px;
+            height: 90px;
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
+
+            font-size: 35px;
+
+            background: linear-gradient(
+                135deg,
+                #1e3a8a,
+                #581c87
+            );
+        }
+
+        .music-info {
+            flex: 1;
+        }
+
+        .music-label {
+            color: #60a5fa;
+            font-size: 10px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .music-info h3 {
+            margin-top: 6px;
+            font-size: 20px;
+        }
+
+        .music-info p {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .music-button {
+            padding: 12px 18px;
+            border-radius: 10px;
+
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+
+            color: #cbd5e1;
+            cursor: pointer;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            width: min(1150px, calc(100% - 32px));
+            margin: auto;
+
+            padding: 50px 0 35px;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            color: #475569;
+            font-size: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        .footer-links a:hover {
+            color: #94a3b8;
+        }
+
+        /* =========================
            MOBILE
-        ------------------------- */
+        ========================= */
 
-        @media (max-width: 700px) {
+        @media (max-width: 850px) {
 
-            header {
-                padding: 22px 18px;
+            nav {
+                display: none;
             }
 
             .hero {
-                padding:
-                    60px 20px
-                    50px;
+                min-height: 650px;
             }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experiment {
+                grid-template-columns: 1fr;
+            }
+
+            .experiment-visual {
+                min-height: 180px;
+                font-size: 80px;
+            }
+
+            .favorites-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .highlight-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
 
             .hero h1 {
-                letter-spacing: -2px;
+                letter-spacing: -3px;
             }
 
-            main {
-                padding:
-                    0 18px
-                    60px;
+            .hero h2 {
+                letter-spacing: 3px;
             }
 
-            .game-card {
+            section {
+                padding: 70px 0;
+            }
+
+            .experiment-content {
+                padding: 30px;
+            }
+
+            .experiment-content h3 {
+                font-size: 30px;
+            }
+
+            .favorites-grid {
                 grid-template-columns: 1fr;
-
-                padding: 23px;
             }
 
-            .play-button {
+            .music-player {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .music-button {
                 width: 100%;
             }
 
-            .cards {
-                grid-template-columns: 1fr;
+            footer {
+                flex-direction: column;
             }
-
-            .links {
-                grid-template-columns: 1fr;
-            }
-
         }
-
     </style>
 </head>
 
 <body>
 
 <header>
+    <div class="nav">
 
-    <div class="logo">
-        ADRIEL<span>NOBRE</span>
+        <a href="#" class="logo">
+            ADRIEL<span>.</span>NOBRE
+        </a>
+
+        <nav>
+            <a href="#games">Jogos</a>
+            <a href="#experiment">Experimentos</a>
+            <a href="#favorites">Favoritos</a>
+            <a href="#music">Música</a>
+        </nav>
+
     </div>
-
-    <div class="status">
-        <span class="status-dot"></span>
-        Online
-    </div>
-
 </header>
-
-
-<section class="hero">
-
-    <div class="hero-badge">
-        🧪 PERSONAL LAB
-    </div>
-
-    <h1>
-        Adriel Nobre<br>
-        <span>Lab.</span>
-    </h1>
-
-    <p>
-        Um espaço para meus jogos, projetos,
-        experimentos e pequenas ideias
-        de tecnologia.
-    </p>
-
-</section>
 
 
 <main>
 
-    <!-- JOGOS -->
+    <!-- =========================
+         HERO
+    ========================= -->
 
-    <section class="section">
+    <section class="hero">
 
-        <div class="section-title">
+        <div class="hero-badge">
+            <span class="online-dot"></span>
+            ADRIEL NOBRE LAB
+        </div>
 
-            <h2>🎮 Jogos</h2>
+        <h1>CREATE.</h1>
+        <h2>PLAY • DISCOVER • EXPERIMENT</h2>
+
+        <p class="hero-description">
+            Um pequeno espaço na internet onde eu coloco
+            coisas que criei, coisas que gosto e experimentos
+            que achei interessante fazer.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#games" class="button primary">
+                🎮 Explorar jogos
+            </a>
+
+            <a href="#favorites" class="button secondary">
+                ❤️ Conhecer meus favoritos
+            </a>
+
+        </div>
+
+        <div class="scroll-hint">
+            SCROLL ↓
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GAMES
+    ========================= -->
+
+    <section id="games">
+
+        <div class="section-heading">
+
+            <div class="section-label">
+                MY GAMES
+            </div>
+
+            <h2>Jogos</h2>
 
             <p>
-                Pequenas experiências para jogar no navegador.
+                Pequenos jogos e experiências que estou criando
+                para o Lab.
             </p>
 
         </div>
 
 
-        <div class="game-card">
+        <div class="games-grid">
 
-            <div class="game-info">
+            <article class="game-card">
 
-                <div class="game-icon">
-                    ⚡
+                <div class="game-icon">⚡</div>
+
+                <div>
+                    <h3>Nobre Reflex</h3>
+
+                    <p>
+                        Teste a velocidade dos seus reflexos
+                        e tente conseguir o menor tempo possível.
+                    </p>
                 </div>
 
-                <h3>
-                    Nobre Reflex
-                </h3>
+                <a href="/reflex/" class="game-button">
+                    Jogar →
+                </a>
 
-                <p>
-                    Teste sua velocidade de reação.
-                    Espere o momento certo e clique
-                    o mais rápido que conseguir.
-                </p>
+            </article>
 
-                <div class="tags">
 
-                    <span class="tag">
-                        ⚡ Reflexo
-                    </span>
+            <article class="game-card">
 
-                    <span class="tag">
-                        📱 Mobile
-                    </span>
+                <div class="game-icon">🧠</div>
 
-                    <span class="tag">
-                        🖱️ PC
-                    </span>
+                <div>
+                    <h3>Nobre Memory</h3>
 
+                    <p>
+                        Observe, memorize e encontre os pares
+                        antes que sua memória falhe.
+                    </p>
                 </div>
 
-            </div>
+                <a href="/memory/" class="game-button">
+                    Jogar →
+                </a>
+
+            </article>
 
 
-            <a
-                class="play-button"
-                href="/reflex/"
-            >
-                Jogar →
-            </a>
+            <article class="game-card">
+
+                <div class="game-icon">💻</div>
+
+                <div>
+                    <h3>Hack the Code</h3>
+
+                    <p>
+                        Use lógica, pistas e velocidade para
+                        descobrir o código secreto.
+                    </p>
+                </div>
+
+                <a href="/hack/" class="game-button">
+                    Jogar →
+                </a>
+
+            </article>
 
         </div>
 
     </section>
 
 
-    <!-- EM BREVE -->
+    <!-- =========================
+         EXPERIMENT
+    ========================= -->
 
-    <section class="section">
+    <section id="experiment">
 
-        <div class="section-title">
+        <div class="section-heading">
 
-            <h2>🧪 Próximos experimentos</h2>
+            <div class="section-label">
+                EXPERIMENT
+            </div>
+
+            <h2>Laboratório</h2>
 
             <p>
-                Coisas que ainda estão sendo construídas.
+                Experimentos interativos onde a ideia é
+                simplesmente descobrir "o que acontece se...?"
             </p>
 
         </div>
 
 
-        <div class="cards">
+        <div class="experiment">
 
+            <div class="experiment-content">
 
-<div class="small-card">
-    <div class="icon">🧠</div>
-    <h3>Nobre Memory</h3>
-
-    <p>
-        Encontre todos os pares e teste sua memória,
-        concentração e velocidade.
-    </p>
-
-    <a class="play-button" href="/memory/">
-        Jogar →
-    </a>
-</div>
-
-
-<div class="small-card">
-    <div class="icon">💻</div>
-
-    <h3>Hack the Code</h3>
-
-    <p>
-        Descubra o código secreto usando lógica,
-        pistas e velocidade.
-    </p>
-
-    <a class="play-button" href="/hack/">
-        Jogar →
-    </a>
-</div>
-
-
-            <div class="small-card">
-
-                <div class="icon">
-                    👾
+                <div class="section-label">
+                    COMING SOON
                 </div>
 
-                <h3>
-                    Bug Escape
-                </h3>
+                <h3>🧪 Lab Reaction</h3>
 
                 <p>
-                    Sobreviva aos bugs pelo
-                    maior tempo possível.
+                    Misture elementos químicos, descubra novas
+                    reações e observe o resultado. Algumas
+                    combinações podem gerar fogo, fumaça,
+                    mudanças de cor e outras reações visuais.
                 </p>
 
-                <span class="coming">
-                    EM BREVE
-                </span>
+                <a href="#" class="experiment-button">
+                    Experimento em desenvolvimento
+                </a>
 
             </div>
 
-
-            <div class="small-card">
-
-                <div class="icon">
-                    🔬
-                </div>
-
-                <h3>
-                    Experimentos
-                </h3>
-
-                <p>
-                    Ideias estranhas, testes,
-                    animações e outras coisas.
-                </p>
-
-                <span class="coming">
-                    EM BREVE
-                </span>
-
+            <div class="experiment-visual">
+                ⚗️
             </div>
 
         </div>
@@ -784,63 +907,384 @@
     </section>
 
 
-    <!-- LINKS -->
+    <!-- =========================
+         FAVORITES
+    ========================= -->
 
-    <section class="section">
+    <section id="favorites">
 
-        <div class="section-title">
+        <div class="section-heading">
 
-            <h2>🔗 Encontrar-me</h2>
+            <div class="section-label">
+                MY WORLD
+            </div>
+
+            <h2>Coisas que eu gosto</h2>
+
+            <p>
+                Jogos, histórias, personagens, livros e músicas
+                que fizeram parte da minha vida.
+            </p>
 
         </div>
 
 
-        <div class="links">
+        <div class="favorites-grid">
 
-            <a
-                class="link-card"
-                href="https://github.com/adriel-nobre"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <span class="link-icon">
-                    💻
-                </span>
+            <article class="favorite-card">
 
-                <span>
-                    GitHub
-                </span>
-            </a>
+                <div class="favorite-icon">🎮</div>
 
+                <div>
+                    <h3>Jogos</h3>
 
-            <a
-                class="link-card"
-                href="https://www.instagram.com/adriel_snobre/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <span class="link-icon">
-                    📸
-                </span>
+                    <p>
+                        Final Fantasy IX, Super Mario World,
+                        League of Legends
+                    </p>
+                </div>
 
-                <span>
-                    Instagram
-                </span>
-            </a>
+            </article>
 
 
-            <a
-                class="link-card"
-                href="mailto:"
-            >
-                <span class="link-icon">
-                    ✉️
-                </span>
+            <article class="favorite-card">
 
-                <span>
-                    Contato
-                </span>
-            </a>
+                <div class="favorite-icon">📺</div>
+
+                <div>
+                    <h3>Séries</h3>
+
+                    <p>
+                        The Big Bang Theory, Locke & Key,
+                        Westworld
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="favorite-card">
+
+                <div class="favorite-icon">🎬</div>
+
+                <div>
+                    <h3>Filmes</h3>
+
+                    <p>
+                        O Show de Truman, De Volta para o Futuro,
+                        As Crônicas de Nárnia
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="favorite-card">
+
+                <div class="favorite-icon">🍥</div>
+
+                <div>
+                    <h3>Animes</h3>
+
+                    <p>
+                        Naruto, Steins;Gate,
+                        Yu☆Gi☆Oh! Duel Monsters
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="favorite-card">
+
+                <div class="favorite-icon">📖</div>
+
+                <div>
+                    <h3>Mangás</h3>
+
+                    <p>
+                        Kenichi, Vinland Saga,
+                        Ballroom e Youkoso
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="favorite-card">
+
+                <div class="favorite-icon">📚</div>
+
+                <div>
+                    <h3>Livros</h3>
+
+                    <p>
+                        Higashi no Eden, Não Conte a Ninguém,
+                        A Revolução dos Bichos
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="favorite-card">
+
+                <div class="favorite-icon">🎵</div>
+
+                <div>
+                    <h3>Músicas</h3>
+
+                    <p>
+                        Cult of Personality,
+                        Destination — Crash Adams
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="favorite-card">
+
+                <div class="favorite-icon">🧪</div>
+
+                <div>
+                    <h3>Experimentos</h3>
+
+                    <p>
+                        Ideias estranhas, projetos e coisas
+                        que quero experimentar.
+                    </p>
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PERSONAL HIGHLIGHTS
+    ========================= -->
+
+    <section>
+
+        <div class="section-heading">
+
+            <div class="section-label">
+                SPECIAL
+            </div>
+
+            <h2>Algumas histórias</h2>
+
+            <p>
+                Algumas coisas estão aqui não porque são
+                necessariamente "as melhores", mas porque
+                significam alguma coisa para mim.
+            </p>
+
+        </div>
+
+
+        <div class="highlight-grid">
+
+
+            <article class="highlight">
+
+                <div class="highlight-icon">
+                    🕹️
+                </div>
+
+                <div>
+
+                    <h3>O começo</h3>
+
+                    <p>
+                        Super Mario World foi o primeiro jogo
+                        que joguei.
+                    </p>
+
+                    <span class="tag">
+                        FIRST GAME
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <article class="highlight">
+
+                <div class="highlight-icon">
+                    🍥
+                </div>
+
+                <div>
+
+                    <h3>Antes da escola</h3>
+
+                    <p>
+                        Naruto me lembra a época do ensino
+                        fundamental, quando eu assistia antes
+                        de ir para a escola.
+                    </p>
+
+                    <span class="tag">
+                        NOSTALGIA
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <article class="highlight">
+
+                <div class="highlight-icon">
+                    👻
+                </div>
+
+                <div>
+
+                    <h3>Vivi</h3>
+
+                    <p>
+                        Em Final Fantasy IX, Vivi é meu
+                        personagem favorito.
+                    </p>
+
+                    <span class="tag">
+                        FINAL FANTASY IX
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <article class="highlight">
+
+                <div class="highlight-icon">
+                    🤝
+                </div>
+
+                <div>
+
+                    <h3>Pessoas</h3>
+
+                    <p>
+                        League of Legends está aqui por uma
+                        razão diferente: foi através dele que
+                        conheci pessoas incríveis.
+                    </p>
+
+                    <span class="tag">
+                        MEMORIES
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <article class="highlight">
+
+                <div class="highlight-icon">
+                    ⏱️
+                </div>
+
+                <div>
+
+                    <h3>Steins;Gate</h3>
+
+                    <p>
+                        Uma escolha que combina bastante com
+                        a ideia de laboratório e experimentos
+                        do site.
+                    </p>
+
+                    <span class="tag">
+                        LAB
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <article class="highlight">
+
+                <div class="highlight-icon">
+                    🃏
+                </div>
+
+                <div>
+
+                    <h3>Yu☆Gi☆Oh!</h3>
+
+                    <p>
+                        Um anime que teve uma importância
+                        especial para mim.
+                    </p>
+
+                    <span class="tag">
+                        SPECIAL
+                    </span>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MUSIC
+    ========================= -->
+
+    <section id="music">
+
+        <div class="section-heading">
+
+            <div class="section-label">
+                SOUNDTRACK
+            </div>
+
+            <h2>Minha música</h2>
+
+            <p>
+                Algumas músicas que fazem parte da trilha
+                sonora do meu Lab.
+            </p>
+
+        </div>
+
+
+        <div class="music-player">
+
+            <div class="album-placeholder">
+                🎵
+            </div>
+
+            <div class="music-info">
+
+                <div class="music-label">
+                    FAVORITE TRACK
+                </div>
+
+                <h3>Cult of Personality</h3>
+
+                <p>
+                    Living Colour
+                </p>
+
+            </div>
+
+            <button class="music-button" id="musicButton">
+                🔊 Música
+            </button>
 
         </div>
 
@@ -851,11 +1295,106 @@
 
 <footer>
 
-    Feito por <strong>Adriel Nobre</strong> ·
-    Nobre Lab
+    <div>
+        © 2026 Adriel Nobre Lab
+    </div>
+
+    <div class="footer-links">
+
+        <a
+            href="https://github.com/adriel-nobre"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            GitHub
+        </a>
+
+        <a
+            href="https://www.instagram.com/adriel_snobre/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Instagram
+        </a>
+
+    </div>
 
 </footer>
 
-</body>
 
+<script>
+
+    /* =====================================
+       MUSIC BUTTON
+       ===================================== */
+
+    const musicButton = document.getElementById("musicButton");
+
+    let musicEnabled = false;
+
+    musicButton.addEventListener("click", () => {
+
+        musicEnabled = !musicEnabled;
+
+        if (musicEnabled) {
+
+            musicButton.textContent = "🔊 Música ON";
+
+            /*
+             * A música real será adicionada depois.
+             * Por enquanto este botão prepara o player.
+             */
+
+        } else {
+
+            musicButton.textContent = "🔇 Música OFF";
+
+        }
+
+    });
+
+
+    /* =====================================
+       SMALL SCROLL ANIMATION
+       ===================================== */
+
+    const cards = document.querySelectorAll(
+        ".game-card, .favorite-card, .highlight, .experiment"
+    );
+
+    const observer = new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.08
+        }
+    );
+
+
+    cards.forEach(card => {
+
+        card.style.opacity = "0";
+        card.style.transform = "translateY(18px)";
+        card.style.transition =
+            "opacity 0.6s ease, transform 0.6s ease";
+
+        observer.observe(card);
+
+    });
+
+</script>
+
+</body>
 </html>
