@@ -111,7 +111,11 @@
             margin-top: 20px;
         }
 
-        button.action {
+        .action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
             border: none;
             border-radius: 10px;
             padding: 13px 20px;
@@ -120,9 +124,10 @@
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        button.action:hover {
+        .action:hover {
             background: #3b82f6;
         }
 
@@ -207,9 +212,9 @@
             🔄 Reiniciar
         </button>
 
-        <button class="action back" onclick="goBack()">
+        <a href="../index.html" class="action back" onclick="goBack(event)">
             ← Voltar
-        </button>
+        </a>
     </div>
 
     <div id="result" class="result">
@@ -460,9 +465,20 @@
     }
 
 
-    function goBack() {
+    function goBack(event) {
+        if (event) {
+            event.preventDefault();
+        }
 
-        window.location.href = "../";
+        if (
+            window.history.length > 1 &&
+            document.referrer &&
+            document.referrer.includes(window.location.host)
+        ) {
+            window.history.back();
+        } else {
+            window.location.href = "../index.html";
+        }
     }
 
 

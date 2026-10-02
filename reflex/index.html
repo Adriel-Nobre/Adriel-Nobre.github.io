@@ -90,25 +90,40 @@
             font-size: 22px;
         }
 
-        button {
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
             margin-top: 30px;
-
-            padding: 15px 30px;
-
-            border: none;
-            border-radius: 12px;
-
-            background: #2563eb;
-            color: white;
-
-            font-size: 18px;
-            font-weight: bold;
-
-            cursor: pointer;
+            flex-wrap: wrap;
         }
 
-        button:hover {
+        .action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 15px 28px;
+            border: none;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .action:hover {
             background: #1d4ed8;
+        }
+
+        .action.back {
+            background: #374151;
+        }
+
+        .action.back:hover {
+            background: #4b5563;
         }
 
         .hidden {
@@ -144,9 +159,15 @@
         🏆 Recorde: -- ms
     </div>
 
-    <button id="restart">
-        Começar
-    </button>
+    <div class="buttons">
+        <button id="restart" class="action">
+            Começar
+        </button>
+
+        <a href="../index.html" class="action back" onclick="goBack(event)">
+            ← Voltar
+        </a>
+    </div>
 
 </div>
 
@@ -275,6 +296,22 @@
         }
 
         return "🐌 O Windows iniciou mais rápido.";
+    }
+
+    function goBack(event) {
+        if (event) {
+            event.preventDefault();
+        }
+
+        if (
+            window.history.length > 1 &&
+            document.referrer &&
+            document.referrer.includes(window.location.host)
+        ) {
+            window.history.back();
+        } else {
+            window.location.href = "../index.html";
+        }
     }
 
 </script>

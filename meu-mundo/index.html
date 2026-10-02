@@ -1105,28 +1105,28 @@
             background: rgba(15, 23, 42, 0.78);
             border: 1px solid rgba(148, 163, 184, 0.16);
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 10px;
         }
 
         .highlight-memory .memory-icon {
             color: #a78bfa;
             font-size: 15px;
-            margin-top: 2px;
             flex-shrink: 0;
         }
 
         .highlight-memory .memory-text {
             color: #f1f5f9;
             font-size: 13.5px;
-            line-height: 1.55;
             font-weight: 500;
         }
 
         /* =========================
-           RESPONSIVIDADE
+           RESPONSIVIDADE (DESKTOP INTERMEDIÁRIO & MOBILE)
         ========================= */
-        @media (max-width: 950px) {
+
+        /* Tablets & Telas Médias (769px a 950px) */
+        @media (min-width: 769px) and (max-width: 950px) {
             .cards-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 18px;
@@ -1147,46 +1147,197 @@
             .highlight-grid .highlight-card:nth-child(5) {
                 grid-column: span 2;
             }
+
+            #musicas .cards-grid,
+            .cards-grid.two-columns {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 850px) {
             .nav-menu {
                 display: none;
             }
-
-            .cards-grid.two-columns {
-                grid-template-columns: 1fr;
-            }
         }
 
-        @media (max-width: 650px) {
+        /* ===================================================
+           MOBILE (SMARTPHONES <= 768px)
+           Grade de 3 Colunas inspirada em catálogo de capas
+        =================================================== */
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            /* Margens e Larguras Otimizadas */
+            section,
             .hero {
-                min-height: auto;
-                padding: 55px 0 35px;
+                width: min(100% - 16px, 1150px) !important;
+                padding: 38px 0 !important;
+            }
+
+            .nav-container {
+                width: min(100% - 16px, 1150px) !important;
+                min-height: 56px !important;
+            }
+
+            .logo {
+                font-size: 14px !important;
+            }
+
+            .back-link {
+                padding: 6px 12px !important;
+                font-size: 11.5px !important;
+            }
+
+            /* Hero Compacto */
+            .hero {
+                min-height: auto !important;
+                padding: 40px 0 25px !important;
             }
 
             .hero h1 {
-                letter-spacing: -2px;
+                font-size: clamp(28px, 7.5vw, 38px) !important;
+                letter-spacing: -1.5px !important;
+            }
+
+            .hero-tagline {
+                font-size: 12.5px !important;
+                margin-bottom: 12px !important;
             }
 
             .hero-intro {
-                font-size: 15px;
-                margin-bottom: 25px;
+                font-size: 13.5px !important;
+                line-height: 1.5 !important;
+                margin-bottom: 20px !important;
             }
 
-            section {
-                padding: 45px 0;
+            .category-nav {
+                gap: 6px !important;
             }
 
+            .category-chip {
+                padding: 6px 11px !important;
+                font-size: 11px !important;
+            }
+
+            /* Cabeçalhos de Seção */
+            .section-header {
+                margin-bottom: 16px !important;
+                gap: 8px !important;
+            }
+
+            .section-label {
+                font-size: 10.5px !important;
+                letter-spacing: 2px !important;
+                margin-bottom: 4px !important;
+            }
+
+            .section-title {
+                font-size: clamp(20px, 5.2vw, 26px) !important;
+                letter-spacing: -0.5px !important;
+                gap: 8px !important;
+            }
+
+            .section-icon {
+                font-size: 22px !important;
+            }
+
+            .section-count {
+                font-size: 11px !important;
+            }
+
+            /* =====================================
+               GRADE DE 3 COLUNAS PARA CARDS DE MÍDIA
+               (Jogos, Séries, Filmes, Animes, Mangás, Livros)
+            ===================================== */
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+            }
+
+            .world-card {
+                padding: 8px 6px 10px !important;
+                border-radius: 12px !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+            }
+
+            .world-card::before {
+                display: none;
+            }
+
+            .card-cover {
+                width: 100% !important;
+                aspect-ratio: 2 / 3 !important;
+                border-radius: 8px !important;
+                margin: 0 auto 8px !important;
+                max-height: none !important;
+            }
+
+            .card-top {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                margin-bottom: 6px !important;
+                gap: 3px !important;
+            }
+
+            .category-tag {
+                font-size: 8px !important;
+                padding: 2px 4px !important;
+                border-radius: 4px !important;
+                letter-spacing: 0.3px !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                max-width: calc(100% - 16px) !important;
+            }
+
+            .card-glyph {
+                font-size: 11px !important;
+            }
+
+            .card-title {
+                font-size: clamp(10.5px, 2.8vw, 12.5px) !important;
+                font-weight: 700 !important;
+                line-height: 1.25 !important;
+                margin-bottom: 6px !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+                letter-spacing: -0.2px !important;
+            }
+
+            .card-observation {
+                padding: 5px 6px !important;
+                border-radius: 6px !important;
+                font-size: 9px !important;
+                line-height: 1.3 !important;
+                gap: 3px !important;
+            }
+
+            .card-observation .obs-icon {
+                font-size: 9px !important;
+                margin-top: 1px !important;
+            }
+
+            .card-clean-spacer {
+                padding-top: 4px !important;
+                font-size: 9px !important;
+                line-height: 1.3 !important;
+            }
+
+            /* =====================================
+               SEÇÃO "O QUE MARCOU MINHA HISTÓRIA"
+            ===================================== */
             .section-highlight {
-                padding: 30px 16px 36px;
-                border-radius: 22px;
-                margin: 0 auto 30px;
+                padding: 22px 12px 26px !important;
+                border-radius: 20px !important;
+                margin: 10px auto 25px !important;
             }
 
             .highlight-grid {
-                grid-template-columns: 1fr;
-                gap: 18px;
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
             }
 
             .highlight-grid .highlight-card:nth-child(1),
@@ -1194,51 +1345,138 @@
             .highlight-grid .highlight-card:nth-child(3),
             .highlight-grid .highlight-card:nth-child(4),
             .highlight-grid .highlight-card:nth-child(5) {
-                grid-column: span 1;
+                grid-column: span 1 !important;
             }
 
             .highlight-card {
-                padding: 18px;
+                padding: 14px 12px !important;
+                border-radius: 14px !important;
             }
 
-            .cards-grid {
-                grid-template-columns: 1fr;
-                gap: 18px;
+            .highlight-header {
+                min-height: auto !important;
+                margin-bottom: 10px !important;
+                gap: 8px !important;
             }
 
-            .world-card {
-                padding: 18px;
+            .highlight-tag {
+                font-size: 9.5px !important;
+                padding: 3px 8px !important;
             }
 
-            .card-cover,
+            .highlight-status {
+                font-size: 9.5px !important;
+                padding: 3px 8px !important;
+            }
+
+            .highlight-icon {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 15px !important;
+                border-radius: 9px !important;
+            }
+
             .highlight-cover {
-                max-height: 420px;
+                aspect-ratio: 2 / 3 !important;
+                max-height: 200px !important;
+                border-radius: 10px !important;
+                margin: 0 auto 10px !important;
+            }
+
+            .highlight-title {
+                font-size: 16px !important;
+                margin-bottom: 3px !important;
+            }
+
+            .highlight-subtitle {
+                font-size: 11.5px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .highlight-memory {
+                padding: 9px 10px !important;
+                font-size: 11.5px !important;
+                border-radius: 9px !important;
+                gap: 8px !important;
+            }
+
+            /* =====================================
+               SEÇÃO DE MÚSICAS (1 Coluna Fluida no Mobile)
+            ===================================== */
+            #musicas .cards-grid,
+            .cards-grid.two-columns {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
             }
 
             .music-card {
-                padding: 16px;
-                gap: 14px;
+                padding: 16px 14px !important;
+                gap: 14px !important;
+                border-radius: 16px !important;
             }
 
             .music-cover {
-                width: 72px;
-                height: 72px;
+                width: 68px !important;
+                height: 68px !important;
+                border-radius: 12px !important;
             }
 
             .disc-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 18px;
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 16px !important;
             }
 
             .music-title {
-                font-size: 18px;
+                font-size: 16px !important;
             }
 
+            .music-artist {
+                font-size: 12.5px !important;
+            }
+
+            /* Footer */
             footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 14px !important;
+                padding: 30px 0 40px !important;
+            }
+        }
+
+        /* Telas ultra-compactas (<= 360px) */
+        @media (max-width: 360px) {
+            .cards-grid {
+                gap: 5px !important;
+            }
+
+            .world-card {
+                padding: 6px 4px 8px !important;
+                border-radius: 9px !important;
+            }
+
+            .card-cover {
+                border-radius: 6px !important;
+                margin-bottom: 5px !important;
+            }
+
+            .card-title {
+                font-size: 9.5px !important;
+            }
+
+            .category-tag {
+                font-size: 7px !important;
+                padding: 1px 3px !important;
+            }
+
+            .card-glyph {
+                font-size: 9.5px !important;
+            }
+
+            .card-observation,
+            .card-clean-spacer {
+                font-size: 8px !important;
+                padding: 4px 3px !important;
             }
         }
 
@@ -1828,10 +2066,10 @@
                     <span class="section-icon">🎵</span> Músicas
                 </h2>
             </div>
-            <div class="section-count">2 faixas marcantes</div>
+            <div class="section-count">3 faixas marcantes</div>
         </div>
 
-        <div class="cards-grid two-columns">
+        <div class="cards-grid">
             <!-- Cult of Personality -->
             <article class="music-card">
                 <div class="music-cover">
@@ -1901,6 +2139,57 @@
                     <!-- Mini Player -->
                     <div class="mini-player">
                         <audio preload="metadata" src="../musicas/Crash Adams - Destination.mp3"></audio>
+                        
+                        <div class="player-row">
+                            <button class="play-btn" type="button" aria-label="Reproduzir música" title="Play">
+                                <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                <svg class="pause-icon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                            </button>
+
+                            <div class="player-timeline-wrapper">
+                                <div class="player-timeline" title="Avançar / Retroceder">
+                                    <div class="timeline-progress"></div>
+                                </div>
+                                <div class="player-time">
+                                    <span class="time-current">0:00</span>
+                                    <span class="time-total">0:00</span>
+                                </div>
+                            </div>
+
+                            <div class="player-volume-control">
+                                <button class="volume-btn vol-down-btn" type="button" title="Diminuir volume" aria-label="Diminuir volume">
+                                    <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
+                                </button>
+                                <div class="volume-slider-wrapper">
+                                    <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="0.8" aria-label="Controle de volume" title="Volume">
+                                </div>
+                                <button class="volume-btn vol-up-btn" type="button" title="Aumentar volume" aria-label="Aumentar volume">
+                                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- No Promises to Keep -->
+            <article class="music-card">
+                <div class="music-cover">
+                    <img src="imagens/musicas/no promises to keep.jpg" alt="No Promises to Keep" loading="lazy">
+                </div>
+                <div class="disc-icon" title="Loren Allred - No Promises to Keep (FF VII Rebirth)">
+                    ✨
+                </div>
+                <div class="music-details">
+                    <div class="music-tag">Faixa Marcante</div>
+                    <h3 class="music-title">No Promises to Keep</h3>
+                    <div class="music-artist">
+                        Artista: <span>Loren Allred (FF VII Rebirth)</span>
+                    </div>
+
+                    <!-- Mini Player -->
+                    <div class="mini-player">
+                        <audio preload="metadata" src="../musicas/No Promises to Keep FF VII.mp3"></audio>
                         
                         <div class="player-row">
                             <button class="play-btn" type="button" aria-label="Reproduzir música" title="Play">
