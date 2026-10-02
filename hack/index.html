@@ -411,6 +411,187 @@ body {
             font-weight: bold;
         }
 
+        .win-gif {
+
+            width: 100%;
+
+            max-width: 250px;
+
+            border-radius: 12px;
+
+            border:
+                2px solid
+                rgba(34, 197, 94, 0.5);
+
+            box-shadow:
+                0 0 20px
+                rgba(34, 197, 94, 0.35);
+
+            display: block;
+
+            margin: 12px auto 16px;
+        }
+
+        .result-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .extra-hint-box {
+
+            margin-top: 18px;
+
+            padding: 12px 16px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            transition: all 0.3s ease;
+        }
+
+        .extra-hint-box.locked {
+
+            background: rgba(2, 6, 23, 0.6);
+
+            border: 1px dashed rgba(100, 116, 139, 0.4);
+        }
+
+        .extra-hint-box.locked .extra-hint-header {
+
+            color: #64748b;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .extra-hint-box.locked .extra-hint-content {
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+        .extra-hint-box.ready {
+
+            background: rgba(250, 204, 21, 0.08);
+
+            border: 1px solid #facc15;
+
+            animation: hintPulse 1.5s infinite ease-in-out;
+        }
+
+        .extra-hint-box.ready .extra-hint-header {
+
+            color: #facc15;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 8px;
+
+            text-shadow: 0 0 8px rgba(250, 204, 21, 0.5);
+        }
+
+        .extra-hint-btn {
+
+            background: #eab308;
+
+            color: #020617;
+
+            border: none;
+
+            border-radius: 8px;
+
+            padding: 8px 16px;
+
+            font-family:
+                "Courier New",
+                monospace;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+
+            transition: all 0.2s ease;
+        }
+
+        .extra-hint-btn:hover {
+
+            background: #facc15;
+
+            transform: scale(1.04);
+
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.7);
+        }
+
+        .extra-hint-box.revealed {
+
+            background: rgba(34, 197, 94, 0.08);
+
+            border: 1px solid rgba(34, 197, 94, 0.4);
+
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);
+        }
+
+        .extra-hint-box.revealed .extra-hint-header {
+
+            color: #22c55e;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+            text-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+        }
+
+        .extra-hint-box.revealed .extra-hint-content {
+
+            color: #86efac;
+
+            font-size: 13.5px;
+
+            line-height: 1.5;
+        }
+
+        @keyframes hintPulse {
+
+            0% {
+                box-shadow: 0 0 6px rgba(250, 204, 21, 0.25);
+                border-color: rgba(250, 204, 21, 0.6);
+            }
+
+            50% {
+                box-shadow: 0 0 16px rgba(250, 204, 21, 0.5);
+                border-color: #facc15;
+            }
+
+            100% {
+                box-shadow: 0 0 6px rgba(250, 204, 21, 0.25);
+                border-color: rgba(250, 204, 21, 0.6);
+            }
+        }
+
 @media (max-width: 500px) {
 
     body {
@@ -502,6 +683,24 @@ body {
         margin-top: 18px;
         padding: 20px 15px;
     }
+
+    .extra-hint-box {
+        margin-top: 12px;
+        padding: 10px 12px;
+    }
+
+    .extra-hint-box.locked .extra-hint-header,
+    .extra-hint-box.ready .extra-hint-header,
+    .extra-hint-box.revealed .extra-hint-header {
+        font-size: 12px;
+    }
+
+    .extra-hint-box.locked .extra-hint-content,
+    .extra-hint-box.revealed .extra-hint-content,
+    .extra-hint-btn {
+        font-size: 12px;
+        padding: 7px 12px;
+    }
 }
 
     </style>
@@ -591,6 +790,14 @@ body {
                 id="hints"
             ></div>
 
+
+            <!-- DICA EXTRA -->
+
+            <div
+                id="extraHintBox"
+                class="extra-hint-box locked"
+            ></div>
+
         </div>
 
 
@@ -670,6 +877,17 @@ body {
 
             <h2 id="resultTitle"></h2>
 
+            <div
+                id="winGifContainer"
+                style="display: none;"
+            >
+                <img
+                    src="../gif/baby-win.gif"
+                    alt="Parabéns pela vitória!"
+                    class="win-gif"
+                >
+            </div>
+
             <p id="resultText"></p>
 
             <p>
@@ -687,14 +905,23 @@ body {
                 class="record"
             ></p>
 
-            <br>
+            <div class="result-buttons">
 
-            <button
-                class="action hack-button"
-                onclick="startGame()"
-            >
-                💻 NOVO DESAFIO
-            </button>
+                <button
+                    class="action hack-button"
+                    onclick="startGame()"
+                >
+                    💻 NOVO DESAFIO
+                </button>
+
+                <button
+                    class="action restart-button"
+                    onclick="goBack()"
+                >
+                    ← VOLTAR
+                </button>
+
+            </div>
 
         </div>
 
@@ -751,6 +978,14 @@ body {
         document.getElementById("record");
 
 
+    const winGifContainer =
+        document.getElementById("winGifContainer");
+
+
+    const extraHintBox =
+        document.getElementById("extraHintBox");
+
+
     let secretCode = "";
 
     let attempts = 0;
@@ -764,6 +999,12 @@ body {
     let gameActive = false;
 
     let startTime = null;
+
+    let extraHintText = "";
+
+    let extraHintAvailable = false;
+
+    let extraHintRevealed = false;
 
 
     /*
@@ -931,7 +1172,269 @@ body {
         );
 
 
-        return hints;
+        return {
+            hints,
+            revealedPosition: position,
+            parityPosition: parityPosition,
+            sumPositions: [first, second]
+        };
+    }
+
+
+    /*
+        Gera uma dica extra inteligente, útil e focada
+        em um dígito que NÃO foi revelado nas pistas iniciais.
+    */
+
+    function generateExtraHint(code, hintsMeta) {
+
+        const digits =
+            code.split("").map(Number);
+
+        const positionNames = [
+            "primeiro",
+            "segundo",
+            "terceiro",
+            "quarto"
+        ];
+
+        const revealedPos =
+            hintsMeta
+                ? hintsMeta.revealedPosition
+                : -1;
+
+        const parityPos =
+            hintsMeta
+                ? hintsMeta.parityPosition
+                : -1;
+
+
+        /*
+            Candidatos: posições cujo número NÃO
+            foi revelado diretamente pela Pista 1.
+        */
+
+        const unknownPositions =
+            [0, 1, 2, 3].filter(
+                p => p !== revealedPos
+            );
+
+
+        /*
+            Prioriza as posições que também não receberam
+            dica direta de paridade na Pista 2.
+        */
+
+        const leastHinted =
+            unknownPositions.filter(
+                p => p !== parityPos
+            );
+
+        const candidatePool =
+            leastHinted.length > 0
+                ? leastHinted
+                : unknownPositions;
+
+
+        /*
+            Escolhe o dígito alvo desconhecido.
+        */
+
+        const targetPos =
+            candidatePool[
+                Math.floor(
+                    Math.random() *
+                    candidatePool.length
+                )
+            ];
+
+        const targetVal =
+            digits[targetPos];
+
+        const targetName =
+            positionNames[targetPos];
+
+        const possibleHints = [];
+
+
+        /*
+            1. Faixa / Intervalo útil
+        */
+
+        if (
+            targetVal >= 2 &&
+            targetVal <= 7
+        ) {
+
+            possibleHints.push(
+                `O ${targetName} número está entre ${targetVal - 2} e ${targetVal + 2}.`
+            );
+
+        }
+
+        if (targetVal <= 4) {
+
+            possibleHints.push(
+                `O ${targetName} número é menor ou igual a 4.`
+            );
+
+        } else {
+
+            possibleHints.push(
+                `O ${targetName} número é maior ou igual a 5.`
+            );
+
+        }
+
+
+        /*
+            2. Paridade do número (se não tiver sido a pista de paridade)
+        */
+
+        if (targetPos !== parityPos) {
+
+            const par =
+                targetVal % 2 === 0
+                    ? "par"
+                    : "ímpar";
+
+            possibleHints.push(
+                `O ${targetName} número é ${par}.`
+            );
+
+        }
+
+
+        /*
+            3. Comparação com o número já revelado na Pista 1
+        */
+
+        if (revealedPos !== -1) {
+
+            const revVal =
+                digits[revealedPos];
+
+            const revName =
+                positionNames[revealedPos];
+
+            if (targetVal > revVal) {
+
+                possibleHints.push(
+                    `O ${targetName} número é maior que o ${revName} (${revVal}).`
+                );
+
+            } else if (targetVal < revVal) {
+
+                possibleHints.push(
+                    `O ${targetName} número é menor que o ${revName} (${revVal}).`
+                );
+
+            } else {
+
+                possibleHints.push(
+                    `O ${targetName} número é igual ao ${revName} (${revVal}).`
+                );
+
+            }
+
+        }
+
+
+        /*
+            4. Intervalo estreito adicional
+        */
+
+        if (
+            targetVal >= 3 &&
+            targetVal <= 8
+        ) {
+
+            possibleHints.push(
+                `O ${targetName} número está entre ${targetVal - 1} e ${targetVal + 1}.`
+            );
+
+        }
+
+
+        const chosen =
+            possibleHints[
+                Math.floor(
+                    Math.random() *
+                    possibleHints.length
+                )
+            ];
+
+        return chosen;
+    }
+
+
+    /*
+        Renderiza o estado da Dica Extra.
+    */
+
+    function renderExtraHint() {
+
+        if (!extraHintBox) return;
+
+
+        if (extraHintRevealed) {
+
+            extraHintBox.className =
+                "extra-hint-box revealed";
+
+            extraHintBox.innerHTML = `
+                <div class="extra-hint-header">⚡ DICA EXTRA</div>
+                <div class="extra-hint-content">🔎 ${extraHintText}</div>
+            `;
+
+        } else if (extraHintAvailable) {
+
+            extraHintBox.className =
+                "extra-hint-box ready";
+
+            extraHintBox.innerHTML = `
+                <div class="extra-hint-header">⚡ DICA EXTRA LIBERADA!</div>
+                <button type="button" class="extra-hint-btn" onclick="revealExtraHint()">🔍 REVELAR DICA</button>
+            `;
+
+        } else {
+
+            const unlockThreshold =
+                timeLimit === 60
+                    ? 15
+                    : 12;
+
+            extraHintBox.className =
+                "extra-hint-box locked";
+
+            extraHintBox.innerHTML = `
+                <div class="extra-hint-header">⚡ DICA EXTRA</div>
+                <div class="extra-hint-content">🔒 Será liberada quando restarem ${unlockThreshold} segundos!</div>
+            `;
+
+        }
+
+    }
+
+
+    /*
+        Revela a dica extra quando solicitada.
+    */
+
+    function revealExtraHint() {
+
+        if (
+            !gameActive ||
+            !extraHintAvailable ||
+            extraHintRevealed
+        ) {
+            return;
+        }
+
+
+        extraHintRevealed = true;
+
+        renderExtraHint();
     }
 
 
@@ -979,24 +1482,49 @@ body {
             "none";
 
 
+        if (winGifContainer) {
+
+            winGifContainer.style.display =
+                "none";
+
+        }
+
+
         /*
             Gera novas pistas
             para o novo código.
         */
 
-        const hints =
+        const hintsData =
             generateHints(
                 secretCode
             );
 
 
         hintsElement.innerHTML =
-            hints
+            hintsData.hints
                 .map(
                     hint =>
                         `<div class="hint">${hint}</div>`
                 )
                 .join("");
+
+
+        /*
+            Inicializa a Dica Extra.
+        */
+
+        extraHintAvailable = false;
+
+        extraHintRevealed = false;
+
+        extraHintText =
+            generateExtraHint(
+                secretCode,
+                hintsData
+            );
+
+        renderExtraHint();
 
 
         /*
@@ -1041,6 +1569,24 @@ body {
 
         timerElement.textContent =
             timeLeft + "s";
+
+
+        const unlockThreshold =
+            timeLimit === 60
+                ? 15
+                : 12;
+
+
+        if (
+            timeLeft <= unlockThreshold &&
+            !extraHintAvailable &&
+            !extraHintRevealed
+        ) {
+
+            extraHintAvailable = true;
+
+            renderExtraHint();
+        }
 
 
         if (timeLeft <= 15) {
@@ -1201,8 +1747,16 @@ body {
         });
 
 
+        if (winGifContainer) {
+
+            winGifContainer.style.display =
+                "block";
+
+        }
+
+
         resultTitle.textContent =
-            "🟢 ACCESS GRANTED";
+            "🎉 PARABÉNS! VOCÊ VENCEU!";
 
 
         resultTitle.className =
@@ -1210,7 +1764,7 @@ body {
 
 
         resultText.textContent =
-            "Você invadiu o sistema!";
+            "Excelente! Você invadiu o sistema e quebrou o código!";
 
 
         finalAttempts.textContent =
@@ -1249,6 +1803,14 @@ body {
             input.disabled = true;
 
         });
+
+
+        if (winGifContainer) {
+
+            winGifContainer.style.display =
+                "none";
+
+        }
 
 
         resultTitle.textContent =
