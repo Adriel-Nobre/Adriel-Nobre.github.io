@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meu Mundo — Adriel Nobre Lab</title>
+
+    <meta
+        name="description"
+        content="Uma coleção de obras, jogos, séries, filmes, animes, mangás, livros e músicas que marcaram minha vida — Adriel Nobre Lab."
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(59, 130, 246, 0.14), transparent 35%),
+                radial-gradient(circle at 85% 25%, rgba(139, 92, 246, 0.12), transparent 35%),
+                radial-gradient(circle at 50% 60%, rgba(37, 99, 235, 0.08), transparent 45%),
+                #050816;
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Grade futurista de fundo */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, black 10%, transparent 95%);
+            z-index: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(5, 8, 22, 0.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .nav-container {
+            width: min(1150px, calc(100% - 32px));
+            margin: auto;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+
+        .logo:hover {
+            opacity: 0.9;
+            transform: translateX(2px);
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #94a3b8;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.25s ease;
+        }
+
+        .back-link:hover {
+            color: #ffffff;
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(96, 165, 250, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 16px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: #94a3b8;
+            font-size: 13px;
+            transition: 0.2s;
+            padding: 4px 6px;
+        }
+
+        .nav-menu a:hover {
+            color: #60a5fa;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+        .hero {
+            width: min(1150px, calc(100% - 32px));
+            margin: auto;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 80px 0 60px;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #c4b5fd;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #a78bfa;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #a78bfa;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.7;
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(50px, 9vw, 95px);
+            line-height: 0.95;
+            letter-spacing: -3px;
+            font-weight: 900;
+            background: linear-gradient(
+                120deg,
+                #ffffff,
+                #93c5fd 40%,
+                #c084fc 80%,
+                #a78bfa
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .hero-tagline {
+            font-size: clamp(18px, 3vw, 24px);
+            color: #64748b;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero-intro {
+            max-width: 680px;
+            color: #94a3b8;
+            line-height: 1.8;
+            font-size: 17px;
+            margin: 0 auto 35px;
+        }
+
+        /* Quick Navigation Bar */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .category-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.25s ease;
+        }
+
+        .category-chip:hover {
+            color: #ffffff;
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(96, 165, 250, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15);
+        }
+
+        /* =========================
+           SECTIONS & GRIDS
+        ========================= */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            width: min(1150px, calc(100% - 32px));
+            margin: auto;
+            padding: 70px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .section-header {
+            margin-bottom: 35px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .section-label {
+            color: #60a5fa;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4.5vw, 42px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            font-size: clamp(26px, 4vw, 36px);
+            display: inline-block;
+        }
+
+        .section-count {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .cards-grid.two-columns {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* =========================
+           CARD COVER / IMAGE WRAPPER (2:3)
+        ========================= */
+        .card-cover {
+            width: 100%;
+            aspect-ratio: 2 / 3;
+            border-radius: 14px;
+            overflow: hidden;
+            margin: 0 auto 16px;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.12), transparent 70%),
+                #090e1d;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.45);
+        }
+
+        .card-cover::before {
+            content: "🖼️";
+            font-size: 26px;
+            opacity: 0.2;
+            position: absolute;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+
+        .card-cover img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* =========================
+           CARD COMPONENT
+        ========================= */
+        .world-card {
+            min-height: 100%;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.05),
+                    rgba(255, 255, 255, 0.015)
+                );
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.45), 0 0 1px rgba(255, 255, 255, 0.06);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efeito de brilho sutil no canto superior */
+        .world-card::before {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.1), transparent 70%);
+            top: -45px;
+            right: -45px;
+            pointer-events: none;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .world-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(96, 165, 250, 0.32);
+            box-shadow: 0 16px 36px -4px rgba(5, 8, 22, 0.65), 0 0 20px rgba(59, 130, 246, 0.12);
+        }
+
+        .world-card:hover::before {
+            transform: scale(1.25);
+            opacity: 1;
+        }
+
+        .world-card:hover .card-cover img {
+            transform: scale(1.04);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .category-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(96, 165, 250, 0.25);
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .card-glyph {
+            font-size: 20px;
+            opacity: 0.85;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+            line-height: 1.35;
+            letter-spacing: -0.3px;
+        }
+
+        .card-observation {
+            margin-top: auto;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .card-observation .obs-icon {
+            color: #60a5fa;
+            font-size: 14px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .card-observation .obs-text {
+            color: #cbd5e1;
+        }
+
+        .card-observation strong {
+            color: #93c5fd;
+            font-weight: 600;
+        }
+
+        .card-clean-spacer {
+            margin-top: auto;
+            padding-top: 10px;
+            font-size: 12.5px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           MUSIC CARDS ESPECIAIS & MINI PLAYER
+        ========================= */
+        .music-card {
+            padding: 22px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(30, 41, 59, 0.65),
+                    rgba(15, 23, 42, 0.8)
+                );
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.45);
+        }
+
+        .music-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 120px;
+            background: radial-gradient(circle at right center, rgba(139, 92, 246, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .music-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(167, 139, 250, 0.4);
+            box-shadow: 0 16px 36px -4px rgba(5, 8, 22, 0.65), 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+
+        .music-card.is-playing {
+            border-color: rgba(167, 139, 250, 0.65);
+            box-shadow: 0 16px 36px -4px rgba(5, 8, 22, 0.65), 0 0 25px rgba(139, 92, 246, 0.35);
+        }
+
+        .music-cover {
+            width: 84px;
+            height: 84px;
+            border-radius: 14px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.15), transparent 70%),
+                #090e1d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+        }
+
+        .music-cover::before {
+            content: "🎵";
+            font-size: 24px;
+            opacity: 0.3;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .music-cover img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .music-card:hover .music-cover img {
+            transform: scale(1.05);
+        }
+
+        @keyframes spinDisc {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .disc-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a, #6b21a8);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .disc-icon::before {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #050816;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .music-card.is-playing .disc-icon {
+            animation: spinDisc 4s linear infinite;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+
+        .music-details {
+            flex: 1;
+            z-index: 1;
+            min-width: 0;
+        }
+
+        .music-tag {
+            color: #a78bfa;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .music-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .music-artist {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .music-artist span {
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        /* Mini Player Controls */
+        .mini-player {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .player-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .play-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 18px rgba(139, 92, 246, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        .play-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            display: block;
+        }
+
+        .player-timeline-wrapper {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .player-timeline {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.14);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: height 0.15s ease;
+        }
+
+        .player-timeline:hover {
+            height: 8px;
+        }
+
+        .timeline-progress {
+            height: 100%;
+            width: 0%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #60a5fa, #c084fc);
+            pointer-events: none;
+            transition: width 0.08s linear;
+        }
+
+        .player-time {
+            font-size: 11px;
+            color: #94a3b8;
+            font-variant-numeric: tabular-nums;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        .player-volume-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .volume-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .volume-btn:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: rgba(96, 165, 250, 0.4);
+            color: #ffffff;
+            transform: scale(1.06);
+        }
+
+        .volume-btn:active {
+            transform: scale(0.92);
+        }
+
+        .volume-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+            display: block;
+        }
+
+        .volume-slider-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .volume-slider {
+            width: 50px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #a78bfa;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(167, 139, 250, 0.7);
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+            background: #c084fc;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #a78bfa;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(167, 139, 250, 0.7);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+        footer {
+            width: min(1150px, calc(100% - 32px));
+            margin: auto;
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: #64748b;
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-left p {
+            margin-top: 6px;
+            color: #94a3b8;
+        }
+
+        .footer-left strong {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #60a5fa;
+        }
+
+        /* =========================
+           O QUE MARCOU MINHA HISTÓRIA (HIGHLIGHTS)
+        ========================= */
+        .section-highlight {
+            position: relative;
+            background:
+                radial-gradient(ellipse at 50% -10%, rgba(99, 102, 241, 0.18), transparent 65%),
+                radial-gradient(circle at 10% 90%, rgba(239, 68, 68, 0.08), transparent 45%),
+                radial-gradient(circle at 90% 90%, rgba(234, 179, 8, 0.08), transparent 45%),
+                rgba(9, 14, 28, 0.65);
+            border-radius: 28px;
+            padding: 46px 32px 54px;
+            margin: 10px auto 40px;
+            border: 1px solid rgba(167, 139, 250, 0.28);
+            box-shadow:
+                0 25px 60px -15px rgba(5, 8, 22, 0.85),
+                0 0 35px rgba(99, 102, 241, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 22px;
+        }
+
+        .highlight-grid .highlight-card:nth-child(1),
+        .highlight-grid .highlight-card:nth-child(2),
+        .highlight-grid .highlight-card:nth-child(3) {
+            grid-column: span 2;
+        }
+
+        .highlight-grid .highlight-card:nth-child(4),
+        .highlight-grid .highlight-card:nth-child(5) {
+            grid-column: span 3;
+        }
+
+        .highlight-card {
+            min-height: 100%;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.07),
+                    rgba(255, 255, 255, 0.02)
+                );
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Ambient Glow individual nos Destaques */
+        .highlight-card::before {
+            content: "";
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            top: -45px;
+            right: -45px;
+            pointer-events: none;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0.6;
+        }
+
+        .highlight-card.theme-mario::before {
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.28), transparent 70%);
+        }
+        .highlight-card.theme-vivi::before {
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.32), transparent 70%);
+        }
+        .highlight-card.theme-naruto::before {
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.28), transparent 70%);
+        }
+        .highlight-card.theme-lol::before {
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.32), transparent 70%);
+        }
+        .highlight-card.theme-yugioh::before {
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.28), transparent 70%);
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(196, 181, 253, 0.45);
+            box-shadow:
+                0 20px 45px rgba(5, 8, 22, 0.7),
+                0 0 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .highlight-card:hover::before {
+            transform: scale(1.35);
+            opacity: 1;
+        }
+
+        .highlight-cover {
+            width: 100%;
+            aspect-ratio: 2 / 3;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 0 auto 16px;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.14), transparent 70%),
+                #090e1d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .highlight-cover::before {
+            content: "⭐";
+            font-size: 26px;
+            opacity: 0.2;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .highlight-cover img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .highlight-card:hover .highlight-cover img {
+            transform: scale(1.04);
+        }
+
+        .highlight-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 52px;
+            margin-bottom: 14px;
+        }
+
+        .highlight-badges {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .highlight-tag {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f1f5f9;
+        }
+
+        .highlight-status {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(167, 139, 250, 0.4);
+            color: #ddd6fe;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .highlight-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .highlight-card:hover .highlight-icon {
+            transform: scale(1.1) rotate(4deg);
+        }
+
+        .highlight-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .highlight-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.25;
+            margin-bottom: 4px;
+            letter-spacing: -0.4px;
+        }
+
+        .highlight-subtitle {
+            font-size: 13px;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        .highlight-memory {
+            margin-top: auto;
+            padding: 13px 15px;
+            border-radius: 13px;
+            background: rgba(15, 23, 42, 0.78);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .highlight-memory .memory-icon {
+            color: #a78bfa;
+            font-size: 15px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .highlight-memory .memory-text {
+            color: #f1f5f9;
+            font-size: 13.5px;
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        /* =========================
+           RESPONSIVIDADE
+        ========================= */
+        @media (max-width: 950px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .highlight-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .highlight-grid .highlight-card:nth-child(1),
+            .highlight-grid .highlight-card:nth-child(2),
+            .highlight-grid .highlight-card:nth-child(3),
+            .highlight-grid .highlight-card:nth-child(4) {
+                grid-column: span 1;
+            }
+
+            .highlight-grid .highlight-card:nth-child(5) {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .cards-grid.two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .hero {
+                min-height: auto;
+                padding: 55px 0 35px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero-intro {
+                font-size: 15px;
+                margin-bottom: 25px;
+            }
+
+            section {
+                padding: 45px 0;
+            }
+
+            .section-highlight {
+                padding: 30px 16px 36px;
+                border-radius: 22px;
+                margin: 0 auto 30px;
+            }
+
+            .highlight-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .highlight-grid .highlight-card:nth-child(1),
+            .highlight-grid .highlight-card:nth-child(2),
+            .highlight-grid .highlight-card:nth-child(3),
+            .highlight-grid .highlight-card:nth-child(4),
+            .highlight-grid .highlight-card:nth-child(5) {
+                grid-column: span 1;
+            }
+
+            .highlight-card {
+                padding: 18px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .world-card {
+                padding: 18px;
+            }
+
+            .card-cover,
+            .highlight-cover {
+                max-height: 420px;
+            }
+
+            .music-card {
+                padding: 16px;
+                gap: 14px;
+            }
+
+            .music-cover {
+                width: 72px;
+                height: 72px;
+            }
+
+            .disc-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .music-title {
+                font-size: 18px;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+        }
+
+        /* Otimização para toque / dispositivos sem hover */
+        @media (hover: none) {
+            .world-card:hover,
+            .highlight-card:hover,
+            .music-card:hover,
+            .category-chip:hover,
+            .back-link:hover {
+                transform: none !important;
+            }
+
+            .world-card:hover .card-cover img,
+            .highlight-card:hover .highlight-cover img,
+            .music-card:hover .music-cover img {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+<header>
+    <div class="nav-container">
+        <a href="../index.html" class="logo">
+            ADRIEL<span>.</span>NOBRE
+        </a>
+
+        <div class="nav-actions">
+            <ul class="nav-menu">
+                <li><a href="#historia">Destaques</a></li>
+                <li><a href="#jogos">Jogos</a></li>
+                <li><a href="#series">Séries</a></li>
+                <li><a href="#filmes">Filmes</a></li>
+                <li><a href="#animes">Animes</a></li>
+                <li><a href="#mangas">Mangás</a></li>
+                <li><a href="#livros">Livros</a></li>
+                <li><a href="#musicas">Músicas</a></li>
+            </ul>
+
+            <a href="../index.html" class="back-link">
+                ← Voltar ao Lab
+            </a>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <!-- =========================
+         HERO SECTION
+    ========================= -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            Universo Pessoal & Inspirações
+        </div>
+
+        <h1>MEU MUNDO</h1>
+        <div class="hero-tagline">Coleção de Obras & Memórias</div>
+
+        <p class="hero-intro">
+            Esta é uma coleção de obras, jogos, séries, filmes, animes, mangás, livros e músicas que marcaram minha vida e continuam inspirando minha jornada.
+        </p>
+
+        <!-- Menu Rápido de Categorias -->
+        <nav class="category-nav" aria-label="Navegação por categorias">
+            <a href="#historia" class="category-chip" style="background: rgba(139, 92, 246, 0.18); border-color: rgba(167, 139, 250, 0.4); color: #e9d5ff;">⭐ Destaques</a>
+            <a href="#jogos" class="category-chip">🎮 Jogos</a>
+            <a href="#series" class="category-chip">📺 Séries</a>
+            <a href="#filmes" class="category-chip">🎬 Filmes</a>
+            <a href="#animes" class="category-chip">🍥 Animes</a>
+            <a href="#mangas" class="category-chip">📖 Mangás</a>
+            <a href="#livros" class="category-chip">📚 Livros</a>
+            <a href="#musicas" class="category-chip">🎵 Músicas</a>
+        </nav>
+    </section>
+
+    <!-- =========================
+         ⭐ O QUE MARCOU MINHA HISTÓRIA
+    ========================= -->
+    <section id="historia" class="section-highlight">
+        <div class="section-header">
+            <div>
+                <div class="section-label">
+                    <span>✨</span> Memórias & Impacto
+                </div>
+                <h2 class="section-title">
+                    <span class="section-icon">⭐</span> O que marcou minha história
+                </h2>
+            </div>
+            <div class="section-count">5 destaques inesquecíveis</div>
+        </div>
+
+        <div class="highlight-grid">
+            <!-- 1. Super Mario World -->
+            <article class="highlight-card theme-mario">
+                <div class="highlight-header">
+                    <div class="highlight-badges">
+                        <span class="highlight-tag">🎮 Jogo</span>
+                        <span class="highlight-status">🌟 Primeiro Contato</span>
+                    </div>
+                    <div class="highlight-icon">🍄</div>
+                </div>
+                <div class="highlight-cover">
+                    <img src="imagens/jogos/super-mario-world.jpg" alt="Super Mario World" loading="lazy">
+                </div>
+                <div class="highlight-body">
+                    <h3 class="highlight-title">Super Mario World</h3>
+                    <div class="highlight-subtitle">SNES • Plataforma Clássica</div>
+                    <div class="highlight-memory">
+                        <span class="memory-icon">💬</span>
+                        <div class="memory-text">Meu primeiro jogo.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. Vivi (Final Fantasy IX) -->
+            <article class="highlight-card theme-vivi">
+                <div class="highlight-header">
+                    <div class="highlight-badges">
+                        <span class="highlight-tag">✨ Personagem</span>
+                        <span class="highlight-status">💖 Favorito</span>
+                    </div>
+                    <div class="highlight-icon">🪄</div>
+                </div>
+                <div class="highlight-cover">
+                    <img src="imagens/jogos/final-fantasy-ix.jpg" alt="Vivi — Final Fantasy IX" loading="lazy">
+                </div>
+                <div class="highlight-body">
+                    <h3 class="highlight-title">Vivi</h3>
+                    <div class="highlight-subtitle">Final Fantasy IX • Black Mage</div>
+                    <div class="highlight-memory">
+                        <span class="memory-icon">💬</span>
+                        <div class="memory-text">Meu personagem favorito.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. Naruto -->
+            <article class="highlight-card theme-naruto">
+                <div class="highlight-header">
+                    <div class="highlight-badges">
+                        <span class="highlight-tag">🍥 Anime</span>
+                        <span class="highlight-status">🏫 Nostalgia</span>
+                    </div>
+                    <div class="highlight-icon">🍃</div>
+                </div>
+                <div class="highlight-cover">
+                    <img src="imagens/animes/naruto.jpg" alt="Naruto" loading="lazy">
+                </div>
+                <div class="highlight-body">
+                    <h3 class="highlight-title">Naruto</h3>
+                    <div class="highlight-subtitle">Pierrot • Shounen Clássico</div>
+                    <div class="highlight-memory">
+                        <span class="memory-icon">💬</span>
+                        <div class="memory-text">Me lembra a época da escola, quando eu assistia antes de ir para a aula.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. League of Legends -->
+            <article class="highlight-card theme-lol">
+                <div class="highlight-header">
+                    <div class="highlight-badges">
+                        <span class="highlight-tag">⚔️ Jogo</span>
+                        <span class="highlight-status">🤝 Conexões</span>
+                    </div>
+                    <div class="highlight-icon">👑</div>
+                </div>
+                <div class="highlight-cover">
+                    <img src="imagens/jogos/league-of-legends.png" alt="League of Legends" loading="lazy">
+                </div>
+                <div class="highlight-body">
+                    <h3 class="highlight-title">League of Legends</h3>
+                    <div class="highlight-subtitle">Riot Games • MOBA & Comunidade</div>
+                    <div class="highlight-memory">
+                        <span class="memory-icon">💬</span>
+                        <div class="memory-text">Me ajudou a conhecer pessoas incríveis.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. Yu☆Gi☆Oh! Duel Monsters -->
+            <article class="highlight-card theme-yugioh">
+                <div class="highlight-header">
+                    <div class="highlight-badges">
+                        <span class="highlight-tag">🎴 Anime</span>
+                        <span class="highlight-status">🛡️ Apoio</span>
+                    </div>
+                    <div class="highlight-icon">🎴</div>
+                </div>
+                <div class="highlight-cover">
+                    <img src="imagens/animes/yu-gi-oh-duel-monsters.webp" alt="Yu☆Gi☆Oh! Duel Monsters" loading="lazy">
+                </div>
+                <div class="highlight-body">
+                    <h3 class="highlight-title">Yu☆Gi☆Oh! Duel Monsters</h3>
+                    <div class="highlight-subtitle">Studio Gallop • Estratégia & Duelos</div>
+                    <div class="highlight-memory">
+                        <span class="memory-icon">💬</span>
+                        <div class="memory-text">Me ajudou muito.</div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- =========================
+         1. 🎮 JOGOS
+    ========================= -->
+    <section id="jogos">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Universo Gamer</div>
+                <h2 class="section-title">
+                    <span class="section-icon">🎮</span> Jogos
+                </h2>
+            </div>
+            <div class="section-count">3 obras favoritas</div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Final Fantasy IX -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/jogos/final-fantasy-ix.jpg" alt="Final Fantasy IX" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">RPG</span>
+                    <span class="card-glyph">✨</span>
+                </div>
+                <h3 class="card-title">Final Fantasy IX</h3>
+                <div class="card-observation">
+                    <span class="obs-icon">💬</span>
+                    <div class="obs-text">
+                        <strong>Observação:</strong> Vivi é meu personagem favorito.
+                    </div>
+                </div>
+            </article>
+
+            <!-- Super Mario World -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/jogos/super-mario-world.jpg" alt="Super Mario World" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Plataforma</span>
+                    <span class="card-glyph">🍄</span>
+                </div>
+                <h3 class="card-title">Super Mario World</h3>
+                <div class="card-observation">
+                    <span class="obs-icon">💬</span>
+                    <div class="obs-text">
+                        <strong>Observação:</strong> Foi o primeiro jogo que joguei.
+                    </div>
+                </div>
+            </article>
+
+            <!-- League of Legends -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/jogos/league-of-legends.png" alt="League of Legends" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">MOBA</span>
+                    <span class="card-glyph">⚔️</span>
+                </div>
+                <h3 class="card-title">League of Legends</h3>
+                <div class="card-observation">
+                    <span class="obs-icon">💬</span>
+                    <div class="obs-text">
+                        <strong>Observação:</strong> Um jogo que me ajudou a conhecer pessoas incríveis.
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- =========================
+         2. 📺 SÉRIES
+    ========================= -->
+    <section id="series">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Televisão & Streaming</div>
+                <h2 class="section-title">
+                    <span class="section-icon">📺</span> Séries
+                </h2>
+            </div>
+            <div class="section-count">3 obras favoritas</div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- The Big Bang Theory -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/series/the-big-bang-theory.jpg" alt="The Big Bang Theory" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Comédia / Geek</span>
+                    <span class="card-glyph">⚛️</span>
+                </div>
+                <h3 class="card-title">The Big Bang Theory</h3>
+                <div class="card-clean-spacer">Clássico da comédia e cultura nerd</div>
+            </article>
+
+            <!-- Locke & Key -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/series/locke-and-key.jpg" alt="Locke & Key" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Fantasia / Mistério</span>
+                    <span class="card-glyph">🗝️</span>
+                </div>
+                <h3 class="card-title">Locke & Key</h3>
+                <div class="card-clean-spacer">Magia, mistérios e descobertas</div>
+            </article>
+
+            <!-- Westworld -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/series/westworld.jpg" alt="Westworld" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Ficção Científica</span>
+                    <span class="card-glyph">🤖</span>
+                </div>
+                <h3 class="card-title">Westworld</h3>
+                <div class="card-observation">
+                    <span class="obs-icon">💬</span>
+                    <div class="obs-text">
+                        <strong>Observação:</strong> As temporadas 1 e 2 são muito boas.
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- =========================
+         3. 🎬 FILMES
+    ========================= -->
+    <section id="filmes">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Cinema & Narrativas</div>
+                <h2 class="section-title">
+                    <span class="section-icon">🎬</span> Filmes
+                </h2>
+            </div>
+            <div class="section-count">3 obras favoritas</div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- O Show de Truman -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/filmes/o-show-de-truman.jpg" alt="O Show de Truman" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Drama / Ficção</span>
+                    <span class="card-glyph">📽️</span>
+                </div>
+                <h3 class="card-title">O Show de Truman</h3>
+                <div class="card-clean-spacer">Uma reflexão genial sobre a realidade</div>
+            </article>
+
+            <!-- De Volta para o Futuro -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/filmes/de-volta-para-o-futuro.jpg" alt="De Volta para o Futuro" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Sci-Fi / Aventura</span>
+                    <span class="card-glyph">⚡</span>
+                </div>
+                <h3 class="card-title">De Volta para o Futuro</h3>
+                <div class="card-clean-spacer">Uma das maiores viagens no tempo da história</div>
+            </article>
+
+            <!-- As Crônicas de Nárnia -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/filmes/as-cronicas-de-narnia.jpg" alt="As Crônicas de Nárnia" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Fantasia / Épico</span>
+                    <span class="card-glyph">🦁</span>
+                </div>
+                <h3 class="card-title">As Crônicas de Nárnia</h3>
+                <div class="card-clean-spacer">Mundos fantásticos e narrativas inesquecíveis</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- =========================
+         4. 🍥 ANIMES
+    ========================= -->
+    <section id="animes">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Animação Japonesa</div>
+                <h2 class="section-title">
+                    <span class="section-icon">🍥</span> Animes
+                </h2>
+            </div>
+            <div class="section-count">3 obras favoritas</div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Naruto -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/animes/naruto.jpg" alt="Naruto" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Shounen / Ninja</span>
+                    <span class="card-glyph">🍥</span>
+                </div>
+                <h3 class="card-title">Naruto</h3>
+                <div class="card-observation">
+                    <span class="obs-icon">💬</span>
+                    <div class="obs-text">
+                        <strong>Observação:</strong> Me lembra a época da escola, quando eu assistia antes de ir para a aula.
+                    </div>
+                </div>
+            </article>
+
+            <!-- Steins;Gate -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/animes/steins-gate.jpg" alt="Steins;Gate" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Sci-Fi / Suspense</span>
+                    <span class="card-glyph">⏳</span>
+                </div>
+                <h3 class="card-title">Steins;Gate</h3>
+                <div class="card-clean-spacer">Linhas do tempo e teoria do caos</div>
+            </article>
+
+            <!-- Yu☆Gi☆Oh! Duel Monsters -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/animes/yu-gi-oh-duel-monsters.webp" alt="Yu☆Gi☆Oh! Duel Monsters" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Jogos / Fantasia</span>
+                    <span class="card-glyph">🎴</span>
+                </div>
+                <h3 class="card-title">Yu☆Gi☆Oh! Duel Monsters</h3>
+                <div class="card-observation">
+                    <span class="obs-icon">💬</span>
+                    <div class="obs-text">
+                        <strong>Observação:</strong> Me ajudou muito.
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- =========================
+         5. 📖 MANGÁS
+    ========================= -->
+    <section id="mangas">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Quadrinhos Japoneses</div>
+                <h2 class="section-title">
+                    <span class="section-icon">📖</span> Mangás
+                </h2>
+            </div>
+            <div class="section-count">3 obras favoritas</div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Hataraku Maou-sama! -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/mangas/hataraku-maou-sama.jpg" alt="Hataraku Maou-sama!" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Comédia / Fantasia</span>
+                    <span class="card-glyph">😈</span>
+                </div>
+                <h3 class="card-title">Hataraku Maou-sama!</h3>
+                <div class="card-clean-spacer">Humor, magia reversa e cotidiano</div>
+            </article>
+
+            <!-- Vinland Saga -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/mangas/vinland-saga.jpg" alt="Vinland Saga" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Seinen / Épico</span>
+                    <span class="card-glyph">🛡️</span>
+                </div>
+                <h3 class="card-title">Vinland Saga</h3>
+                <div class="card-clean-spacer">Profundidade histórica e busca pela paz</div>
+            </article>
+
+            <!-- Ballroom e Youkoso -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/mangas/ballroom-e-youkoso.webp" alt="Ballroom e Youkoso" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Dança / Drama</span>
+                    <span class="card-glyph">💃</span>
+                </div>
+                <h3 class="card-title">Ballroom e Youkoso</h3>
+                <div class="card-clean-spacer">Paixão, arte e dança competitiva</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- =========================
+         6. 📚 LIVROS
+    ========================= -->
+    <section id="livros">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Literatura & Ideias</div>
+                <h2 class="section-title">
+                    <span class="section-icon">📚</span> Livros
+                </h2>
+            </div>
+            <div class="section-count">3 obras favoritas</div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Shousetsu Higashi no Eden -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/livros/shousetsu-higashi-no-eden.jpg" alt="Shousetsu Higashi no Eden" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Ficção / Suspense</span>
+                    <span class="card-glyph">📱</span>
+                </div>
+                <h3 class="card-title">Shousetsu Higashi no Eden</h3>
+                <div class="card-clean-spacer">Conspiração, sociedade e mistério</div>
+            </article>
+
+            <!-- Não Conte a Ninguém -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/livros/nao-conte-a-ninguem.jpg" alt="Não Conte a Ninguém" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Thriller / Mistério</span>
+                    <span class="card-glyph">🔍</span>
+                </div>
+                <h3 class="card-title">Não Conte a Ninguém</h3>
+                <div class="card-clean-spacer">Suspense eletrizante do início ao fim</div>
+            </article>
+
+            <!-- A Revolução dos Bichos -->
+            <article class="world-card">
+                <div class="card-cover">
+                    <img src="imagens/livros/a-revolucao-dos-bichos.jpg" alt="A Revolução dos Bichos" loading="lazy">
+                </div>
+                <div class="card-top">
+                    <span class="category-tag">Clássico / Distopia</span>
+                    <span class="card-glyph">🏛️</span>
+                </div>
+                <h3 class="card-title">A Revolução dos Bichos</h3>
+                <div class="card-clean-spacer">Uma alegoria essencial sobre o poder</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- =========================
+         7. 🎵 MÚSICAS
+    ========================= -->
+    <section id="musicas">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Trilha Sonora</div>
+                <h2 class="section-title">
+                    <span class="section-icon">🎵</span> Músicas
+                </h2>
+            </div>
+            <div class="section-count">2 faixas marcantes</div>
+        </div>
+
+        <div class="cards-grid two-columns">
+            <!-- Cult of Personality -->
+            <article class="music-card">
+                <div class="music-cover">
+                    <img src="imagens/musicas/cult-of-personality.jpg" alt="Cult of Personality" loading="lazy">
+                </div>
+                <div class="disc-icon" title="Living Colour - Cult of Personality">
+                    🎸
+                </div>
+                <div class="music-details">
+                    <div class="music-tag">Faixa Marcante</div>
+                    <h3 class="music-title">Cult of Personality</h3>
+                    <div class="music-artist">
+                        Artista: <span>Living Colour</span>
+                    </div>
+
+                    <!-- Mini Player -->
+                    <div class="mini-player">
+                        <audio preload="metadata" src="../musicas/Cult-of-Personality-Living-Colour.mp3"></audio>
+                        
+                        <div class="player-row">
+                            <button class="play-btn" type="button" aria-label="Reproduzir música" title="Play">
+                                <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                <svg class="pause-icon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                            </button>
+
+                            <div class="player-timeline-wrapper">
+                                <div class="player-timeline" title="Avançar / Retroceder">
+                                    <div class="timeline-progress"></div>
+                                </div>
+                                <div class="player-time">
+                                    <span class="time-current">0:00</span>
+                                    <span class="time-total">0:00</span>
+                                </div>
+                            </div>
+
+                            <div class="player-volume-control">
+                                <button class="volume-btn vol-down-btn" type="button" title="Diminuir volume" aria-label="Diminuir volume">
+                                    <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
+                                </button>
+                                <div class="volume-slider-wrapper">
+                                    <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="0.8" aria-label="Controle de volume" title="Volume">
+                                </div>
+                                <button class="volume-btn vol-up-btn" type="button" title="Aumentar volume" aria-label="Aumentar volume">
+                                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Destination -->
+            <article class="music-card">
+                <div class="music-cover">
+                    <img src="imagens/musicas/destination.jpg" alt="Destination" loading="lazy">
+                </div>
+                <div class="disc-icon" title="Crash Adams - Destination">
+                    🎧
+                </div>
+                <div class="music-details">
+                    <div class="music-tag">Faixa Marcante</div>
+                    <h3 class="music-title">Destination</h3>
+                    <div class="music-artist">
+                        Artista: <span>Crash Adams</span>
+                    </div>
+
+                    <!-- Mini Player -->
+                    <div class="mini-player">
+                        <audio preload="metadata" src="../musicas/Crash Adams - Destination.mp3"></audio>
+                        
+                        <div class="player-row">
+                            <button class="play-btn" type="button" aria-label="Reproduzir música" title="Play">
+                                <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                <svg class="pause-icon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                            </button>
+
+                            <div class="player-timeline-wrapper">
+                                <div class="player-timeline" title="Avançar / Retroceder">
+                                    <div class="timeline-progress"></div>
+                                </div>
+                                <div class="player-time">
+                                    <span class="time-current">0:00</span>
+                                    <span class="time-total">0:00</span>
+                                </div>
+                            </div>
+
+                            <div class="player-volume-control">
+                                <button class="volume-btn vol-down-btn" type="button" title="Diminuir volume" aria-label="Diminuir volume">
+                                    <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
+                                </button>
+                                <div class="volume-slider-wrapper">
+                                    <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="0.8" aria-label="Controle de volume" title="Volume">
+                                </div>
+                                <button class="volume-btn vol-up-btn" type="button" title="Aumentar volume" aria-label="Aumentar volume">
+                                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+</main>
+
+<!-- =========================
+     FOOTER
+========================= -->
+<footer>
+    <div class="footer-left">
+        <strong>ADRIEL NOBRE LAB</strong>
+        <p>Meu Mundo — Coleção de obras, jogos, histórias e músicas que marcaram minha vida.</p>
+    </div>
+
+    <div class="footer-links">
+        <a href="../index.html">← Voltar ao Início</a>
+        <a href="#jogos">Topo ↑</a>
+    </div>
+</footer>
+
+<!-- =========================
+     SMOOTH SCROLL REVEAL & ERROR FALLBACK SCRIPT
+========================= -->
+<script>
+    // Tratamento suave para imagens pendentes/ainda não carregadas localmente
+    document.querySelectorAll("img").forEach(img => {
+        img.addEventListener("error", function() {
+            this.style.display = "none";
+        });
+    });
+
+    const animatedCards = document.querySelectorAll(
+        ".world-card, .music-card, .section-header, .highlight-card"
+    );
+
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.08
+        }
+    );
+
+    animatedCards.forEach(card => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(20px)";
+        card.style.transition = "opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)";
+        observer.observe(card);
+    });
+
+    // ============================================
+    // MINI AUDIO PLAYER
+    // ============================================
+    (function initMiniAudioPlayers() {
+        const players = document.querySelectorAll(".mini-player");
+        let activeAudio = null;
+
+        function formatTime(seconds) {
+            if (isNaN(seconds) || !isFinite(seconds)) return "0:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+        }
+
+        players.forEach(player => {
+            const audio = player.querySelector("audio");
+            const playBtn = player.querySelector(".play-btn");
+            const playIcon = player.querySelector(".play-icon");
+            const pauseIcon = player.querySelector(".pause-icon");
+            const timeline = player.querySelector(".player-timeline");
+            const progress = player.querySelector(".timeline-progress");
+            const timeCurrent = player.querySelector(".time-current");
+            const timeTotal = player.querySelector(".time-total");
+            const volDownBtn = player.querySelector(".vol-down-btn");
+            const volUpBtn = player.querySelector(".vol-up-btn");
+            const volSlider = player.querySelector(".volume-slider");
+            const musicCard = player.closest(".music-card");
+
+            if (!audio) return;
+
+            // Define volume inicial
+            audio.volume = parseFloat(volSlider.value || 0.8);
+
+            function setPlayingUI(isPlaying) {
+                if (isPlaying) {
+                    playIcon.style.display = "none";
+                    pauseIcon.style.display = "block";
+                    playBtn.setAttribute("title", "Pausar");
+                    playBtn.setAttribute("aria-label", "Pausar música");
+                    if (musicCard) musicCard.classList.add("is-playing");
+                } else {
+                    playIcon.style.display = "block";
+                    pauseIcon.style.display = "none";
+                    playBtn.setAttribute("title", "Play");
+                    playBtn.setAttribute("aria-label", "Reproduzir música");
+                    if (musicCard) musicCard.classList.remove("is-playing");
+                }
+            }
+
+            // Play / Pause
+            playBtn.addEventListener("click", () => {
+                if (audio.paused) {
+                    // Pausa qualquer outra faixa em execução
+                    if (activeAudio && activeAudio !== audio) {
+                        activeAudio.pause();
+                    }
+                    audio.play().then(() => {
+                        activeAudio = audio;
+                        setPlayingUI(true);
+                    }).catch(err => {
+                        console.warn("Não foi possível iniciar a reprodução:", err);
+                    });
+                } else {
+                    audio.pause();
+                    setPlayingUI(false);
+                }
+            });
+
+            audio.addEventListener("play", () => {
+                if (activeAudio && activeAudio !== audio) {
+                    activeAudio.pause();
+                }
+                activeAudio = audio;
+                setPlayingUI(true);
+            });
+
+            audio.addEventListener("pause", () => {
+                setPlayingUI(false);
+            });
+
+            audio.addEventListener("ended", () => {
+                setPlayingUI(false);
+                progress.style.width = "0%";
+                timeCurrent.textContent = "0:00";
+            });
+
+            // Metadados carregados
+            audio.addEventListener("loadedmetadata", () => {
+                timeTotal.textContent = formatTime(audio.duration);
+            });
+
+            // Atualização contínua de progresso
+            audio.addEventListener("timeupdate", () => {
+                if (audio.duration) {
+                    const percent = (audio.currentTime / audio.duration) * 100;
+                    progress.style.width = `${percent}%`;
+                    timeCurrent.textContent = formatTime(audio.currentTime);
+                    if (timeTotal.textContent === "0:00" || !timeTotal.textContent) {
+                        timeTotal.textContent = formatTime(audio.duration);
+                    }
+                }
+            });
+
+            // Clique na timeline para avançar/retroceder
+            timeline.addEventListener("click", (e) => {
+                const rect = timeline.getBoundingClientRect();
+                const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+                const ratio = clickX / rect.width;
+                if (audio.duration) {
+                    audio.currentTime = ratio * audio.duration;
+                }
+            });
+
+            // Controle de Volume
+            function applyVolume(val) {
+                const clamped = Math.max(0, Math.min(1, Math.round(val * 100) / 100));
+                audio.volume = clamped;
+                volSlider.value = clamped;
+            }
+
+            volSlider.addEventListener("input", (e) => {
+                applyVolume(parseFloat(e.target.value));
+            });
+
+            volDownBtn.addEventListener("click", () => {
+                applyVolume(audio.volume - 0.1);
+            });
+
+            volUpBtn.addEventListener("click", () => {
+                applyVolume(audio.volume + 0.1);
+            });
+        });
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Reaction — Adriel Nobre Lab</title>
+    <meta name="description" content="Lab Reaction — Um laboratório virtual interativo onde você combina substâncias químicas para descobrir reações simuladas com efeitos visuais e explicações educativas.">
+
+    <style>
+        /* ==========================================================================
+           RESET & VARIÁVEIS DO SISTEMA DE DESIGN
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-deep: #050816;
+            --bg-card: rgba(255, 255, 255, 0.035);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(96, 165, 250, 0.4);
+            --primary-blue: #3b82f6;
+            --primary-purple: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --font-sans: Arial, Helvetica, sans-serif;
+            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background:
+                radial-gradient(circle at 20% 10%, rgba(59, 130, 246, 0.15), transparent 35%),
+                radial-gradient(circle at 80% 25%, rgba(139, 92, 246, 0.12), transparent 35%),
+                radial-gradient(circle at 50% 65%, rgba(56, 189, 248, 0.08), transparent 45%),
+                var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, black 15%, transparent 95%);
+            z-index: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ==========================================================================
+           CONTAINER E HEADER
+           ========================================================================== */
+        .container {
+            max-width: 1150px;
+            width: calc(100% - 32px);
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(5, 8, 22, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .header-nav {
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            border-radius: var(--radius-md);
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background: rgba(59, 130, 246, 0.2);
+            color: #ffffff;
+            transform: translateX(-3px);
+            border-color: rgba(96, 165, 250, 0.4);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+        }
+
+        /* ==========================================================================
+           HERO & APRESENTAÇÃO
+           ========================================================================== */
+        .hero-lab {
+            padding: 45px 0 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .lab-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(96, 165, 250, 0.25);
+            color: #93c5fd;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .hero-lab h1 {
+            font-size: clamp(32px, 5vw, 54px);
+            letter-spacing: -1.5px;
+            font-weight: 900;
+            background: linear-gradient(125deg, #ffffff 15%, #93c5fd 50%, #c084fc 85%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .hero-lab .hero-subtitle {
+            font-size: clamp(15px, 2.2vw, 19px);
+            color: #60a5fa;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .hero-lab .hero-desc {
+            max-width: 620px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        /* ==========================================================================
+           LAYOUT DO LABORATÓRIO (GRID PRINCIPAL)
+           ========================================================================== */
+        .lab-workspace {
+            display: grid;
+            grid-template-columns: 1fr 1.05fr;
+            gap: 24px;
+            margin: 28px 0 45px;
+            align-items: stretch;
+        }
+
+        .panel-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 17px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+        }
+
+        .panel-title-icon {
+            font-size: 20px;
+        }
+
+        .selection-counter {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-muted);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .selection-counter.filled {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border-color: rgba(96, 165, 250, 0.4);
+        }
+
+        /* ==========================================================================
+           PAINEL DE SUBSTÂNCIAS DISPONÍVEIS
+           ========================================================================== */
+        .substances-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            overflow-y: auto;
+            max-height: 480px;
+            padding-right: 4px;
+        }
+
+        .substances-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+        .substances-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .substances-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+        .substances-grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .substance-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 14px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            user-select: none;
+            outline: none;
+        }
+
+        .substance-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--substance-color, var(--primary-blue));
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--substance-glow, rgba(59, 130, 246, 0.2));
+        }
+
+        .substance-btn.selected {
+            background: rgba(59, 130, 246, 0.18);
+            border-color: #60a5fa;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .substance-btn.selected::after {
+            content: "✓";
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 18px;
+            height: 18px;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 900;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        }
+
+        .substance-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .substance-symbol {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: var(--substance-color, #93c5fd);
+            margin-bottom: 4px;
+            display: inline-block;
+            filter: drop-shadow(0 2px 8px var(--substance-glow, rgba(59, 130, 246, 0.4)));
+        }
+
+        .substance-name {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.25;
+            margin-bottom: 4px;
+        }
+
+        .substance-tag {
+            font-size: 10px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==========================================================================
+           BANCADA CENTRAL & FRASCO DE REAÇÃO
+           ========================================================================== */
+        .reaction-chamber-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(150deg, rgba(15, 23, 42, 0.6), rgba(5, 8, 22, 0.8));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chamber-glow {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, var(--chamber-glow-color, rgba(59, 130, 246, 0.15)) 0%, transparent 70%);
+            pointer-events: none;
+            transition: background 0.6s ease;
+            z-index: 0;
+        }
+
+        /* Slots de Reagentes */
+        .slots-wrapper {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slot-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            min-height: 72px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .slot-box.active {
+            border-style: solid;
+            border-color: rgba(96, 165, 250, 0.5);
+            background: rgba(59, 130, 246, 0.08);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15);
+        }
+
+        .slot-empty-text {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .slot-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 8px;
+        }
+
+        .slot-info {
+            text-align: left;
+            overflow: hidden;
+        }
+
+        .slot-symbol {
+            font-size: 16px;
+            font-weight: 900;
+            color: #60a5fa;
+        }
+
+        .slot-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-remove-slot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(244, 63, 94, 0.2);
+            color: #f43f5e;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .btn-remove-slot:hover {
+            background: #f43f5e;
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .slots-plus {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text-muted);
+            user-select: none;
+        }
+
+        /* Recipiente / Frasco Central Estilizado */
+        .vessel-container {
+            flex: 1;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 10px 0;
+            z-index: 1;
+        }
+
+        .flask-wrapper {
+            position: relative;
+            width: 180px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flask-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .flask-canvas {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 140px;
+            height: 160px;
+            pointer-events: none;
+            border-radius: 0 0 35px 35px;
+            z-index: 2;
+        }
+
+        .reaction-status-text {
+            margin-top: 14px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-align: center;
+            min-height: 22px;
+            transition: color 0.3s ease;
+        }
+
+        .chamber-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-mix {
+            flex: 2;
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+            user-select: none;
+        }
+
+        .btn-mix:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .btn-mix:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+            color: var(--text-muted);
+            border-color: transparent;
+        }
+
+        .btn-clear {
+            flex: 1;
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+            user-select: none;
+        }
+
+        .btn-clear:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @keyframes flask-vibrate {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            20% { transform: translate(-3px, 2px) rotate(-1.5deg); }
+            40% { transform: translate(3px, -2px) rotate(1.5deg); }
+            60% { transform: translate(-2px, -1px) rotate(-1deg); }
+            80% { transform: translate(2px, 2px) rotate(1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .flask-wrapper.is-reacting {
+            animation: flask-vibrate 0.12s infinite;
+        }
+
+        /* ==========================================================================
+           CARD / MODAL DE RESULTADO DA REAÇÃO
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 8, 22, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: linear-gradient(145deg, #0b112c, #050816);
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            border-radius: 22px;
+            max-width: 520px;
+            width: 100%;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(59, 130, 246, 0.3);
+            text-align: center;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.open .modal-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-discovery-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2));
+            border: 1px solid #10b981;
+            color: #34d399;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .modal-discovery-badge.already-known {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #60a5fa;
+            color: #93c5fd;
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 15px rgba(59, 130, 246, 0.5));
+            animation: bounce-subtle 1.5s infinite ease-in-out;
+        }
+
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .modal-formula {
+            font-size: 15px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 18px;
+            font-family: monospace;
+            background: rgba(59, 130, 246, 0.1);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .modal-desc {
+            font-size: 14.5px;
+            color: #cbd5e1;
+            line-height: 1.65;
+            margin-bottom: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            text-align: left;
+        }
+
+        .modal-btn {
+            padding: 12px 28px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        /* ==========================================================================
+           CADERNO DE DESCOBERTAS
+           ========================================================================== */
+        .discoveries-section {
+            padding: 40px 0 60px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .discoveries-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .discoveries-title-area h2 {
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .discoveries-title-area p {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            margin-top: 4px;
+        }
+
+        .discoveries-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .progress-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .progress-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #60a5fa;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-bar-bg {
+            width: 140px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #10b981);
+            border-radius: 999px;
+            transition: width 0.4s ease;
+        }
+
+        .btn-reset-progress {
+            background: transparent;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: #f87171;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-reset-progress:hover {
+            background: rgba(244, 63, 94, 0.15);
+            border-color: #f87171;
+            color: #ffffff;
+        }
+
+        /* Grid do Caderno de Descobertas */
+        .discoveries-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .discovery-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discovery-card.discovered {
+            border-color: rgba(96, 165, 250, 0.3);
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.06), rgba(139, 92, 246, 0.02));
+        }
+
+        .discovery-card.discovered:hover {
+            transform: translateY(-3px);
+            border-color: rgba(96, 165, 250, 0.5);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(59, 130, 246, 0.15);
+        }
+
+        .discovery-card.locked {
+            opacity: 0.6;
+            border-style: dashed;
+            background: rgba(0, 0, 0, 0.2);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 140px;
+        }
+
+        .card-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .discovery-card-icon {
+            font-size: 26px;
+        }
+
+        .discovery-badge-id {
+            font-size: 11px;
+            font-weight: 800;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
+
+        .discovery-card-name {
+            font-size: 15.5px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .discovery-card-formula {
+            font-size: 12px;
+            font-weight: 700;
+            color: #60a5fa;
+            font-family: monospace;
+            margin-bottom: 8px;
+        }
+
+        .discovery-card-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .locked-icon {
+            font-size: 24px;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .locked-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+        }
+
+        .locked-hint {
+            font-size: 11px;
+            color: #475569;
+            margin-top: 4px;
+        }
+
+        /* ==========================================================================
+           MODAL DE CONFIRMAÇÃO DE RESET
+           ========================================================================== */
+        .confirm-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 8, 22, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 210;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .confirm-modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .confirm-card {
+            background: #0b112c;
+            border: 1px solid rgba(244, 63, 94, 0.4);
+            border-radius: var(--radius-lg);
+            max-width: 400px;
+            width: 100%;
+            padding: 26px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .confirm-card h3 {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .confirm-card p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-confirm-reset {
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            background: #e11d48;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-confirm-reset:hover {
+            background: #be123c;
+        }
+
+        .btn-cancel-reset {
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            font-weight: 700;
+            font-size: 13px;
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-cancel-reset:hover {
+            background: rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           FOOTER
+           ========================================================================== */
+        footer {
+            margin-top: auto;
+            padding: 35px 0;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .footer-content a {
+            color: #60a5fa;
+            transition: color 0.2s;
+        }
+
+        .footer-content a:hover {
+            color: #93c5fd;
+        }
+
+        /* ==========================================================================
+           RESPONSIVIDADE (TABLET & MOBILE)
+           ========================================================================== */
+        @media (max-width: 960px) {
+            .lab-workspace {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .substances-grid {
+                grid-template-columns: repeat(3, 1fr);
+                max-height: 320px;
+            }
+
+            .discoveries-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                width: calc(100% - 24px);
+            }
+
+            .hero-lab {
+                padding: 30px 0 15px;
+            }
+
+            .substances-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                max-height: 280px;
+            }
+
+            .substance-btn {
+                padding: 10px 6px;
+            }
+
+            .substance-symbol {
+                font-size: 18px;
+            }
+
+            .substance-name {
+                font-size: 11.5px;
+            }
+
+            .panel-card {
+                padding: 16px;
+            }
+
+            .slots-wrapper {
+                gap: 8px;
+            }
+
+            .slot-box {
+                min-height: 60px;
+                padding: 6px;
+            }
+
+            .chamber-actions {
+                flex-direction: column;
+            }
+
+            .btn-mix, .btn-clear {
+                width: 100%;
+                flex: none;
+            }
+
+            .discoveries-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .discoveries-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .discoveries-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================================================
+         HEADER
+         ========================================================================== -->
+    <header>
+        <div class="container">
+            <div class="header-nav">
+                <a href="../index.html" class="logo">
+                    ADRIEL<span>.</span>NOBRE
+                </a>
+                <a href="../index.html" class="btn-back">
+                    ← Voltar ao Lab
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+         HERO & APRESENTAÇÃO
+         ========================================================================== -->
+    <main class="container">
+        <section class="hero-lab">
+            <div class="lab-badge">
+                🔬 Experimento Interativo
+            </div>
+            <h1>LAB REACTION</h1>
+            <div class="hero-subtitle">
+                Experimente, descubra e entenda.
+            </div>
+            <p class="hero-desc">
+                Um laboratório virtual onde você pode combinar substâncias e descobrir diferentes reações. Selecione dois elementos ou compostos, misture-os no recipiente e observe a transformação química!
+            </p>
+        </section>
+
+        <!-- ==========================================================================
+             ÁREA PRINCIPAL DO LABORATÓRIO (WORKSPACE)
+             ========================================================================== -->
+        <section class="lab-workspace">
+
+            <!-- PAINEL DE SUBSTÂNCIAS -->
+            <div class="panel-card" id="substancesPanel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="panel-title-icon">🧪</span>
+                        Substâncias Disponíveis
+                    </div>
+                    <span class="selection-counter" id="selectionCounter">
+                        0 / 2 selecionadas
+                    </span>
+                </div>
+
+                <div class="substances-grid" id="substancesGrid">
+                    <!-- Gerado dinamicamente via JS -->
+                </div>
+            </div>
+
+            <!-- BANCADA & FRASCO DE REAÇÃO -->
+            <div class="panel-card reaction-chamber-panel" id="reactionChamber">
+                <div class="chamber-glow" id="chamberGlow"></div>
+
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="panel-title-icon">⚗️</span>
+                        Câmara de Mistura
+                    </div>
+                </div>
+
+                <!-- Slots dos reagentes -->
+                <div class="slots-wrapper">
+                    <div class="slot-box" id="slotA">
+                        <span class="slot-empty-text">+ Substância 1</span>
+                    </div>
+
+                    <div class="slots-plus">+</div>
+
+                    <div class="slot-box" id="slotB">
+                        <span class="slot-empty-text">+ Substância 2</span>
+                    </div>
+                </div>
+
+                <!-- Recipiente central (Frasco Erlenmeyer estilizado com Canvas) -->
+                <div class="vessel-container">
+                    <div class="flask-wrapper" id="flaskWrapper">
+                        <svg class="flask-svg" viewBox="0 0 160 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="rgba(255, 255, 255, 0.25)" />
+                                    <stop offset="40%" stop-color="rgba(255, 255, 255, 0.05)" />
+                                    <stop offset="100%" stop-color="rgba(255, 255, 255, 0.15)" />
+                                </linearGradient>
+                                <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop id="liquidStop1" offset="0%" stop-color="#3b82f6" stop-opacity="0.8" />
+                                    <stop id="liquidStop2" offset="100%" stop-color="#1d4ed8" stop-opacity="0.9" />
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Líquido interno do frasco -->
+                            <path id="flaskLiquidPath" d="M 45 110 L 22 155 C 18 165 25 172 36 172 L 124 172 C 135 172 142 165 138 155 L 115 110 Z" fill="url(#liquidGrad)" opacity="0.85" />
+
+                            <!-- Contorno de Vidro e Graduação -->
+                            <path d="M 66 12 L 66 50 L 16 154 C 10 166 18 174 32 174 L 128 174 C 142 174 150 166 144 154 L 94 50 L 94 12 Z" stroke="url(#glassGrad)" stroke-width="4" stroke-linejoin="round" />
+                            <!-- Gargalo do frasco -->
+                            <rect x="62" y="8" width="36" height="6" rx="3" fill="rgba(255,255,255,0.3)" />
+
+                            <!-- Marcadores de volume de laboratório -->
+                            <line x1="90" y1="90" x2="105" y2="90" stroke="rgba(255,255,255,0.25)" stroke-width="2" />
+                            <line x1="96" y1="115" x2="114" y2="115" stroke="rgba(255,255,255,0.25)" stroke-width="2" />
+                            <line x1="102" y1="140" x2="124" y2="140" stroke="rgba(255,255,255,0.25)" stroke-width="2" />
+
+                            <!-- Reflexo do vidro frontal -->
+                            <path d="M 72 55 L 32 148" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round" />
+                        </svg>
+
+                        <!-- Canvas para bolhas, vapor e efeitos -->
+                        <canvas class="flask-canvas" id="flaskCanvas" width="140" height="160"></canvas>
+                    </div>
+
+                    <div class="reaction-status-text" id="reactionStatusText">
+                        Selecione 2 substâncias para iniciar a reação.
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="chamber-actions">
+                    <button class="btn-mix" id="btnMix" disabled>
+                        <span>⚡</span> Misturar Substâncias
+                    </button>
+                    <button class="btn-clear" id="btnClear">
+                        <span>🔄</span> Limpar
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==========================================================================
+             CADERNO DE DESCOBERTAS
+             ========================================================================== -->
+        <section class="discoveries-section">
+            <div class="discoveries-header">
+                <div class="discoveries-title-area">
+                    <h2>
+                        <span>📓</span> Caderno de Descobertas
+                    </h2>
+                    <p>
+                        Acompanhe todas as transformações químicas que você já sintetizou com sucesso.
+                    </p>
+                </div>
+
+                <div class="discoveries-controls">
+                    <div class="progress-indicator">
+                        <span class="progress-label" id="progressLabel">
+                            Descobertas: 0 / 9
+                        </span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressBarFill"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn-reset-progress" id="btnResetProgress" title="Apagar histórico de descobertas">
+                        🗑️ Limpar descobertas
+                    </button>
+                </div>
+            </div>
+
+            <div class="discoveries-grid" id="discoveriesGrid">
+                <!-- Preenchido dinamicamente via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================================================
+         MODAL DE RESULTADO / REAÇÃO DESCOBERTA
+         ========================================================================== -->
+    <div class="modal-overlay" id="discoveryModal">
+        <div class="modal-card">
+            <div class="modal-discovery-badge" id="modalBadge">
+                ✨ REAÇÃO DESCOBERTA!
+            </div>
+            <div class="modal-icon" id="modalIcon">💧</div>
+            <h3 class="modal-title" id="modalTitle">Formação de Água</h3>
+            <div class="modal-formula" id="modalFormula">2H₂ + O₂ → 2H₂O</div>
+            <p class="modal-desc" id="modalDesc">
+                Os materiais iniciais sofreram uma transformação química e deram origem a novas substâncias com propriedades diferentes.
+            </p>
+            <button class="modal-btn" id="modalCloseBtn">
+                Entendido! Continuar no Lab
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         MODAL DE CONFIRMAÇÃO DE RESET
+         ========================================================================== -->
+    <div class="confirm-modal-overlay" id="confirmModal">
+        <div class="confirm-card">
+            <h3>⚠️ Limpar Descobertas?</h3>
+            <p>
+                Tem certeza que deseja apagar todo o seu progresso do Caderno de Descobertas? Essa ação não poderá ser desfeita.
+            </p>
+            <div class="confirm-actions">
+                <button class="btn-confirm-reset" id="btnConfirmReset">
+                    Sim, apagar progresso
+                </button>
+                <button class="btn-cancel-reset" id="btnCancelReset">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                © 2026 Adriel Nobre Lab • Criado com curiosidade e tecnologia.
+            </div>
+            <div>
+                <a href="../index.html">Ir para a página inicial →</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         LÓGICA JAVASCRIPT
+         ========================================================================== -->
+    <script>
+        /* ==========================================================================
+           1. ESTRUTURA DE DADOS: SUBSTÂNCIAS
+           ========================================================================== */
+        const SUBSTANCES = [
+            {
+                id: 'H2',
+                symbol: 'H₂',
+                name: 'Hidrogênio',
+                tag: 'Gás Inflamável',
+                color: '#60a5fa',
+                glow: 'rgba(96, 165, 250, 0.4)',
+                liquidColor: '#38bdf8'
+            },
+            {
+                id: 'O2',
+                symbol: 'O₂',
+                name: 'Oxigênio',
+                tag: 'Comburente',
+                color: '#38bdf8',
+                glow: 'rgba(56, 189, 248, 0.4)',
+                liquidColor: '#0ea5e9'
+            },
+            {
+                id: 'Na',
+                symbol: 'Na',
+                name: 'Sódio',
+                tag: 'Metal Alcalino',
+                color: '#fbbf24',
+                glow: 'rgba(251, 191, 36, 0.4)',
+                liquidColor: '#f59e0b'
+            },
+            {
+                id: 'Cl2',
+                symbol: 'Cl₂',
+                name: 'Cloro',
+                tag: 'Gás Halogênio',
+                color: '#34d399',
+                glow: 'rgba(52, 211, 153, 0.4)',
+                liquidColor: '#10b981'
+            },
+            {
+                id: 'Fe',
+                symbol: 'Fe',
+                name: 'Ferro',
+                tag: 'Metal de Transição',
+                color: '#94a3b8',
+                glow: 'rgba(148, 163, 184, 0.4)',
+                liquidColor: '#64748b'
+            },
+            {
+                id: 'HCl',
+                symbol: 'HCl',
+                name: 'Ácido Clorídrico',
+                tag: 'Ácido Forte',
+                color: '#f87171',
+                glow: 'rgba(248, 113, 113, 0.4)',
+                liquidColor: '#ef4444'
+            },
+            {
+                id: 'NaOH',
+                symbol: 'NaOH',
+                name: 'Hidróxido de Sódio',
+                tag: 'Base Forte',
+                color: '#c084fc',
+                glow: 'rgba(192, 132, 252, 0.4)',
+                liquidColor: '#8b5cf6'
+            },
+            {
+                id: 'CH3COOH',
+                symbol: 'CH₃COOH',
+                name: 'Ácido Acético (Vinagre)',
+                tag: 'Ácido Fraco',
+                color: '#fb923c',
+                glow: 'rgba(251, 146, 60, 0.4)',
+                liquidColor: '#ea580c'
+            },
+            {
+                id: 'NaHCO3',
+                symbol: 'NaHCO₃',
+                name: 'Bicarbonato de Sódio',
+                tag: 'Sal Básico',
+                color: '#2dd4bf',
+                glow: 'rgba(45, 212, 191, 0.4)',
+                liquidColor: '#0d9488'
+            }
+        ];
+
+        /* ==========================================================================
+           2. ESTRUTURA DE DADOS: REAÇÕES & DESCOBERTAS
+           ========================================================================== */
+        const REACTIONS = [
+            {
+                id: 'water_synthesis',
+                pair: ['H2', 'O2'],
+                name: 'Formação de Água',
+                equation: '2H₂ + O₂ → 2H₂O',
+                icon: '💧',
+                color: '#38bdf8',
+                effectType: 'steam',
+                desc: 'Dois átomos de hidrogênio ligam-se a um de oxigênio liberando calor e formando vapor d\'água que se condensa em água pura essencial para a vida.'
+            },
+            {
+                id: 'salt_synthesis',
+                pair: ['Na', 'Cl2'],
+                name: 'Formação de Sal de Cozinha',
+                equation: '2Na + Cl₂ → 2NaCl',
+                icon: '🧂',
+                color: '#fbbf24',
+                effectType: 'spark_crystals',
+                desc: 'O sódio transfere um elétron para o cloro em uma ligação iônica vigorosa, transformando elementos perigosos em cloreto de sódio, o sal comum de cozinha.'
+            },
+            {
+                id: 'acid_base_neutralization',
+                pair: ['HCl', 'NaOH'],
+                name: 'Neutralização Ácido-Base',
+                equation: 'HCl + NaOH → NaCl + H₂O',
+                icon: '⚖️',
+                color: '#818cf8',
+                effectType: 'glow_neutral',
+                desc: 'Um ácido forte reage com uma base forte, anulando reciprocamente a acidez e a alcalinidade para produzir apenas água e sal neutro dissolvido.'
+            },
+            {
+                id: 'effervescence_co2',
+                pair: ['CH3COOH', 'NaHCO3'],
+                name: 'Efervescência de Gás Carbônico',
+                equation: 'CH₃COOH + NaHCO₃ → CH₃COONa + H₂O + CO₂↑',
+                icon: '🫧',
+                color: '#34d399',
+                effectType: 'bubbles_fizz',
+                desc: 'A reação entre o vinagre e o bicarbonato produz dióxido de carbono instantaneamente, criando a famosa efervescência de bolhas e gás.'
+            },
+            {
+                id: 'iron_oxidation',
+                pair: ['Fe', 'O2'],
+                name: 'Oxidação do Ferro (Ferrugem)',
+                equation: '4Fe + 3O₂ → 2Fe₂O₃',
+                icon: '🛡️',
+                color: '#f97316',
+                effectType: 'sparks_rust',
+                desc: 'O oxigênio reage quimicamente com os átomos de ferro na presença de umidade, gerando óxido de ferro alaranjado conhecido popularmente como ferrugem.'
+            },
+            {
+                id: 'hydrochloric_synthesis',
+                pair: ['H2', 'Cl2'],
+                name: 'Síntese de Cloreto de Hidrogênio',
+                equation: 'H₂ + Cl₂ → 2HCl',
+                icon: '🧪',
+                color: '#4ade80',
+                effectType: 'green_glow',
+                desc: 'A combinação fotoquímica direta entre os gases hidrogênio e cloro dá origem ao cloreto de hidrogênio gasoso, gás precursor do ácido clorídrico.'
+            },
+            {
+                id: 'metal_acid_reaction',
+                pair: ['Fe', 'HCl'],
+                name: 'Corrosão Ácida com Liberação de Gás',
+                equation: 'Fe + 2HCl → FeCl₂ + H₂↑',
+                icon: '⚡',
+                color: '#f87171',
+                effectType: 'acid_bubbles',
+                desc: 'O ácido clorídrico ataca a estrutura do ferro, liberando hidrogênio gasoso que sobe em bolhas e formando uma solução de cloreto ferroso.'
+            },
+            {
+                id: 'bicarbonate_acid_neutralization',
+                pair: ['HCl', 'NaHCO3'],
+                name: 'Neutralização Rápida de Antiácido',
+                equation: 'HCl + NaHCO₃ → NaCl + H₂O + CO₂↑',
+                icon: '💊',
+                color: '#2dd4bf',
+                effectType: 'intense_fizz',
+                desc: 'O bicarbonato neutraliza o ácido instantaneamente liberando água, sal e gás carbônico, princípio fundamental do funcionamento de antiácidos digestivos.'
+            },
+            {
+                id: 'sodium_acetate_synthesis',
+                pair: ['CH3COOH', 'NaOH'],
+                name: 'Síntese de Acetato de Sódio',
+                equation: 'CH₃COOH + NaOH → CH₃COONa + H₂O',
+                icon: '🧊',
+                color: '#c084fc',
+                effectType: 'crystallize',
+                desc: 'Neutralização do ácido acético com hidróxido de sódio que origina o acetato de sódio, sal orgânico utilizado em bolsas térmicas e conservantes alimentares.'
+            }
+        ];
+
+        /* ==========================================================================
+           3. ESTADO DA APLICAÇÃO
+           ========================================================================== */
+        const STORAGE_KEY = 'adriel_lab_reaction_discoveries';
+        let selectedSubstances = [];
+        let discoveredIds = [];
+        let isAnimating = false;
+
+        /* ==========================================================================
+           4. ELEMENTOS DO DOM
+           ========================================================================== */
+        const substancesGrid = document.getElementById('substancesGrid');
+        const selectionCounter = document.getElementById('selectionCounter');
+        const slotA = document.getElementById('slotA');
+        const slotB = document.getElementById('slotB');
+        const btnMix = document.getElementById('btnMix');
+        const btnClear = document.getElementById('btnClear');
+        const reactionStatusText = document.getElementById('reactionStatusText');
+        const flaskWrapper = document.getElementById('flaskWrapper');
+        const chamberGlow = document.getElementById('chamberGlow');
+        const flaskCanvas = document.getElementById('flaskCanvas');
+        const discoveriesGrid = document.getElementById('discoveriesGrid');
+        const progressLabel = document.getElementById('progressLabel');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const btnResetProgress = document.getElementById('btnResetProgress');
+
+        // Modais
+        const discoveryModal = document.getElementById('discoveryModal');
+        const modalBadge = document.getElementById('modalBadge');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalFormula = document.getElementById('modalFormula');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const confirmModal = document.getElementById('confirmModal');
+        const btnConfirmReset = document.getElementById('btnConfirmReset');
+        const btnCancelReset = document.getElementById('btnCancelReset');
+
+        /* ==========================================================================
+           5. CANVAS DE ANIMAÇÃO DE PARTÍCULAS
+           ========================================================================== */
+        const ctx = flaskCanvas.getContext('2d');
+        let particles = [];
+
+        class Particle {
+            constructor(type, customColor) {
+                this.type = type;
+                this.x = 25 + Math.random() * 90;
+                this.y = 100 + Math.random() * 50;
+                this.radius = type === 'bubble' ? 2 + Math.random() * 4 : 1.5 + Math.random() * 3;
+                this.speedY = -(0.5 + Math.random() * 1.5);
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.alpha = 0.8;
+                this.decay = 0.005 + Math.random() * 0.01;
+                this.color = customColor || '#60a5fa';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= this.decay;
+
+                if (this.type === 'steam') {
+                    this.radius += 0.05;
+                }
+            }
+
+            draw(context) {
+                context.save();
+                context.globalAlpha = Math.max(0, this.alpha);
+                context.fillStyle = this.color;
+                context.beginPath();
+                context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                context.fill();
+                context.restore();
+            }
+        }
+
+        function initCanvasLoop() {
+            function render() {
+                ctx.clearRect(0, 0, flaskCanvas.width, flaskCanvas.height);
+
+                if (Math.random() < 0.15 && particles.length < 30) {
+                    particles.push(new Particle('bubble', 'rgba(255, 255, 255, 0.5)'));
+                }
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.update();
+                    p.draw(ctx);
+
+                    if (p.alpha <= 0 || p.y < 20) {
+                        particles.splice(i, 1);
+                    }
+                }
+
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+
+        function spawnReactionParticles(effectType, mainColor) {
+            particles = [];
+            const count = 45;
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const p = new Particle(
+                        effectType === 'steam' ? 'steam' : 'bubble',
+                        mainColor
+                    );
+                    p.speedY = -(1.5 + Math.random() * 2.5);
+                    p.speedX = (Math.random() - 0.5) * 2;
+                    particles.push(p);
+                }, i * 25);
+            }
+        }
+
+        /* ==========================================================================
+           6. GERENCIAMENTO DE LOCALSTORAGE
+           ========================================================================== */
+        function loadDiscoveries() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    discoveredIds = JSON.parse(raw);
+                    if (!Array.isArray(discoveredIds)) discoveredIds = [];
+                }
+            } catch (e) {
+                console.warn('Erro ao carregar do localStorage:', e);
+                discoveredIds = [];
+            }
+            updateDiscoveriesUI();
+        }
+
+        function saveDiscoveries() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(discoveredIds));
+            } catch (e) {
+                console.warn('Erro ao salvar no localStorage:', e);
+            }
+        }
+
+        /* ==========================================================================
+           7. RENDERIZAÇÃO DA INTERFACE
+           ========================================================================== */
+        function renderSubstances() {
+            substancesGrid.innerHTML = '';
+            SUBSTANCES.forEach(sub => {
+                const btn = document.createElement('button');
+                btn.className = 'substance-btn';
+                btn.style.setProperty('--substance-color', sub.color);
+                btn.style.setProperty('--substance-glow', sub.glow);
+                btn.dataset.id = sub.id;
+
+                const isSelected = selectedSubstances.includes(sub.id);
+                if (isSelected) btn.classList.add('selected');
+
+                btn.innerHTML = `
+                    <div class="substance-symbol">${sub.symbol}</div>
+                    <div class="substance-name">${sub.name}</div>
+                    <div class="substance-tag">${sub.tag}</div>
+                `;
+
+                btn.addEventListener('click', () => toggleSubstanceSelection(sub.id));
+                substancesGrid.appendChild(btn);
+            });
+        }
+
+        function updateSelectionUI() {
+            const buttons = substancesGrid.querySelectorAll('.substance-btn');
+            buttons.forEach(btn => {
+                const id = btn.dataset.id;
+                const isSelected = selectedSubstances.includes(id);
+                btn.classList.toggle('selected', isSelected);
+                btn.disabled = (!isSelected && selectedSubstances.length >= 2 && !isAnimating);
+            });
+
+            selectionCounter.textContent = `${selectedSubstances.length} / 2 selecionadas`;
+            selectionCounter.classList.toggle('filled', selectedSubstances.length === 2);
+
+            renderSlot(slotA, selectedSubstances[0], 1);
+            renderSlot(slotB, selectedSubstances[1], 2);
+
+            btnMix.disabled = (selectedSubstances.length !== 2 || isAnimating);
+            updateFlaskLiquidColor();
+        }
+
+        function renderSlot(slotEl, substanceId, slotIndex) {
+            if (!substanceId) {
+                slotEl.className = 'slot-box';
+                slotEl.innerHTML = `<span class="slot-empty-text">+ Substância ${slotIndex}</span>`;
+                return;
+            }
+
+            const sub = SUBSTANCES.find(s => s.id === substanceId);
+            if (!sub) return;
+
+            slotEl.className = 'slot-box active';
+            slotEl.innerHTML = `
+                <div class="slot-content">
+                    <div class="slot-info">
+                        <div class="slot-symbol" style="color: ${sub.color}">${sub.symbol}</div>
+                        <div class="slot-name">${sub.name}</div>
+                    </div>
+                    <button class="btn-remove-slot" title="Remover" onclick="removeSubstance('${sub.id}')">×</button>
+                </div>
+            `;
+        }
+
+        function updateFlaskLiquidColor() {
+            const stop1 = document.getElementById('liquidStop1');
+            const stop2 = document.getElementById('liquidStop2');
+
+            if (selectedSubstances.length === 0) {
+                stop1.setAttribute('stop-color', '#3b82f6');
+                stop2.setAttribute('stop-color', '#1d4ed8');
+                chamberGlow.style.setProperty('--chamber-glow-color', 'rgba(59, 130, 246, 0.15)');
+                reactionStatusText.textContent = 'Selecione 2 substâncias para iniciar a reação.';
+                reactionStatusText.style.color = 'var(--text-muted)';
+            } else if (selectedSubstances.length === 1) {
+                const sub1 = SUBSTANCES.find(s => s.id === selectedSubstances[0]);
+                stop1.setAttribute('stop-color', sub1.liquidColor);
+                stop2.setAttribute('stop-color', '#0f172a');
+                chamberGlow.style.setProperty('--chamber-glow-color', sub1.glow);
+                reactionStatusText.textContent = `${sub1.name} adicionado ao frasco. Escolha a segunda substância.`;
+                reactionStatusText.style.color = sub1.color;
+            } else if (selectedSubstances.length === 2) {
+                const sub1 = SUBSTANCES.find(s => s.id === selectedSubstances[0]);
+                const sub2 = SUBSTANCES.find(s => s.id === selectedSubstances[1]);
+                stop1.setAttribute('stop-color', sub1.liquidColor);
+                stop2.setAttribute('stop-color', sub2.liquidColor);
+                chamberGlow.style.setProperty('--chamber-glow-color', 'rgba(139, 92, 246, 0.35)');
+                reactionStatusText.textContent = `Pronto para reagir: ${sub1.symbol} + ${sub2.symbol}. Clique em "Misturar Substâncias"!`;
+                reactionStatusText.style.color = '#93c5fd';
+            }
+        }
+
+        function updateDiscoveriesUI() {
+            const total = REACTIONS.length;
+            const count = discoveredIds.length;
+            progressLabel.textContent = `Descobertas: ${count} / ${total}`;
+            const pct = Math.round((count / total) * 100);
+            progressBarFill.style.width = `${pct}%`;
+
+            discoveriesGrid.innerHTML = '';
+            REACTIONS.forEach((reaction, index) => {
+                const isFound = discoveredIds.includes(reaction.id);
+                const card = document.createElement('article');
+
+                if (isFound) {
+                    card.className = 'discovery-card discovered';
+                    card.innerHTML = `
+                        <div class="card-top-row">
+                            <span class="discovery-card-icon">${reaction.icon}</span>
+                            <span class="discovery-badge-id">#${index + 1}</span>
+                        </div>
+                        <div class="discovery-card-name">${reaction.name}</div>
+                        <div class="discovery-card-formula">${reaction.equation}</div>
+                        <div class="discovery-card-desc">${reaction.desc}</div>
+                    `;
+                    card.style.cursor = 'pointer';
+                    card.addEventListener('click', () => showDiscoveryModal(reaction, false));
+                } else {
+                    card.className = 'discovery-card locked';
+                    card.innerHTML = `
+                        <div class="locked-icon">🔒</div>
+                        <div class="locked-title">???</div>
+                        <div class="locked-hint">Misture novos elementos para revelar</div>
+                    `;
+                }
+                discoveriesGrid.appendChild(card);
+            });
+        }
+
+        /* ==========================================================================
+           8. CONTROLE DE INTERAÇÕES E MISTURA
+           ========================================================================== */
+        function toggleSubstanceSelection(substanceId) {
+            if (isAnimating) return;
+
+            const idx = selectedSubstances.indexOf(substanceId);
+            if (idx > -1) {
+                selectedSubstances.splice(idx, 1);
+            } else {
+                if (selectedSubstances.length < 2) {
+                    selectedSubstances.push(substanceId);
+                }
+            }
+            updateSelectionUI();
+        }
+
+        window.removeSubstance = function(substanceId) {
+            if (isAnimating) return;
+            const idx = selectedSubstances.indexOf(substanceId);
+            if (idx > -1) {
+                selectedSubstances.splice(idx, 1);
+                updateSelectionUI();
+            }
+        };
+
+        function clearMixture() {
+            if (isAnimating) return;
+            selectedSubstances = [];
+            updateSelectionUI();
+        }
+
+        function findReaction(subA, subB) {
+            return REACTIONS.find(r => 
+                (r.pair[0] === subA && r.pair[1] === subB) ||
+                (r.pair[0] === subB && r.pair[1] === subA)
+            );
+        }
+
+        function performReaction() {
+            if (selectedSubstances.length !== 2 || isAnimating) return;
+
+            isAnimating = true;
+            btnMix.disabled = true;
+            btnClear.disabled = true;
+
+            const [subA, subB] = selectedSubstances;
+            const reaction = findReaction(subA, subB);
+
+            flaskWrapper.classList.add('is-reacting');
+            reactionStatusText.textContent = '⚗️ Reagindo... Os materiais estão interagindo energeticamente!';
+            reactionStatusText.style.color = '#c084fc';
+
+            if (reaction) {
+                spawnReactionParticles(reaction.effectType, reaction.color);
+                chamberGlow.style.setProperty('--chamber-glow-color', reaction.color);
+            } else {
+                spawnReactionParticles('bubble', '#64748b');
+                chamberGlow.style.setProperty('--chamber-glow-color', 'rgba(100, 116, 139, 0.2)');
+            }
+
+            setTimeout(() => {
+                flaskWrapper.classList.remove('is-reacting');
+                isAnimating = false;
+                btnMix.disabled = false;
+                btnClear.disabled = false;
+
+                if (reaction) {
+                    const isNewDiscovery = !discoveredIds.includes(reaction.id);
+                    if (isNewDiscovery) {
+                        discoveredIds.push(reaction.id);
+                        saveDiscoveries();
+                        updateDiscoveriesUI();
+                    }
+                    showDiscoveryModal(reaction, isNewDiscovery);
+                    reactionStatusText.textContent = `✨ Reação concluída com sucesso: ${reaction.name}!`;
+                    reactionStatusText.style.color = '#34d399';
+                } else {
+                    reactionStatusText.textContent = 'Nada aconteceu desta vez. Nem toda combinação resulta em uma reação química.';
+                    reactionStatusText.style.color = '#94a3b8';
+                }
+            }, 1400);
+        }
+
+        /* ==========================================================================
+           9. MODAIS E DIÁLOGOS
+           ========================================================================== */
+        function showDiscoveryModal(reaction, isNew) {
+            modalBadge.className = isNew ? 'modal-discovery-badge' : 'modal-discovery-badge already-known';
+            modalBadge.textContent = isNew ? '✨ REAÇÃO DESCOBERTA!' : '📖 REAÇÃO REGISTRADA';
+            modalIcon.textContent = reaction.icon;
+            modalTitle.textContent = reaction.name;
+            modalFormula.textContent = reaction.equation;
+            modalDesc.textContent = reaction.desc;
+
+            discoveryModal.classList.add('open');
+        }
+
+        function closeDiscoveryModal() {
+            discoveryModal.classList.remove('open');
+        }
+
+        function openConfirmResetModal() {
+            confirmModal.classList.add('open');
+        }
+
+        function closeConfirmResetModal() {
+            confirmModal.classList.remove('open');
+        }
+
+        function resetDiscoveries() {
+            discoveredIds = [];
+            saveDiscoveries();
+            updateDiscoveriesUI();
+            closeConfirmResetModal();
+            reactionStatusText.textContent = 'Caderno de descobertas resetado com sucesso.';
+            reactionStatusText.style.color = '#94a3b8';
+        }
+
+        /* ==========================================================================
+           10. EVENT LISTENERS & INICIALIZAÇÃO
+           ========================================================================== */
+        btnMix.addEventListener('click', performReaction);
+        btnClear.addEventListener('click', clearMixture);
+        modalCloseBtn.addEventListener('click', closeDiscoveryModal);
+        discoveryModal.addEventListener('click', (e) => {
+            if (e.target === discoveryModal) closeDiscoveryModal();
+        });
+
+        btnResetProgress.addEventListener('click', openConfirmResetModal);
+        btnConfirmReset.addEventListener('click', resetDiscoveries);
+        btnCancelReset.addEventListener('click', closeConfirmResetModal);
+        confirmModal.addEventListener('click', (e) => {
+            if (e.target === confirmModal) closeConfirmResetModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDiscoveryModal();
+                closeConfirmResetModal();
+            }
+        });
+
+        // Inicialização
+        renderSubstances();
+        updateSelectionUI();
+        loadDiscoveries();
+        initCanvasLoop();
+    </script>
+</body>
+</html>
