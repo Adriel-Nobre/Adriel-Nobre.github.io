@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 NÃO PODE REPETIR</title>
+    <meta name="description" content="Sua memória aguenta a velocidade? Jogo de atenção e agilidade mental do Adriel Nobre Lab.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-gradient: radial-gradient(circle at top, #1e1b4b, #0f172a 45%, #020617);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-easy: #10b981;
+            --accent-hard: #f43f5e;
+            --success: #10b981;
+            --error: #ef4444;
+            --gold: #facc15;
+            --card-bg: rgba(30, 41, 59, 0.75);
+            --card-border: rgba(99, 102, 241, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Cabeçalho */
+        header {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #ffffff, #c7d2fe, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* Cartão Principal */
+        .main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 24px 22px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Seletor de Dificuldade (3 Modos) */
+        .difficulty-selector {
+            display: flex;
+            background: rgba(15, 23, 42, 0.7);
+            padding: 4px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 18px;
+            gap: 4px;
+        }
+
+        .diff-btn {
+            flex: 1;
+            padding: 9px 8px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .diff-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .diff-btn.active.easy {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+        }
+
+        .diff-btn.active.normal {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+        }
+
+        .diff-btn.active.hard {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+        }
+
+        /* Tag de Modo no Jogo */
+        .mode-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .mode-badge.easy {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .mode-badge.normal {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .mode-badge.hard {
+            background: rgba(244, 63, 94, 0.2);
+            color: #fb7185;
+            border: 1px solid rgba(251, 113, 133, 0.3);
+        }
+
+        /* Painel de Status (HUD) */
+        .hud {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 15px;
+        }
+
+        .hud-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .hud-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .hud-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .hud-value.combo-value {
+            color: var(--gold);
+        }
+
+        .hud-value.score-value {
+            color: #38bdf8;
+        }
+
+        /* Barra de Tempo */
+        .timer-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 99px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 99px;
+            transform-origin: left;
+            transition: width 0.04s linear;
+        }
+
+        .timer-bar.easy-mode {
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+        }
+
+        .timer-bar.hard-mode {
+            background: linear-gradient(90deg, #f43f5e, #fb923c);
+        }
+
+        /* Área do Número Central */
+        .number-arena {
+            width: 100%;
+            max-width: 300px;
+            height: 220px;
+            margin: 0 auto 16px auto;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
+            border: 2px solid rgba(99, 102, 241, 0.35);
+            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.05), 0 8px 24px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            touch-action: manipulation;
+            transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .number-arena:active {
+            transform: scale(0.96);
+        }
+
+        .number-display {
+            font-size: 100px;
+            font-weight: 900;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 4px 20px rgba(99, 102, 241, 0.5);
+            pointer-events: none;
+        }
+
+        /* Animação de Entrada do Número */
+        .number-arena.pop-in .number-display {
+            animation: numberPopIn 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes numberPopIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.65);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .number-arena.correct-hit {
+            border-color: var(--success);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .number-arena.error-hit {
+            border-color: var(--error);
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.5);
+            animation: arenaShake 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        @keyframes arenaShake {
+            10%, 90% { transform: translate3d(-3px, 0, 0); }
+            20%, 80% { transform: translate3d(5px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        /* Feedback Flutuante para Marcos de Combo (de 7 em 7) */
+        .feedback-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+        }
+
+        .feedback-badge.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feedback-badge.bonus {
+            background: rgba(234, 179, 8, 0.25);
+            color: var(--gold);
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            box-shadow: 0 2px 10px rgba(234, 179, 8, 0.2);
+        }
+
+        /* Instruções */
+        .instruction-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin: 4px 0 16px 0;
+            line-height: 1.55;
+            font-size: 14px;
+            color: #cbd5e1;
+            text-align: left;
+            width: 100%;
+        }
+
+        .instruction-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .instruction-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .instruction-icon {
+            font-size: 17px;
+            line-height: 1.2;
+        }
+
+        /* Botões */
+        .buttons-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 14px 26px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            touch-action: manipulation;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-primary.easy-mode-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-primary.hard-mode-btn {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            box-shadow: 0 4px 16px rgba(244, 63, 94, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+
+        .btn-back {
+            background: rgba(51, 65, 85, 0.8);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-back:hover {
+            background: rgba(71, 85, 105, 1);
+            color: #ffffff;
+        }
+
+        /* Dicas de teclado */
+        .keyboard-hint {
+            margin-top: 14px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .key-tag {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* Tela de Fim de Jogo */
+        .gameover-title {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #f87171;
+        }
+
+        .gameover-reason {
+            font-size: 15px;
+            color: #cbd5e1;
+            margin-bottom: 18px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-card-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+
+        .stat-card-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .new-record-badge {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(202, 138, 4, 0.3));
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            border-radius: 12px;
+            padding: 10px 16px;
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            animation: pulseRecord 1.5s infinite;
+        }
+
+        @keyframes pulseRecord {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .record-footer {
+            margin-top: 12px;
+            color: var(--gold);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsividade */
+        @media (max-width: 540px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .main-card {
+                padding: 20px 14px;
+                border-radius: 20px;
+            }
+
+            .diff-btn {
+                font-size: 12px;
+                padding: 8px 4px;
+            }
+
+            .number-arena {
+                height: 190px;
+                max-width: 100%;
+            }
+
+            .number-display {
+                font-size: 88px;
+            }
+
+            .hud {
+                font-size: 13px;
+            }
+
+            .hud-value {
+                font-size: 18px;
+            }
+
+            .btn {
+                padding: 13px 20px;
+                font-size: 15px;
+                width: 100%;
+            }
+
+            .stats-grid {
+                gap: 8px;
+            }
+
+            .stat-card {
+                padding: 10px;
+            }
+
+            .stat-card-value {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+
+    <header>
+        <h1>🧠 NÃO PODE REPETIR</h1>
+        <p class="subtitle">"Sua memória aguenta a velocidade?"</p>
+    </header>
+
+    <main class="main-card">
+
+        <!-- ==================== TELA 1: INICIAL ==================== -->
+        <section id="startScreen">
+            
+            <!-- Seletor de Dificuldade (3 Modos) -->
+            <div class="difficulty-selector">
+                <button type="button" class="diff-btn easy" id="btnModeEasy" onclick="selectDifficulty('easy')">
+                    🌱 Fácil
+                </button>
+                <button type="button" class="diff-btn active normal" id="btnModeNormal" onclick="selectDifficulty('normal')">
+                    🔵 Normal
+                </button>
+                <button type="button" class="diff-btn hard" id="btnModeHard" onclick="selectDifficulty('hard')">
+                    🔥 Difícil
+                </button>
+            </div>
+
+            <div class="instruction-box">
+                <div class="instruction-item">
+                    <span class="instruction-icon">✨</span>
+                    <div>
+                        Quando um número aparecer pela primeira vez, <strong>clique nele</strong>.
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">🚫</span>
+                    <div>
+                        Se ele já apareceu antes, <strong>não clique</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <div id="startRecordDisplay" class="record-footer">
+                🏆 Recorde (<span id="startRecordModeName">Normal</span>): <span id="startRecordValue">0</span>
+            </div>
+
+            <div class="buttons-group">
+                <button id="btnStart" class="btn btn-primary" type="button">
+                    ▶ JOGAR
+                </button>
+                <a href="../index.html" class="btn btn-back" onclick="goBack(event)">
+                    ← VOLTAR
+                </a>
+            </div>
+
+            <p class="keyboard-hint">
+                Pressione <span class="key-tag">ENTER</span> para jogar
+            </p>
+        </section>
+
+        <!-- ==================== TELA 2: JOGANDO ==================== -->
+        <section id="playScreen" class="hidden" aria-live="polite">
+            
+            <div>
+                <span id="playModeBadge" class="mode-badge normal">🔵 Normal</span>
+            </div>
+
+            <div class="hud">
+                <div class="hud-item">
+                    <span class="hud-label">Pontos</span>
+                    <span class="hud-value score-value" id="hudScore">0</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">Combo</span>
+                    <span class="hud-value combo-value" id="hudCombo">0</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">Sequência</span>
+                    <span class="hud-value" id="hudSequence">0</span>
+                </div>
+            </div>
+
+            <div class="timer-bar-container">
+                <div class="timer-bar" id="timerBar"></div>
+            </div>
+
+            <!-- Área clicável do número central -->
+            <div id="numberArena" class="number-arena" role="button" tabindex="0" aria-label="Número atual">
+                <span id="feedbackBadge" class="feedback-badge"></span>
+                <span id="numberDisplay" class="number-display">?</span>
+            </div>
+
+            <p class="keyboard-hint">
+                Clique na área do número ou use <span class="key-tag">ESPAÇO</span>
+            </p>
+        </section>
+
+        <!-- ==================== TELA 3: FIM DE JOGO ==================== -->
+        <section id="gameOverScreen" class="hidden">
+            
+            <div id="newRecordBadge" class="new-record-badge hidden">
+                🏆 NOVO RECORDE!
+            </div>
+
+            <div style="margin-bottom: 6px;">
+                <span id="gameOverModeBadge" class="mode-badge normal">🔵 Normal</span>
+            </div>
+
+            <h2 class="gameover-title">FIM DE JOGO</h2>
+            <p class="gameover-reason" id="gameOverReason">Você clicou em um número repetido!</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-card-label">Pontuação</span>
+                    <span class="stat-card-value" id="finalScore">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-card-label">Maior Combo</span>
+                    <span class="stat-card-value" id="finalMaxCombo">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-card-label">Sequência</span>
+                    <span class="stat-card-value" id="finalSequence">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-card-label">Melhor Pontuação</span>
+                    <span class="stat-card-value" id="finalRecord">0</span>
+                </div>
+            </div>
+
+            <div class="buttons-group">
+                <button id="btnRestart" class="btn btn-primary" type="button">
+                    🔄 JOGAR NOVAMENTE
+                </button>
+                <a href="../index.html" class="btn btn-back" onclick="goBack(event)">
+                    ← VOLTAR AOS JOGOS
+                </a>
+            </div>
+
+            <p class="keyboard-hint">
+                Pressione <span class="key-tag">ENTER</span> para reiniciar
+            </p>
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+    /* ==========================================================
+       CONFIGURAÇÕES DOS MODOS DE DIFICULDADE
+       ========================================================== */
+    const MODES = {
+        easy: {
+            name: "Fácil",
+            badgeText: "🌱 Fácil",
+            badgeClass: "easy",
+            storageKey: "naoPodeRepetirRecord_easy",
+            legacyKey: null,
+            initialDurationMs: 1800,
+            minDurationMs: 700,
+            speedupPerStep: 18,
+            pauseBetweenNumbersMs: 240,
+            basePoints: 8,
+            repetitionProbability: 0.35
+        },
+        normal: {
+            name: "Normal",
+            badgeText: "🔵 Normal",
+            badgeClass: "normal",
+            storageKey: "naoPodeRepetirRecord_normal",
+            legacyKey: "naoPodeRepetirRecord",
+            initialDurationMs: 1300,
+            minDurationMs: 450,
+            speedupPerStep: 25,
+            pauseBetweenNumbersMs: 200,
+            basePoints: 10,
+            repetitionProbability: 0.45
+        },
+        hard: {
+            name: "Difícil",
+            badgeText: "🔥 Difícil",
+            badgeClass: "hard",
+            storageKey: "naoPodeRepetirRecord_hard",
+            legacyKey: null,
+            initialDurationMs: 950,
+            minDurationMs: 330,
+            speedupPerStep: 30,
+            pauseBetweenNumbersMs: 160,
+            basePoints: 15,
+            repetitionProbability: 0.45
+        }
+    };
+
+    const CONFIG = {
+        MIN_NUMBER: 1,
+        MAX_NUMBER: 9
+    };
+
+    // Modo selecionado: 'easy' | 'normal' | 'hard'
+    let currentDifficulty = 'normal';
+
+    // Estados: 'START' | 'PLAYING' | 'GAMEOVER'
+    let gameState = 'START';
+
+    // Variáveis da rodada
+    let score = 0;
+    let combo = 0;
+    let maxCombo = 0;
+    let sequence = 0;
+    let seenNumbers = new Set();
+    let currentNumber = null;
+    let isCurrentNumberNew = true;
+    let hasClickedCurrent = false;
+
+    // Timers
+    let turnTimer = null;
+    let pauseTimer = null;
+    let animationFrameId = null;
+    let turnStartTime = 0;
+    let currentTurnDuration = 1300;
+    let isTransitioning = false;
+
+    // Recorde local
+    let highScore = 0;
+
+    /* ==========================================================
+       ELEMENTOS DO DOM
+       ========================================================== */
+    const startScreen = document.getElementById("startScreen");
+    const playScreen = document.getElementById("playScreen");
+    const gameOverScreen = document.getElementById("gameOverScreen");
+
+    const btnModeEasy = document.getElementById("btnModeEasy");
+    const btnModeNormal = document.getElementById("btnModeNormal");
+    const btnModeHard = document.getElementById("btnModeHard");
+    const startRecordModeName = document.getElementById("startRecordModeName");
+    const startRecordValue = document.getElementById("startRecordValue");
+
+    const playModeBadge = document.getElementById("playModeBadge");
+    const gameOverModeBadge = document.getElementById("gameOverModeBadge");
+
+    const hudScore = document.getElementById("hudScore");
+    const hudCombo = document.getElementById("hudCombo");
+    const hudSequence = document.getElementById("hudSequence");
+    const timerBar = document.getElementById("timerBar");
+
+    const numberArena = document.getElementById("numberArena");
+    const numberDisplay = document.getElementById("numberDisplay");
+    const feedbackBadge = document.getElementById("feedbackBadge");
+
+    const newRecordBadge = document.getElementById("newRecordBadge");
+    const gameOverReason = document.getElementById("gameOverReason");
+    const finalScore = document.getElementById("finalScore");
+    const finalMaxCombo = document.getElementById("finalMaxCombo");
+    const finalSequence = document.getElementById("finalSequence");
+    const finalRecord = document.getElementById("finalRecord");
+
+    const btnStart = document.getElementById("btnStart");
+    const btnRestart = document.getElementById("btnRestart");
+
+    /* ==========================================================
+       SELEÇÃO DE DIFICULDADE
+       ========================================================== */
+    function selectDifficulty(mode) {
+        currentDifficulty = mode;
+
+        btnModeEasy.className = "diff-btn easy";
+        btnModeNormal.className = "diff-btn normal";
+        btnModeHard.className = "diff-btn hard";
+
+        btnStart.className = "btn btn-primary";
+        btnRestart.className = "btn btn-primary";
+
+        if (mode === 'easy') {
+            btnModeEasy.className = "diff-btn active easy";
+            btnStart.classList.add("easy-mode-btn");
+            btnRestart.classList.add("easy-mode-btn");
+        } else if (mode === 'normal') {
+            btnModeNormal.className = "diff-btn active normal";
+        } else if (mode === 'hard') {
+            btnModeHard.className = "diff-btn active hard";
+            btnStart.classList.add("hard-mode-btn");
+            btnRestart.classList.add("hard-mode-btn");
+        }
+
+        loadRecord();
+    }
+
+    /* ==========================================================
+       RECORDE E PERSISTÊNCIA
+       ========================================================== */
+    function loadRecord() {
+        const modeConfig = MODES[currentDifficulty];
+        let saved = localStorage.getItem(modeConfig.storageKey);
+
+        // Fallback de compatibilidade com chave antiga no modo normal
+        if (!saved && modeConfig.legacyKey) {
+            saved = localStorage.getItem(modeConfig.legacyKey);
+        }
+
+        highScore = saved ? parseInt(saved, 10) || 0 : 0;
+        startRecordModeName.textContent = modeConfig.name;
+        startRecordValue.textContent = highScore;
+    }
+
+    function saveRecord(newScore) {
+        if (newScore > highScore) {
+            highScore = newScore;
+            const modeConfig = MODES[currentDifficulty];
+            localStorage.setItem(modeConfig.storageKey, highScore.toString());
+            if (modeConfig.legacyKey) {
+                localStorage.setItem(modeConfig.legacyKey, highScore.toString());
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /* ==========================================================
+       TRANSIÇÃO DE TELAS
+       ========================================================== */
+    function showScreen(screen) {
+        gameState = screen;
+        startScreen.classList.add("hidden");
+        playScreen.classList.add("hidden");
+        gameOverScreen.classList.add("hidden");
+
+        const modeConfig = MODES[currentDifficulty];
+
+        if (screen === 'START') {
+            loadRecord();
+            startScreen.classList.remove("hidden");
+        } else if (screen === 'PLAYING') {
+            playModeBadge.textContent = modeConfig.badgeText;
+            playModeBadge.className = `mode-badge ${modeConfig.badgeClass}`;
+            
+            timerBar.className = "timer-bar";
+            if (currentDifficulty === 'easy') {
+                timerBar.classList.add("easy-mode");
+            } else if (currentDifficulty === 'hard') {
+                timerBar.classList.add("hard-mode");
+            }
+
+            playScreen.classList.remove("hidden");
+        } else if (screen === 'GAMEOVER') {
+            gameOverModeBadge.textContent = modeConfig.badgeText;
+            gameOverModeBadge.className = `mode-badge ${modeConfig.badgeClass}`;
+            gameOverScreen.classList.remove("hidden");
+        }
+    }
+
+    /* ==========================================================
+       FLUXO DA PARTIDA
+       ========================================================== */
+    function startGame() {
+        clearAllTimers();
+
+        const modeConfig = MODES[currentDifficulty];
+
+        score = 0;
+        combo = 0;
+        maxCombo = 0;
+        sequence = 0;
+        seenNumbers.clear();
+        currentNumber = null;
+        isCurrentNumberNew = true;
+        hasClickedCurrent = false;
+        isTransitioning = false;
+        currentTurnDuration = modeConfig.initialDurationMs;
+
+        updateHUD();
+        showScreen('PLAYING');
+
+        presentNextNumber();
+    }
+
+    function clearAllTimers() {
+        if (turnTimer) clearTimeout(turnTimer);
+        if (pauseTimer) clearTimeout(pauseTimer);
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        turnTimer = null;
+        pauseTimer = null;
+        animationFrameId = null;
+    }
+
+    /* ==========================================================
+       GERAÇÃO DE NÚMEROS (1 A 9) COM REPETIÇÃO
+       ========================================================== */
+    function generateNextNumber() {
+        const modeConfig = MODES[currentDifficulty];
+
+        // Se todos os números de 1 a 9 já foram vistos: novo ciclo silencioso
+        if (seenNumbers.size >= (CONFIG.MAX_NUMBER - CONFIG.MIN_NUMBER + 1)) {
+            seenNumbers.clear();
+        }
+
+        const seenArray = Array.from(seenNumbers);
+        let chosen;
+        let isRepeated = false;
+
+        // Se já existem números vistos, aplicar chance de repetição
+        if (seenArray.length > 0 && Math.random() < modeConfig.repetitionProbability) {
+            const randomIndex = Math.floor(Math.random() * seenArray.length);
+            chosen = seenArray[randomIndex];
+            isRepeated = true;
+        } else {
+            // Escolher um número novo
+            const unvisited = [];
+            for (let i = CONFIG.MIN_NUMBER; i <= CONFIG.MAX_NUMBER; i++) {
+                if (!seenNumbers.has(i)) {
+                    unvisited.push(i);
+                }
+            }
+
+            if (unvisited.length > 0) {
+                const randomIndex = Math.floor(Math.random() * unvisited.length);
+                chosen = unvisited[randomIndex];
+                isRepeated = false;
+            } else {
+                chosen = Math.floor(Math.random() * 9) + 1;
+                isRepeated = seenNumbers.has(chosen);
+            }
+        }
+
+        return { number: chosen, isNew: !isRepeated };
+    }
+
+    /* ==========================================================
+       APRESENTAÇÃO DO NÚMERO
+       ========================================================== */
+    function presentNextNumber() {
+        if (gameState !== 'PLAYING') return;
+
+        isTransitioning = false;
+        hasClickedCurrent = false;
+
+        const modeConfig = MODES[currentDifficulty];
+        const next = generateNextNumber();
+        currentNumber = next.number;
+        isCurrentNumberNew = next.isNew;
+        sequence++;
+
+        numberDisplay.textContent = currentNumber;
+        numberArena.className = "number-arena pop-in";
+
+        // Aceleração progressiva baseada na sequência e modo
+        const speedFactor = Math.min(sequence, 35);
+        currentTurnDuration = Math.max(
+            modeConfig.minDurationMs,
+            modeConfig.initialDurationMs - (speedFactor * modeConfig.speedupPerStep)
+        );
+
+        updateHUD();
+        startTurnTimer();
+    }
+
+    function startTurnTimer() {
+        turnStartTime = performance.now();
+
+        function updateProgress() {
+            if (gameState !== 'PLAYING' || isTransitioning) return;
+
+            const elapsed = performance.now() - turnStartTime;
+            const remaining = Math.max(0, currentTurnDuration - elapsed);
+            const percentage = (remaining / currentTurnDuration) * 100;
+
+            timerBar.style.width = percentage + "%";
+
+            if (remaining > 0) {
+                animationFrameId = requestAnimationFrame(updateProgress);
+            }
+        }
+
+        timerBar.style.width = "100%";
+        animationFrameId = requestAnimationFrame(updateProgress);
+
+        turnTimer = setTimeout(() => {
+            onTurnTimeout();
+        }, currentTurnDuration);
+    }
+
+    /* ==========================================================
+       AÇÃO DO JOGADOR (CLIQUE OU TECLA ESPAÇO)
+       ========================================================== */
+    function handlePlayerAction() {
+        if (gameState !== 'PLAYING' || isTransitioning || hasClickedCurrent) {
+            return;
+        }
+
+        hasClickedCurrent = true;
+        clearAllTimers();
+
+        const modeConfig = MODES[currentDifficulty];
+
+        if (isCurrentNumberNew) {
+            // ACERTO: Número novo clicado corretamente!
+            seenNumbers.add(currentNumber);
+            combo++;
+            if (combo > maxCombo) maxCombo = combo;
+
+            // Pontuação com bônus de combo
+            const bonus = combo > 4 ? Math.min(combo * 2, 25) : 0;
+            score += modeConfig.basePoints + bonus;
+
+            numberArena.classList.add("correct-hit");
+            
+            // Exibir badge apenas em marcos de combo de 7 em 7
+            if (combo > 0 && combo % 7 === 0) {
+                showBadge(`COMBO ${combo}! 🔥`, "bonus");
+            }
+
+            transitionToNext(true);
+        } else {
+            // ERRO: Clicou em número repetido!
+            numberArena.classList.add("error-hit");
+            endGame("Você clicou no número " + currentNumber + ", que já havia aparecido!");
+        }
+    }
+
+    /* ==========================================================
+       QUANDO O TEMPO DO NÚMERO ESGOTA
+       ========================================================== */
+    function onTurnTimeout() {
+        if (gameState !== 'PLAYING' || isTransitioning) return;
+
+        isTransitioning = true;
+        clearAllTimers();
+
+        const modeConfig = MODES[currentDifficulty];
+
+        if (isCurrentNumberNew) {
+            // ERRO: Deixou passar um número novo sem clicar!
+            numberArena.classList.add("error-hit");
+            endGame("O número " + currentNumber + " era novo e você não clicou a tempo!");
+        } else {
+            // ACERTO DE ATENÇÃO: Era repetido e não clicou!
+            combo++;
+            if (combo > maxCombo) maxCombo = combo;
+            score += modeConfig.basePoints;
+
+            // Exibir badge apenas em marcos de combo de 7 em 7
+            if (combo > 0 && combo % 7 === 0) {
+                showBadge(`COMBO ${combo}! 🔥`, "bonus");
+            }
+
+            transitionToNext(false);
+        }
+    }
+
+    /* ==========================================================
+       TRANSIÇÃO ENTRE NÚMEROS
+       ========================================================== */
+    function transitionToNext(wasHit) {
+        isTransitioning = true;
+        updateHUD();
+
+        const modeConfig = MODES[currentDifficulty];
+
+        pauseTimer = setTimeout(() => {
+            if (gameState !== 'PLAYING') return;
+
+            numberArena.className = "number-arena";
+            presentNextNumber();
+        }, modeConfig.pauseBetweenNumbersMs);
+    }
+
+    /* ==========================================================
+       FEEDBACK VISUAL FLUTUANTE (COMBO 7, 14, 21...)
+       ========================================================== */
+    let badgeTimeout = null;
+    function showBadge(text, type) {
+        if (badgeTimeout) clearTimeout(badgeTimeout);
+
+        feedbackBadge.textContent = text;
+        feedbackBadge.className = `feedback-badge show ${type}`;
+
+        badgeTimeout = setTimeout(() => {
+            feedbackBadge.classList.remove("show");
+        }, 900);
+    }
+
+    /* ==========================================================
+       ATUALIZAÇÃO DE INTERFACE
+       ========================================================== */
+    function updateHUD() {
+        hudScore.textContent = score;
+        hudCombo.textContent = combo;
+        hudSequence.textContent = sequence;
+    }
+
+    /* ==========================================================
+       FIM DE JOGO
+       ========================================================== */
+    function endGame(reasonText) {
+        clearAllTimers();
+        gameState = 'GAMEOVER';
+
+        const isNewRecord = saveRecord(score);
+
+        setTimeout(() => {
+            gameOverReason.textContent = reasonText;
+            finalScore.textContent = score;
+            finalMaxCombo.textContent = maxCombo;
+            finalSequence.textContent = sequence;
+            finalRecord.textContent = highScore;
+
+            if (isNewRecord && score > 0) {
+                newRecordBadge.classList.remove("hidden");
+            } else {
+                newRecordBadge.classList.add("hidden");
+            }
+
+            showScreen('GAMEOVER');
+        }, 500);
+    }
+
+    /* ==========================================================
+       EVENT LISTENERS E CONTROLES
+       ========================================================== */
+    numberArena.addEventListener("click", () => {
+        handlePlayerAction();
+    });
+
+    numberArena.addEventListener("touchstart", (e) => {
+        if (gameState === 'PLAYING') {
+            e.preventDefault();
+            handlePlayerAction();
+        }
+    }, { passive: false });
+
+    btnStart.addEventListener("click", startGame);
+    btnRestart.addEventListener("click", startGame);
+
+    let spaceKeyDown = false;
+    window.addEventListener("keydown", (e) => {
+        if (e.code === "Space" || e.key === " ") {
+            if (gameState === 'PLAYING') {
+                e.preventDefault();
+                if (!spaceKeyDown) {
+                    spaceKeyDown = true;
+                    handlePlayerAction();
+                }
+            }
+        }
+
+        if (e.code === "Enter" || e.key === "Enter") {
+            if (gameState === 'START' || gameState === 'GAMEOVER') {
+                e.preventDefault();
+                startGame();
+            }
+        }
+    });
+
+    window.addEventListener("keyup", (e) => {
+        if (e.code === "Space" || e.key === " ") {
+            spaceKeyDown = false;
+        }
+    });
+
+    /* ==========================================================
+       VOLTAR
+       ========================================================== */
+    function goBack(event) {
+        if (event) {
+            event.preventDefault();
+        }
+
+        if (
+            window.history.length > 1 &&
+            document.referrer &&
+            document.referrer.includes(window.location.host)
+        ) {
+            window.history.back();
+        } else {
+            window.location.href = "../index.html";
+        }
+    }
+
+    // Inicialização
+    loadRecord();
+</script>
+
+</body>
+</html>
